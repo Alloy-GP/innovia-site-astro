@@ -20,6 +20,9 @@ export default defineConfig({
 
   prefetch: { prefetchAll: true },
 
+  // TEMP: dev toolbar hidden for presentation — remove to re-enable.
+  devToolbar: { enabled: false },
+
   // Prevents CSRF errors when testing on vercel.app before custom domain is live
   security: { checkOrigin: false },
 

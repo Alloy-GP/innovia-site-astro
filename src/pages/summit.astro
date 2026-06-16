@@ -22,11 +22,12 @@ const html = `<style>
       color: rgba(255,255,255,0.78);
     }
 
-    .site-header {
-      background: rgba(10,25,54,0.86);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    /* Solid navy nav (matches other pages) — beats the global .site-header.inverse transparent rule */
+    .site-header, .site-header.inverse {
+      background: rgba(15,36,71,0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
     }
     .site-header nav > a { color: rgba(255,255,255,0.7); }
     .site-header nav > a:hover, .site-header nav > a.active { color: #fff; }
@@ -859,7 +860,7 @@ const html = `<style>
           <span>Innovia &middot; Annual Summit</span>
         </div>
         <div class="right">
-          <span class="placeholder placeholder-inline">8th Edition</span>
+          <span>Annual Summit</span>
           <span style="opacity: 0.4;">/</span>
           <span>By invitation</span>
           <span style="opacity: 0.4;">/</span>
@@ -989,9 +990,9 @@ const html = `<style>
       <div class="head">
         <div>
           <div class="eyebrow"><span class="num">No. 04</span><span class="rule-mini"></span>Past summits</div>
-          <h2>Seven editions in.</h2>
+          <h2>Every edition, in one place.</h2>
         </div>
-        <p>The 2027 Summit will be the cooperative&rsquo;s eighth. The format &mdash; one room, the whole co-op, member-submitted topics, no vendor floor &mdash; has been refined over seven years. The 2026 recap is the clearest picture of what to expect.</p>
+        <p>The 2027 Summit returns to the same format &mdash; one room, the whole co-op, member-submitted topics, no vendor floor &mdash; refined year over year. The 2026 recap is the clearest picture of what to expect.</p>
       </div>
 
       <!-- Featured: 2026 -->
@@ -1001,13 +1002,13 @@ const html = `<style>
           <span class="stamp"><span class="dot"></span>Most recent &middot; 2026</span>
         </div>
         <div class="body">
-          <span class="ix"><span class="placeholder placeholder-inline">7th Annual</span> &middot; Feb 4&ndash;6, 2026</span>
+          <span class="ix">Annual Summit &middot; Feb 4&ndash;6, 2026</span>
           <h3>Lido House, Newport Beach</h3>
-          <p>The 2026 Summit gathered <span class="placeholder placeholder-inline">[140]</span> founders and senior operators on the California coast for three days of working sessions, founder-only conversations, and the unhurried networking the cooperative is built around. Highlights: <span class="placeholder placeholder-inline">the line-item math walkthrough, the Cinderella keynote, the founder fireside on staying independent</span>.</p>
+          <p>The 2026 Summit gathered 45 founders and senior operators on the California coast for three days of working sessions across Technology &amp; AI, Financial innovation, HR &amp; Talent Management, and Business Intelligence &mdash; plus the founder-only conversations the cooperative is built around.</p>
           <div class="stats">
-            <div><span class="k">Attendees</span><span class="v placeholder placeholder-inline">140</span></div>
-            <div><span class="k">Member cos.</span><span class="v placeholder placeholder-inline">62</span></div>
-            <div><span class="k">Sessions</span><span class="v placeholder placeholder-inline">21</span></div>
+            <div><span class="k">Attendees</span><span class="v">45</span></div>
+            <div><span class="k">Member cos.</span><span class="v">31</span></div>
+            <div><span class="k">States</span><span class="v">28</span></div>
           </div>
           <div class="actions">
             <a href="/summit/2026/" class="btn btn-primary">
@@ -1024,19 +1025,19 @@ const html = `<style>
         <a class="edition" href="/summit/2026/">
           <span class="yr">25</span>
           <span class="v placeholder placeholder-inline">Park Hyatt &middot; Aviara</span>
-          <span class="m"><span class="placeholder placeholder-inline">6th Annual</span> &middot; <span class="placeholder placeholder-inline">Mar 2025</span></span>
+          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">Mar 2025</span></span>
           <span class="hl placeholder placeholder-inline">The Cinderella program launched here &mdash; manager, accounting, and facility cohorts that members continue today.</span>
         </a>
         <a class="edition" href="/summit/2026/">
           <span class="yr">24</span>
           <span class="v placeholder placeholder-inline">Montage &middot; Laguna Beach</span>
-          <span class="m"><span class="placeholder placeholder-inline">5th Annual</span> &middot; <span class="placeholder placeholder-inline">Apr 2024</span></span>
+          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">Apr 2024</span></span>
           <span class="hl placeholder placeholder-inline">The vendor program restructure &mdash; banking, software, and insurance terms rebuilt around member rates.</span>
         </a>
         <a class="edition" href="/summit/2026/">
           <span class="yr">23</span>
           <span class="v placeholder placeholder-inline">Rosewood &middot; Miramar</span>
-          <span class="m"><span class="placeholder placeholder-inline">4th Annual</span> &middot; <span class="placeholder placeholder-inline">May 2023</span></span>
+          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">May 2023</span></span>
           <span class="hl placeholder placeholder-inline">First closed-door founder fireside on staying independent in the age of the PE roll-up.</span>
         </a>
       </div>

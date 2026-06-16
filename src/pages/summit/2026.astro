@@ -2,7 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 const html = `<style>
     body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
-    .site-header {
+    /* Solid navy nav (matches other pages) — beats the global .site-header.inverse transparent rule */
+    .site-header, .site-header.inverse {
       background: rgba(15,36,71,0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -54,9 +55,12 @@ const html = `<style>
     .summit-hero .summit-mark .yr {
       color: var(--innovia-green);
     }
-    .summit-hero .boat {
-      margin: 24px 0 32px;
-      width: 64px; height: 36px;
+    .summit-hero .summit-mark .summit-logo {
+      display: block;
+      width: auto;
+      max-width: min(300px, 64vw);
+      height: auto;
+      margin: 8px 0 4px;
     }
     .summit-hero .row {
       display: grid; grid-template-columns: 1.4fr 1fr;
@@ -372,7 +376,7 @@ const html = `<style>
   <!-- HERO -->
   <section class="summit-hero">
     <div class="bg" aria-hidden="true">
-      <img src="/assets/photos/reception-rooftop-evening.jpg" alt="">
+      <img src="/assets/photos/lido-house-newport-beach.jpg" alt="Lido House, Newport Beach">
     </div>
     <div class="container">
       <div class="crumb">
@@ -383,27 +387,17 @@ const html = `<style>
         </a>
       </div>
 
-      <!-- Summit sub-brand: boat icon + condensed wordmark -->
-      <svg class="boat" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Boat silhouette -->
-        <path d="M14 38 L106 38 L94 50 L26 50 Z" fill="#fff"/>
-        <path d="M60 12 L60 38 M60 12 L52 38 M60 12 L72 38" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        <path d="M52 38 L60 14 L72 38 Z" fill="rgba(149,208,49,0.9)"/>
-        <!-- Wave line below -->
-        <path d="M4 56 Q22 50 40 56 T76 56 T116 56" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-
+      <!-- Summit 2026 official logo lockup -->
       <h1 class="summit-mark">
-        Innovia<br>
-        Summit <span class="yr">2026</span>
+        <img class="summit-logo" src="/assets/logos/summit-2026-logo.png" alt="Innovia Summit 2026 · Newport Beach, CA">
       </h1>
 
       <div class="row">
         <p>The Innovia Summit is the closed-door annual convening where the cooperative becomes a single body &mdash; founder-only sessions, candid working groups, and the unhurried hospitality of a yacht-club retreat.</p>
         <div class="meta">
-          <div><span class="k">Edition</span><span class="v">7th Annual</span></div>
+          <div><span class="k">Edition</span><span class="v">Annual Summit</span></div>
           <div><span class="k">Venue</span><span class="v">Lido House · Newport Beach</span></div>
-          <div><span class="k">Attendees</span><span class="v placeholder placeholder-inline">[140]</span></div>
+          <div><span class="k">Attendees</span><span class="v">45</span></div>
         </div>
       </div>
     </div>
@@ -419,7 +413,7 @@ const html = `<style>
         </div>
         <div class="body">
           <p>
-            The 2026 Summit gathered <span class="placeholder placeholder-inline">[140]</span> member-company founders and senior operators at the Lido House in Newport Beach for three days of working sessions, founder-only conversations, and the kind of unhurried networking that calls and emails can&rsquo;t reproduce.
+            The 2026 Summit gathered 45 member-company founders and senior operators at the Lido House in Newport Beach for three days of working sessions, founder-only conversations, and the kind of unhurried networking that calls and emails can&rsquo;t reproduce.
           </p>
           <p>
             The format is deliberately spare. No vendor booths. No sponsor floors. No tracks of fifty parallel sessions. Just one room, the whole co-op, the topics members raised in the months before, and time to actually work through them. The hospitality &mdash; the rooftop reception, the firepit dinners, the morning runs along the harbor &mdash; is the connective tissue.
@@ -448,73 +442,53 @@ const html = `<style>
 
       <div class="days">
         <div class="day">
-          <span class="date">Mon · 28 Apr 2026 · Day 01</span>
-          <h3>The work of the cooperative</h3>
-          <p>What members are doing for the communities they serve, and how the cooperative supports it: peer councils, the vendor program, shared intelligence.</p>
+          <span class="date">Wed · 4 Feb 2026 · Day 01</span>
+          <h3>Arrivals &amp; welcome</h3>
+          <p>Members travel in from 31 companies across 28 states. The cooperative opens the way it always does &mdash; in person, over drinks, before the work begins.</p>
           <div class="schedule">
-            <div class="item">
-              <span class="time">09:30</span>
-              <span class="what">Opening · State of the cooperative <small>Co-op leadership · main ballroom</small></span>
-            </div>
-            <div class="item">
-              <span class="time">11:00</span>
-              <span class="what">Banking &amp; treasury working session <small>Member panel · banking partners present</small></span>
-            </div>
-            <div class="item">
-              <span class="time">14:00</span>
-              <span class="what">Margin benchmarking, region by region <small>Closed door · founders only</small></span>
-            </div>
-            <div class="item">
-              <span class="time">19:00</span>
-              <span class="what">Rooftop welcome reception <small>Open to all attendees and partners</small></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="day">
-          <span class="date">Tue · 29 Apr 2026 · Day 02</span>
-          <h3>People &amp; Practice</h3>
-          <p>The Cinderella roles get the room. Manager development, accounting talent, facility leads &mdash; the seats most independents are losing.</p>
-          <div class="schedule">
-            <div class="item">
-              <span class="time">09:00</span>
-              <span class="what">Keynote · The Cinderella roles <small>Marty Stowe, strategic partner</small></span>
-            </div>
-            <div class="item">
-              <span class="time">10:30</span>
-              <span class="what">Manager retention &amp; development cohort <small>Breakout · cupola room</small></span>
-            </div>
-            <div class="item">
-              <span class="time">14:00</span>
-              <span class="what">AI &amp; the back office <small>Vendor working session · software partners</small></span>
-            </div>
-            <div class="item">
-              <span class="time">19:00</span>
-              <span class="what">Firepit dinners · founder small groups <small>Reservations sent at check-in</small></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="day">
-          <span class="date">Wed · 30 Apr 2026 · Day 03</span>
-          <h3>Strategy &amp; the Long View</h3>
-          <p>Independence in an age of acquisition. How members are using the cooperative to stay ahead of the PE roll-up &mdash; and to grow without it.</p>
-          <div class="schedule">
-            <div class="item">
-              <span class="time">09:00</span>
-              <span class="what">Founder fireside · staying independent <small>Closed-door · two founders</small></span>
-            </div>
-            <div class="item">
-              <span class="time">11:00</span>
-              <span class="what">Lead-gen engine &amp; KPI benchmarks <small>Co-op working group</small></span>
-            </div>
-            <div class="item">
-              <span class="time">14:00</span>
-              <span class="what">Co-op governance &amp; 2027 plan <small>Member vote · all companies</small></span>
-            </div>
             <div class="item">
               <span class="time">17:00</span>
-              <span class="what">Closing remarks &amp; rooftop send-off <small>The whole co-op, the last hour</small></span>
+              <span class="what">Welcome reception <small>Sponsored by Vantaca</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="day">
+          <span class="date">Thu · 5 Feb 2026 · Day 02</span>
+          <h3>State of the Co-Op &amp; breakouts</h3>
+          <p>The full program day: the State of the Co-Op, four rotating breakout tracks every attendee moved through, and the member banquet to close.</p>
+          <div class="schedule">
+            <div class="item">
+              <span class="time">09:00</span>
+              <span class="what">State of the Co-Op <small>Co-op leadership</small></span>
+            </div>
+            <div class="item">
+              <span class="time">10:00</span>
+              <span class="what">Breakout sessions 1&ndash;4 · rotating <small>Every attendee through all four tracks</small></span>
+            </div>
+            <div class="item">
+              <span class="time">16:00</span>
+              <span class="what">First Citizens Bank session <small>Banking &amp; treasury</small></span>
+            </div>
+            <div class="item">
+              <span class="time">18:00</span>
+              <span class="what">Cocktails &amp; member banquet <small>Sponsored by First Citizens Bank</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="day">
+          <span class="date">Fri · 6 Feb 2026 · Day 03</span>
+          <h3>Recaps &amp; the road ahead</h3>
+          <p>Facilitators and team captains recap each track, the cooperative introduces Alloy Growth Partners as its new agency, and the Summit closes on the Lido Lawn.</p>
+          <div class="schedule">
+            <div class="item">
+              <span class="time">09:00</span>
+              <span class="what">General session &amp; panel recaps <small>Facilitators &amp; team captains</small></span>
+            </div>
+            <div class="item">
+              <span class="time">14:00</span>
+              <span class="what">Closing reception <small>Sponsored by SmartProperty</small></span>
             </div>
           </div>
         </div>
@@ -523,56 +497,57 @@ const html = `<style>
   </section>
 
   <!-- SESSIONS -->
-  <section class="sessions">
+  <section class="sessions" id="sessions">
     <div class="container">
       <div class="head">
         <div>
           <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 03</span><span class="rule-mini"></span>Session highlights</div>
           <h2 class="t-h2" style="margin-top: 14px;">Six sessions that landed.</h2>
         </div>
+        <p style="max-width: 34ch; color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.6;">Four professional facilitators guided rotating focus groups on Day 2, and every attendee moved through all four tracks.</p>
       </div>
       <div class="grid">
         <article class="session">
+          <div class="photo"><img src="/assets/photos/speaker-rocket-launch.jpg" alt=""></div>
+          <span class="num">Plenary · Day 02</span>
+          <h4>State of the Co-Op</h4>
+          <p>Day 2 opened with a candid look at where Innovia stands &mdash; the Member Portal in development and the 2026 priorities: expanded focus groups, portal build-out, and a national industry perception campaign.</p>
+          <div class="speaker">Co-op leadership &middot; plenary</div>
+        </article>
+        <article class="session">
           <div class="photo"><img src="/assets/photos/speaker-finance.jpg" alt=""></div>
-          <span class="num">S · 01 · Day 01</span>
-          <h4>The line-item math nationals don&rsquo;t want you to see</h4>
-          <p>A blunt walkthrough of the banking, software, and insurance spreads between cooperative-rate and retail.</p>
-          <div class="speaker">Founder panel · <span class="placeholder placeholder-inline">[Names]</span></div>
+          <span class="num">Track 01 · Technology</span>
+          <h4>Technology, AI &amp; Digital Transformation</h4>
+          <p>Members moved past experimentation into measurable wins: company-specific AI trained on governing docs, voice assistants fielding routine calls, and freed capacity redeployed into high-touch &ldquo;Ambassador&rdquo; roles.</p>
+          <div class="speaker">Facilitated by Marty Stowe &middot; Vistage Chair, former CEO &amp; COO</div>
         </article>
         <article class="session">
           <div class="photo"><img src="/assets/photos/panel-discussion.jpg" alt=""></div>
-          <span class="num">S · 02 · Day 01</span>
-          <h4>Banking that understands HOA reserves</h4>
-          <p>Member-rate operating and reserve account terms, and what to look for in a CAM-fluent partner.</p>
-          <div class="speaker">Vendor working session</div>
+          <span class="num">Track 02 · Revenue</span>
+          <h4>Financial Innovation, Revenue &amp; Partnerships</h4>
+          <p>A three-level profit model: plug scope-creep leaks, layer in Schedule A add-ons, and build new revenue streams. Refreshed contracts, billing-capture logs, and a 30% incentive on billed extras led the takeaways.</p>
+          <div class="speaker">Facilitated by Mark Murphy &middot; Vistage Chair, former CEO, COO &amp; CFO</div>
         </article>
         <article class="session">
           <div class="photo"><img src="/assets/photos/audience-listening.jpg" alt=""></div>
-          <span class="num">S · 03 · Day 02</span>
-          <h4>The Cinderella roles</h4>
-          <p>Manager retention, accounting development, facility-lead cohorts &mdash; the program that started here in 2025.</p>
-          <div class="speaker">Marty Stowe · keynote</div>
+          <span class="num">Track 03 · Talent</span>
+          <h4>HR, Talent Management &amp; Scalability</h4>
+          <p>Hire for attitude over experience. Pre-interview assessments, sourcing from hospitality and retail, and structured check-ins that catch burnout early &mdash; built on a Hire, Retention, Culture, Scalability framework.</p>
+          <div class="speaker">Facilitated by Tri Nguyen &middot; Vistage Chair, former SVP of HR</div>
         </article>
         <article class="session">
           <div class="photo"><img src="/assets/photos/roundtable-discussion.jpg" alt=""></div>
-          <span class="num">S · 04 · Day 02</span>
-          <h4>AI in the back office, used carefully</h4>
-          <p>A practitioner&rsquo;s view of what AI is actually doing inside member companies &mdash; and what&rsquo;s still hand-rolled.</p>
-          <div class="speaker">Software partner working group</div>
-        </article>
-        <article class="session">
-          <div class="photo"><img src="/assets/photos/speaker-rocket-launch.jpg" alt=""></div>
-          <span class="num">S · 05 · Day 03</span>
-          <h4>Staying independent in the age of the roll-up</h4>
-          <p>Two founders talk through the offers they&rsquo;ve turned down and the math that made it possible.</p>
-          <div class="speaker">Founder fireside</div>
+          <span class="num">Track 04 · Metrics</span>
+          <h4>Business Intelligence &amp; Performance Metrics</h4>
+          <p>Target a 20&ndash;25% minimum client margin, forecast with weighted pipelines, and use Power BI over Vantaca and QuickBooks for profit by client, manager, and service line. The right metrics, acted on.</p>
+          <div class="speaker">Facilitated by Manvir Heir &middot; Founder &amp; CEO, CAM Advisors</div>
         </article>
         <article class="session">
           <div class="photo"><img src="/assets/photos/working-session.jpg" alt=""></div>
-          <span class="num">S · 06 · Day 03</span>
-          <h4>The 2027 cooperative plan</h4>
-          <p>The five things the membership voted onto the calendar before the rooftop sent off the last attendees.</p>
-          <div class="speaker">Member governance · whole co-op</div>
+          <span class="num">Recaps · Day 03</span>
+          <h4>Panel recaps &amp; the road ahead</h4>
+          <p>Facilitators and team captains recapped each track&rsquo;s takeaways, and the cooperative introduced Alloy Growth Partners as its new agency for national campaigns and shared digital resources.</p>
+          <div class="speaker">Facilitators &amp; team captains</div>
         </article>
       </div>
     </div>
@@ -624,7 +599,7 @@ const html = `<style>
         </div>
         <div class="copy">
           <h2>Next February. New coast. Larger room.</h2>
-          <p>2027 heads to Florida the first week of February &mdash; an expanded program for the Cinderella cohorts and a member-led governance day. Attendance is by invitation through a member company.</p>
+          <p>2027 heads to Florida the first week of February &mdash; an expanded program of member focus groups and a member-led governance day. Attendance is by invitation through a member company.</p>
           <div class="pulses">
             <div><span class="k">Dates</span><span class="v">First week of February 2027</span></div>
             <div><span class="k">Venue</span><span class="v placeholder placeholder-inline">Florida · venue reveal soon</span></div>
