@@ -14,6 +14,7 @@ export const REVIEW_ITEMS: ReviewItem[] = [
   { label: 'CCA Global Partners', path: '/about/cca-global-partners/', review: true },
   { label: 'Why Innovia', path: '/for-cams/why-innovia/', review: true },
   { label: 'Three Pillars', path: '/for-cams/three-pillars/', review: true },
+  { label: 'Business Growth', path: '/for-cams/three-pillars/business-growth/', review: true },
   { label: 'Elite Community', path: '/for-cams/three-pillars/elite-community/', review: true },
   { label: 'Vendor Program', path: '/for-cams/three-pillars/vendor-program/', review: true },
   { label: 'Find a Management Company', path: '/find-a-management-company/', review: true },
