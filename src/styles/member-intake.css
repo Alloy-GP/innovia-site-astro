@@ -267,3 +267,9 @@
   .lead-form .submit-row .row-actions { flex-direction: column-reverse; align-items: stretch; }
   .lead-form .btn-clear { text-align: center; }
 }
+
+/* honeypot — visually & assistively hidden, kept submittable for the bot check */
+.lead-form .hp { position: absolute !important; left: -9999px !important; top: auto; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+/* submit error message */
+.lead-form .form-error { margin: 14px 0 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: #ffb4b4; }
+.lead-form .form-error a { color: var(--innovia-green); text-decoration: underline; }
