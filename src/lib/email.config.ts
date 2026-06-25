@@ -18,7 +18,9 @@ export const EMAIL_CONFIG = {
 
   // Everyone here gets a copy of every form submission
   notify: [
-    'notifications@innoviaco-op.com',
+    // TEMP: route member-intake notifications to Alloy inboxes for now
+    'admin@alloygp.com',
+    'cameron@alloygp.co',
   ],
 
   mailchimp: {
