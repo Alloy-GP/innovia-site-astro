@@ -338,3 +338,104 @@
     .v-cta .lead-form .sent-state .seal { width: 56px; height: 56px; border-radius: 999px; background: var(--innovia-green); color: var(--innovia-navy); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
     .v-cta .lead-form .sent-state h4 { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #fff; letter-spacing: -0.016em; margin: 0 0 10px; }
     .v-cta .lead-form .sent-state p { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.78); max-width: 40ch; margin: 0 auto; }
+
+/* ---- bundled .lead-form base (stg site.css lacks it) — source: Innovia site.css ---- */
+.lead-form {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-top: 3px solid var(--innovia-green);
+  padding: 32px 32px 28px;
+  box-shadow: var(--shadow-4);
+}
+.lead-form .form-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px;
+  padding-bottom: 18px; margin-bottom: 26px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.lead-form .form-label { color: var(--innovia-green); }
+.lead-form .form-count { color: rgba(255,255,255,0.5); white-space: nowrap; }
+
+.lead-form fieldset {
+  border: 0; padding: 0; margin: 0 0 22px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.lead-form legend {
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--innovia-green-soft);
+  padding: 0; margin: 0 0 2px; width: 100%;
+}
+.lead-form .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
+
+/* Visible labels — kept only for selects + open questions */
+.lead-form label.field {
+  display: flex; flex-direction: column; gap: 7px;
+  font-family: var(--font-body); font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.85); letter-spacing: 0;
+}
+.lead-form label.field .opt {
+  font-weight: 400; font-style: italic; font-size: 12px;
+  color: rgba(255,255,255,0.45); margin-left: 6px; text-transform: none;
+}
+
+/* The fields — bright, obviously fillable wells */
+.lead-form input,
+.lead-form select,
+.lead-form textarea {
+  width: 100%; box-sizing: border-box;
+  background: #fff;
+  border: 1.5px solid transparent;
+  border-radius: var(--r-sm);
+  padding: 14px 15px;
+  font-family: var(--font-body); font-size: 16px; line-height: 1.3;
+  color: var(--innovia-navy);
+  transition: box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.lead-form textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.lead-form select {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 40px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2318335E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center;
+}
+.lead-form input::placeholder,
+.lead-form textarea::placeholder { color: rgba(24,51,94,0.5); }
+.lead-form select:invalid { color: rgba(24,51,94,0.5); }
+.lead-form input:focus,
+.lead-form select:focus,
+.lead-form textarea:focus {
+  outline: none;
+  border-color: var(--innovia-green-deep);
+  box-shadow: 0 0 0 3px rgba(149,208,49,0.45);
+}
+
+.lead-form .submit-row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; margin-top: 4px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+}
+.lead-form .submit-row small {
+  font-family: var(--font-body); font-size: 12px;
+  color: rgba(255,255,255,0.55); max-width: 44ch; line-height: 1.45;
+}
+.lead-form button[type="submit"] {
+  background: var(--innovia-green); color: var(--innovia-navy);
+  border: 0; border-radius: var(--r-sm);
+  padding: 16px 28px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 15px; letter-spacing: 0.01em;
+  cursor: pointer; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.lead-form button[type="submit"]:hover { background: var(--innovia-green-deep); color: #fff; }
+.lead-form button[type="submit"]:active { transform: translateY(1px); }
+
+@media (max-width: 1080px) {
+  .lead-form .grid-2 { grid-template-columns: 1fr; }
+  .lead-form .submit-row { flex-direction: column; align-items: stretch; gap: 16px; }
+  .lead-form .submit-row small { max-width: none; }
+}
