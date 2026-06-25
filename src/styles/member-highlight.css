@@ -20,7 +20,9 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 [id] { scroll-margin-top: 96px; }
 
-body.mh {
+/* Navy page backdrop — scoped to this page (this stylesheet only loads here).
+   `html body` outranks site.css `body{}` so the dark theme wins regardless of order. */
+html body {
   background: var(--innovia-navy);
   color: rgba(255,255,255,0.80);
 }

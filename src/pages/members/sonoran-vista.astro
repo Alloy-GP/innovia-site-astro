@@ -2,38 +2,18 @@
 // Static route: /members/sonoran-vista/
 // Member Highlight (video-led editorial) — sample/demo member profile.
 //
-// Standalone page on purpose (ships its own header/footer, matching the prototype),
-// like /charter-offer. NOT linked from site nav/menus — review URL only.
-// noindex: this is a demo member with placeholder data; keep it out of search until
-// it's templated with real per-member data (see the handoff's templating model).
+// Uses the global BaseLayout chrome (shared SiteHeader + SiteFooter). The header
+// runs the dark `inverse` variant since this is a navy page. NOT linked from site
+// nav/menus — review URL only; noindex while it's demo data.
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import MemberHighlight from "../../components/MemberHighlight.astro";
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sonoran Vista Community Management · Innovia Member</title>
-    <meta
-      name="description"
-      content="Sonoran Vista Community Management — an independent, Innovia-member community association management firm serving the Greater Phoenix valley."
-    />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href="https://innoviaco-op.com/members/sonoran-vista/" />
-    <link rel="icon" type="image/png" href="/assets/innovia-icon.png" />
-    <link rel="apple-touch-icon" href="/assets/innovia-icon.png" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Sonoran Vista Community Management · Innovia Member" />
-    <meta
-      property="og:description"
-      content="An independent, Innovia-member community association management firm serving Greater Phoenix."
-    />
-    <meta property="og:url" content="https://innoviaco-op.com/members/sonoran-vista/" />
-    <meta property="og:image" content="/assets/og/option-1-type-led.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-  </head>
-  <body class="mh" data-screen-label="Member Highlight · Sonoran Vista">
-    <MemberHighlight />
-  </body>
-</html>
+<BaseLayout
+  title="Sonoran Vista Community Management · Innovia Member"
+  description="Sonoran Vista Community Management — an independent, Innovia-member community association management firm serving the Greater Phoenix valley."
+  ogImage="/assets/og/option-1-type-led.png"
+  robots="noindex, nofollow"
+  headerVariant="inverse"
+>
+  <MemberHighlight />
+</BaseLayout>
