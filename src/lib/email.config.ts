@@ -19,7 +19,7 @@ export const EMAIL_CONFIG = {
   // Everyone here gets a copy of every form submission
   notify: [
     // TEMP: route member-intake notifications to Alloy inboxes for now
-    'admin@alloygp.com',
+    'admin@alloygp.co',
     'cameron@alloygp.co',
   ],
 
