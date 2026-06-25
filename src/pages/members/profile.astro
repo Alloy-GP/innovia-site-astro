@@ -3,17 +3,27 @@
 // Member Profile Intake — Part 1 of member onboarding. A self-saving intake form
 // a new member firm fills in (~10 min); it feeds the member highlight page.
 //
-// Uses the global BaseLayout chrome (shared SiteHeader + SiteFooter, dark 'inverse'
-// header). NOT linked from site nav/menus. noindex — internal onboarding form.
-import BaseLayout from "../../layouts/BaseLayout.astro";
+// Standalone page on purpose: it ships its OWN chrome (logo-only header + the
+// Innovia×Alloy co-brand footer, inside MemberIntake.astro) — no site nav, and
+// nothing links off this page. noindex — internal onboarding form.
 import MemberIntake from "../../components/MemberIntake.astro";
 ---
-<BaseLayout
-  title="Member Profile Intake · Innovia Co-op"
-  description="Part 1 of your Innovia member onboarding — a 10-minute intake that builds your member highlight page."
-  ogImage="/assets/og/option-1-type-led.png"
-  robots="noindex, nofollow"
-  headerVariant="inverse"
->
-  <MemberIntake />
-</BaseLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Member Profile Intake · Innovia Co-op</title>
+    <meta
+      name="description"
+      content="Part 1 of your Innovia member onboarding — a 10-minute intake that builds your member highlight page."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="/assets/innovia-icon.png" />
+    <link rel="apple-touch-icon" href="/assets/innovia-icon.png" />
+  </head>
+  <body data-screen-label="Member Profile Intake">
+    <MemberIntake />
+  </body>
+</html>

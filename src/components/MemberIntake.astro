@@ -1,6 +1,7 @@
 ---
 // Member Profile Intake — Part 1 of member onboarding (self-saving intake form).
-// Ported from the AGP design handoff (member-intake). Uses global BaseLayout chrome.
+// Ported from the AGP design handoff (member-intake). Standalone chrome: logo-only
+// header + Innovia×Alloy co-brand footer — no nav, nothing links off this page.
 // Client-side only for now: autosave to localStorage + demo success state.
 // TODO before launch: real file upload, server draft autosave, submit endpoint (see handoff).
 import "../styles/tokens.css";
@@ -8,6 +9,12 @@ import "../styles/site.css";
 import "../styles/member-intake.css";
 ---
 
+  <!-- ============ HEADER (logo only — no nav, nothing links out) ============ -->
+  <header class="site-header inverse">
+    <div class="container row">
+      <span class="brand"><img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op" style="height:38px;"></span>
+    </div>
+  </header>
 
   <!-- ============ HERO ============ -->
   <section class="page-hero">
@@ -282,8 +289,23 @@ import "../styles/member-intake.css";
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-
+  <!-- ============ FOOTER (Innovia × Alloy co-brand) ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="brand brand-center">
+        <div class="foot-logos">
+          <span class="foot-innovia"><img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op"></span>
+          <span class="foot-div"></span>
+          <span class="foot-alloy"><img src="/assets/logos/alloy-inverted.svg" alt="Alloy"></span>
+        </div>
+        <p>Brought together by Innovia and Alloy, working in collaboration to give every member firm a profile that shows boards exactly why they belong in the cooperative.</p>
+      </div>
+      <div class="copy">
+        <span>&copy; 2026 Innovia Co-op. Member-owned.</span>
+        <span class="colophon">We stand apart because we stand together.</span>
+      </div>
+    </div>
+  </footer>
 
 <script is:inline>
   (function(){
