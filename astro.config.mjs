@@ -32,9 +32,8 @@ export default defineConfig({
   },
 
   redirects: {
-    // Planned legacy → new path (per handoff doc)
-    '/join-innovia/': '/for-cams/why-innovia/',
-    // Static-build internal path → homepage
-    '/pages/home-b/': '/',
+    // ops branch is a single-page deploy (member profile intake only).
+    // Send the root to the form so ops.innoviaco-op.com lands there.
+    '/': '/member-profile-intake/',
   },
 });
