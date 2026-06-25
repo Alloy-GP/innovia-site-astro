@@ -1,23 +1,21 @@
 ---
-// Member Highlight — video-led editorial profile (Innovia member firm).
-// Ported from the AGP design handoff (member-highlight-d-video). Standalone page chrome
-// (its own header/footer) like the prototype; mega-menu JS intentionally omitted.
-// Sample firm: Sonoran Vista Community Management. Demo data — template per the handoff.
+// Member Highlight — video-led editorial member testimonial (Innovia recruitment page).
+// Ported from the AGP design handoff v5 (worked example: Landmarc, Fredericksburg VA).
+// Uses the global BaseLayout chrome (SiteHeader/SiteFooter) — no bespoke header/footer here.
+// Demo data; per-member accent set as the default in member-highlight.css.
 import "../styles/tokens.css";
 import "../styles/site.css";
 import "../styles/member-highlight.css";
 import "../styles/member-highlight-page.css";
 ---
 
-
-  <!-- ============ HERO ============ -->
   <section class="v-hero" id="top">
     <div class="container">
       <div class="crumb-wrap">
         <div class="mh-crumb">
           <a href="/">Innovia</a><span>/</span>
           <a href="/member-spotlights">Members</a><span>/</span>
-          <span class="here">Sonoran Vista Community Management</span>
+          <span class="here">Landmarc</span>
           <span class="verified">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             Verified Innovia member
@@ -25,54 +23,54 @@ import "../styles/member-highlight-page.css";
         </div>
       </div>
 
-      <div class="v-dateline">
-        <span class="place">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          Phoenix, Arizona
-        </span>
-        <span class="sep"></span>
-        <span>33.4484° N · 112.0740° W</span>
-        <span class="sep"></span>
-        <span>Maricopa County</span>
-        <span class="sep"></span>
-        <span>Member since 2018</span>
-      </div>
-
-      <div class="v-namerow">
-        <h1>Sonoran Vista <em>Community Management.</em></h1>
-      </div>
-      <p class="region-tag">A Phoenix-built management company that treats the desert it serves like home — because it is. Hear it from the people who run it.</p>
+      <div class="v-hero-grid">
+      <div class="v-hero-text">
+      <div class="eyebrow on-accent hero-eyebrow"><span class="rule-mini"></span>Why we joined Innovia</div>
+      <h1>&ldquo;The co-op gave us a national's muscle &mdash; <em>without making us sell our company</em> to get it.&rdquo;</h1>
+      <div class="cite">Tom Brennan &middot; Founder &amp; President, Landmarc</div>
+      </div><!-- /v-hero-text -->
 
       <!-- ===== VIDEO CENTERPIECE =====
            Swap the .poster-slot + .play markup for an <iframe> (YouTube/Vimeo)
            or a <video poster="…"> when the interview file is ready. -->
       <div class="v-stage-wrap">
         <div class="v-stage" id="videoStage" role="button" tabindex="0" aria-label="Play member interview">
-          <img class="v-poster" src="/assets/photos/interview-temp.jpg" alt="Inside Sonoran Vista — member interview" />
+          <div class="poster-slot">
+            <img src="/assets/photos/landmarc-interview.jpg" alt="Interview with Tom Brennan, founder of Landmarc" style="width:100%;height:100%;object-fit:cover;object-position:50% 26%;">
+          </div>
           <div class="play">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
           <div class="caption">
-            <div class="av">MR</div>
+            <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);background-size:cover;background-position:50% 22%;"></div>
             <div>
-              <div class="ttl">Inside Sonoran Vista</div>
-              <div class="sub">Marisol Reyes, Founder &amp; President · on staying independent</div>
+              <div class="ttl">Why we joined Innovia</div>
+              <div class="sub">Tom Brennan, Founder &amp; President &middot; Landmarc</div>
             </div>
             <span class="runtime">4:12</span>
           </div>
         </div>
       </div>
+      </div><!-- /v-hero-grid -->
     </div>
   </section>
 
   <!-- ============ STATS ============ -->
   <section class="v-substats tight">
     <div class="container">
+      <div class="intro">
+        <img class="intro-logo" src="/assets/logos/landmarc-white.png" alt="Landmarc">
+        <div class="intro-badge">
+          <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op">
+          <span>Member since <b>2018</b></span>
+        </div>
+        <p class="intro-text">Landmarc is an independent community-management firm in <b>Fredericksburg, Virginia</b>, caring for HOA and condominium associations across the Rappahannock region since 2009.</p>
+      </div>
       <div class="mh-stats">
-        <div class="s"><span class="v">16<span class="u">yrs</span></span><span class="k">Serving the Valley</span></div>
+        <div class="s"><span class="v">16<span class="u">yrs</span></span><span class="k">Independent &amp; growing</span></div>
         <div class="s"><span class="v">140<span class="u">+</span></span><span class="k">Communities managed</span></div>
-        <div class="s"><span class="v">31k<span class="u">+</span></span><span class="k">Doors under management</span></div>
-        <div class="s"><span class="v">4.9<span class="u">★</span></span><span class="k">Avg. board rating</span></div>
+        <div class="s"><span class="v">48</span><span class="k">On the team</span></div>
+        <div class="s"><span class="v">9</span><span class="k">Localities served</span></div>
       </div>
     </div>
   </section>
@@ -82,19 +80,19 @@ import "../styles/member-highlight-page.css";
     <div class="container">
       <div class="head">
         <div class="eyebrow on-accent"><span class="rule-mini"></span>The story</div>
-        <h2>Built one Phoenix community at a time.</h2>
+        <h2>Built one Virginia community at a time.</h2>
       </div>
       <div class="body">
         <div class="col">
-          <p class="drop">Sonoran Vista started in 2009 with a single self-managed HOA in Arcadia and a founder who was tired of watching national roll-ups treat Valley communities like spreadsheet rows. The pitch was simple: a manager who actually lives here, answers the phone, and shows up at the annual meeting.</p>
-          <p>That stubborn locality became the company's edge. While competitors chased volume across state lines, Sonoran Vista grew by referral — board president to board president — across Phoenix, Scottsdale, and the East Valley.</p>
+          <p class="drop">Landmarc started in 2009 with a single self-managed HOA outside Fredericksburg and a founder who was tired of watching national roll-ups treat local communities like spreadsheet rows. The pitch was simple: a manager who actually lives here, answers the phone, and shows up at the annual meeting.</p>
+          <p>That stubborn locality became the company's edge. While competitors chased volume across state lines, Landmarc grew by referral — board president to board president — across Fredericksburg, Stafford, and Spotsylvania.</p>
         </div>
         <div class="col">
           <p>By 2018, the firm faced the question every successful independent eventually does: sell to a national for the resources, or stay independent and fall behind on buying power. Joining Innovia made it a false choice.</p>
           <p>Today, 48 team members manage 140+ communities with co-op-negotiated vendor pricing behind every budget — and the same founder still personally onboards every new association.</p>
         </div>
         <div class="pull">
-          <p>"We never wanted to be the biggest. We wanted to be the one a board would <em>recommend without being asked.</em>"</p>
+          <p>"We didn't want to sell to a national. We wanted their leverage <em>without their leash.</em> The co-op was the answer."</p>
         </div>
       </div>
     </div>
@@ -105,16 +103,21 @@ import "../styles/member-highlight-page.css";
     <div class="container">
       <div class="frame">
         <div class="card">
-          <div class="av has-photo" role="img" aria-label="Marisol Reyes"></div>
-          <div class="nm">Marisol Reyes</div>
+          <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);background-size:cover;background-position:50% 20%;"></div>
+          <div class="nm">Tom Brennan</div>
           <div class="rl">Founder &amp; President</div>
           <div class="creds"><span>CMCA</span><span>AMS</span><span>PCAM</span></div>
+          <div class="card-facts">
+            <div class="cf"><span class="cf-k">Top credential</span><span class="cf-v">PCAM</span></div>
+            <div class="cf"><span class="cf-k">Industry board</span><span class="cf-v">CAI · Central Virginia</span></div>
+            <div class="cf"><span class="cf-k">At the co-op</span><span class="cf-v">Mid-Atlantic vendor council</span></div>
+          </div>
         </div>
         <div class="copy">
           <div class="eyebrow on-accent"><span class="rule-mini"></span>Leadership</div>
           <h3>The person behind the firm — and the interview.</h3>
-          <p>Marisol founded Sonoran Vista after a decade managing master-planned communities across Maricopa County. She holds the PCAM — the industry's highest management credential — and sits on the Arizona chapter board of CAI. Under her, the firm has never lost a community to a competitor on service.</p>
-          <p>She brought the company into Innovia in 2018, and now represents the Southwest region on the co-op's vendor council. Hear her tell it in the interview above.</p>
+          <p>Tom founded Landmarc after a decade managing master-planned communities across the Rappahannock region. He holds the PCAM — the industry's highest management credential — and sits on the Central Virginia chapter board of CAI. Under him, the firm has never lost a community to a competitor on service.</p>
+          <p>He brought the company into Innovia in 2018, and now represents the Mid-Atlantic region on the co-op's vendor council. Hear him tell it in the interview above.</p>
         </div>
       </div>
 
@@ -124,7 +127,7 @@ import "../styles/member-highlight-page.css";
             <div class="eyebrow on-accent"><span class="rule-mini"></span>Accreditations &amp; standing</div>
             <h4>Credentialed at the firm, not just the desk.</h4>
           </div>
-          <p>Beyond Marisol's personal designations, Sonoran Vista holds company-level accreditation and is a verified member in good standing of the Innovia cooperative.</p>
+          <p>Beyond Tom's personal designations, Landmarc holds company-level accreditation and is a verified member in good standing of the Innovia cooperative.</p>
         </div>
         <div class="accred-grid">
           <div class="cred">
@@ -135,12 +138,12 @@ import "../styles/member-highlight-page.css";
           <div class="cred">
             <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
             <div class="ac">CAI</div>
-            <div class="fn">Community Associations Institute member — Arizona Chapter</div>
+            <div class="fn">Community Associations Institute member — Central Virginia Chapter</div>
           </div>
           <div class="cred">
             <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="m9 15 2 2 4-4"/></svg>
             <div class="ac">Licensed &amp; bonded</div>
-            <div class="fn">Registered and bonded in the State of Arizona</div>
+            <div class="fn">Registered and bonded in the Commonwealth of Virginia</div>
           </div>
           <div class="cred is-innovia">
             <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7a4 4 0 1 1-8 0"/><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M9 19h6"/></svg>
@@ -157,18 +160,18 @@ import "../styles/member-highlight-page.css";
     <div class="container">
       <div class="head">
         <div>
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Communities</div>
-          <h2>A few of the places we call clients.</h2>
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Growth, with the co-op behind it</div>
+          <h2>Membership that fuels growth and expansion.</h2>
         </div>
-        <p>From historic Arcadia enclaves to master-planned communities on the Valley's edge — single-family, condo, and mixed-use, managed end to end.</p>
+        <p>Co-op pricing and benchmarking let us bid sharper and protect margin &mdash; so we win more communities and keep them. The roster below is the proof, spanning single-family, condo, and active-adult associations region-wide.</p>
       </div>
       <div class="grid">
-        <div class="cell"><div class="nm">Arcadia Vista</div><div class="meta">Phoenix · 84 doors · since 2011</div><div class="type">Historic single-family HOA</div></div>
-        <div class="cell"><div class="nm">Camelback Heights</div><div class="meta">Phoenix · 220 doors · since 2014</div><div class="type">Condominium association</div></div>
-        <div class="cell"><div class="nm">Verde Crossing</div><div class="meta">Tempe · 410 doors · since 2016</div><div class="type">Master-planned community</div></div>
-        <div class="cell"><div class="nm">Saguaro Bluffs</div><div class="meta">Scottsdale · 156 doors · since 2017</div><div class="type">Townhome / PUD</div></div>
-        <div class="cell"><div class="nm">North Reserve</div><div class="meta">N. Scottsdale · 1,040 doors · since 2019</div><div class="type">Master-planned community</div></div>
-        <div class="cell"><div class="nm">Mill District Lofts</div><div class="meta">Tempe · 188 doors · since 2021</div><div class="type">Mixed-use condominium</div></div>
+        <div class="cell"><div class="nm">Estates at Lee's Hill</div><div class="meta">Fredericksburg · 312 doors · since 2012</div><div class="type">Single-family HOA</div></div>
+        <div class="cell"><div class="nm">Leeland Station</div><div class="meta">Stafford · 540 doors · since 2014</div><div class="type">Master-planned community</div></div>
+        <div class="cell"><div class="nm">Celebrate Virginia</div><div class="meta">Fredericksburg · 280 doors · since 2016</div><div class="type">Condominium association</div></div>
+        <div class="cell"><div class="nm">Falls Run</div><div class="meta">Fredericksburg · 1,150 doors · since 2017</div><div class="type">55+ active adult</div></div>
+        <div class="cell"><div class="nm">Harrison Crossing</div><div class="meta">Spotsylvania · 196 doors · since 2019</div><div class="type">Townhome / PUD</div></div>
+        <div class="cell"><div class="nm">Cosner's Corner</div><div class="meta">Spotsylvania · 168 doors · since 2021</div><div class="type">Mixed-use condominium</div></div>
       </div>
     </div>
   </section>
@@ -215,18 +218,18 @@ import "../styles/member-highlight-page.css";
           <div class="rstars stars">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           </div>
-          <p>Switched our HOA to Sonoran Vista two years ago and never looked back. They actually answer the phone, and our manager knows every vendor in the Valley by name.<span class="role">Board President · Arcadia Vista</span></p>
+          <p>Switched our HOA to Landmarc two years ago and never looked back. They actually answer the phone, and our manager knows every vendor in the region by name.<span class="role">Board President · Estates at Lee's Hill</span></p>
         </div>
         <div class="rcard">
           <div class="who">
-            <div class="av" style="background:#C2531C;">LM</div>
+            <div class="av" style="background:#5f6166;">LM</div>
             <div><div class="nm">Linda Marsh</div><div class="ago">1 month ago</div></div>
             <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
           </div>
           <div class="rstars stars">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           </div>
-          <p>The vendor pricing they bring through the co-op genuinely lowered our annual budget. Our reserve study finally pencils out without a special assessment.<span class="role">Treasurer · Verde Crossing</span></p>
+          <p>The vendor pricing they bring through the co-op genuinely lowered our annual budget. Our reserve study finally pencils out without a special assessment.<span class="role">Treasurer · Leeland Station</span></p>
         </div>
         <div class="rcard">
           <div class="who">
@@ -237,7 +240,7 @@ import "../styles/member-highlight-page.css";
           <div class="rstars stars">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           </div>
-          <p>Responsive, transparent, and they know Phoenix. When the monsoon took out our retention basin, they had a vetted crew on-site the next morning.<span class="role">Board Member · Saguaro Bluffs</span></p>
+          <p>Responsive, transparent, and they know the area. When an ice storm took down half our tree canopy, they had a vetted crew on-site the next morning.<span class="role">Board Member · Falls Run</span></p>
         </div>
       </div>
     </div>
@@ -245,96 +248,131 @@ import "../styles/member-highlight-page.css";
 
   <!-- ============ SERVICE AREA (location flavour) ============ -->
   <section class="v-area">
-    <div class="wordmark" aria-hidden="true">PHOENIX</div>
     <div class="container">
-      <div class="sec-head" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:46px;">
-        <div>
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Where we work</div>
-          <h2 style="color:#fff;margin-top:14px;font-size:clamp(30px,3.4vw,46px);letter-spacing:-0.024em;">The Valley of the Sun, end to end.</h2>
-        </div>
-        <p class="lead on-dark">Boots-on-the-ground coverage across Phoenix and Maricopa County. If a community is on this map, a local manager can be on-site the same day.</p>
-      </div>
       <div class="frame">
         <div class="map">
           <div class="grid-bg"></div>
-          <span class="label">Service Area · Maricopa County, AZ</span>
+          <span class="label">Service Area · Rappahannock Region, VA</span>
           <svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
             <path class="road" d="M 60 250 H 580"/><path class="road" d="M 320 40 V 420"/>
             <path class="road" d="M 120 120 L 520 360"/><path class="road" d="M 520 120 L 160 360"/>
             <circle class="ring" cx="305" cy="232" r="192"/>
             <g>
-              <circle class="pin" cx="190" cy="150" r="6"/><text class="pin-lbl" x="190" y="138" text-anchor="middle">Peoria</text>
-              <circle class="pin" cx="150" cy="225" r="6"/><text class="pin-lbl" x="150" y="213" text-anchor="middle">Glendale</text>
-              <circle class="pin" cx="250" cy="195" r="5"/><text class="pin-lbl" x="250" y="183" text-anchor="middle">Tempe</text>
-              <circle class="pin" cx="420" cy="178" r="7"/><text class="pin-lbl" x="420" y="166" text-anchor="middle">Scottsdale</text>
-              <circle class="pin" cx="452" cy="272" r="7"/><text class="pin-lbl" x="454" y="292" text-anchor="middle">Mesa</text>
-              <circle class="pin" cx="392" cy="332" r="6"/><text class="pin-lbl" x="392" y="352" text-anchor="middle">Gilbert</text>
-              <circle class="pin" cx="300" cy="346" r="6"/><text class="pin-lbl" x="300" y="366" text-anchor="middle">Chandler</text>
-              <circle class="pin" cx="470" cy="130" r="5"/><text class="pin-lbl" x="470" y="118" text-anchor="middle">Paradise Vly</text>
+              <circle class="pin" cx="320" cy="118" r="6"/><text class="pin-lbl" x="320" y="106" text-anchor="middle">Stafford</text>
+              <circle class="pin" cx="168" cy="176" r="6"/><text class="pin-lbl" x="168" y="164" text-anchor="middle">Culpeper</text>
+              <circle class="pin" cx="250" cy="158" r="5"/><text class="pin-lbl" x="250" y="146" text-anchor="middle">Locust Grove</text>
+              <circle class="pin" cx="210" cy="300" r="6"/><text class="pin-lbl" x="210" y="320" text-anchor="middle">Spotsylvania</text>
+              <circle class="pin" cx="148" cy="330" r="5"/><text class="pin-lbl" x="148" y="350" text-anchor="middle">Orange</text>
+              <circle class="pin" cx="316" cy="372" r="6"/><text class="pin-lbl" x="316" y="392" text-anchor="middle">Caroline</text>
+              <circle class="pin" cx="470" cy="204" r="6"/><text class="pin-lbl" x="470" y="192" text-anchor="middle">King George</text>
+              <circle class="pin" cx="462" cy="320" r="5"/><text class="pin-lbl" x="462" y="340" text-anchor="middle">Bowling Green</text>
             </g>
             <rect class="hq" x="293" y="220" width="24" height="24" transform="rotate(45 305 232)"/>
-            <text class="hq-lbl" x="305" y="212" text-anchor="middle">Phoenix · HQ</text>
+            <text class="hq-lbl" x="305" y="212" text-anchor="middle">Fredericksburg · HQ</text>
           </svg>
         </div>
         <div class="coverage">
           <h3>Cities we serve</h3>
           <p>Local managers within reach of every community on our roster.</p>
           <div class="cities">
-            <span>Phoenix</span><span>Scottsdale</span><span>Tempe</span><span>Mesa</span>
-            <span>Chandler</span><span>Gilbert</span><span>Glendale</span><span>Peoria</span>
-            <span>Paradise Valley</span><span>Fountain Hills</span>
+            <span>Fredericksburg</span><span>Stafford</span><span>Spotsylvania</span><span>King George</span>
+            <span>Culpeper</span><span>Caroline</span><span>Orange</span><span>Locust Grove</span>
+            <span>Colonial Beach</span><span>Bowling Green</span>
           </div>
-          <div class="foot">HQ · Camelback corridor, Phoenix 85016</div>
+          <div class="foot">HQ · Central Park, Fredericksburg, VA 22401</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ WHY INNOVIA ============ -->
-  <section class="mh-why-quote">
+  <!-- ============ CO-OP BENEFIT CALLOUT ============ -->
+  <section class="v-coop">
     <div class="container">
-      <div class="eyebrow on-dark" style="margin-bottom:32px;"><span class="rule-mini"></span>Why we joined Innovia</div>
-      <div class="frame">
+      <div class="head">
         <div>
-          <blockquote>Our membership in Innovia lets us stay <span class="hl">independent</span> while having the buying power and thought leadership of the best management companies in the country.</blockquote>
-          <div class="who">
-            <div class="av">MR</div>
-            <div><div class="nm">Marisol Reyes</div><div class="rl">Founder &amp; President, Sonoran Vista</div></div>
+          <div class="lockup">
+            <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op">
+            <span>Member since <b>2018</b></span>
           </div>
+          <h2>What the co-op is <em>doing for us.</em></h2>
         </div>
-        <div class="aside">
-          <div class="lead-in">What membership changed</div>
-          <p>Co-op-negotiated rates on banking, insurance, and maintenance now sit behind every Sonoran Vista budget — and the firm benchmarks fees and reserves against 1.4M+ households of cooperative data, instead of guessing.</p>
+        <p class="lede">Real numbers, after a few years in. <b>This is what membership is actually doing for an independent firm</b> &mdash; not a brochure, the bottom line.</p>
+      </div>
+      <div class="metrics">
+        <div class="m"><div class="big">22<span>%</span></div><div class="ml">Lower vendor costs</div><div class="md">Co-op-negotiated pricing on banking, insurance, and maintenance &mdash; on every contract.</div></div>
+        <div class="m"><div class="big">$340<span>k</span></div><div class="ml">Saved &amp; rebated last year</div><div class="md">Rebates and savings I could never land alone, straight to the bottom line.</div></div>
+        <div class="m"><div class="big">80<span>+</span></div><div class="ml">Peer firm owners</div><div class="md">Trading playbooks that actually work &mdash; pricing, hiring, software, the hard calls.</div></div>
+        <div class="m"><div class="big">100<span>%</span></div><div class="ml">Still independent</div><div class="md">National-scale leverage without selling to a roll-up. I still own my company.</div></div>
+      </div>
+      <div class="changed">
+        <div class="ch-head">What the membership puts to work</div>
+        <p class="ch-sub">The co-op opens doors an independent firm can't on its own &mdash; here's what Landmarc taps, and what it earns the communities they manage:</p>
+        <div class="ch-grid">
+          <div class="ch"><span class="ix">01</span><div><span class="src">Alloy &middot; CAM Growth</span><div class="t">A dedicated growth partner bringing new communities and a sharper brand &mdash; not just back-office tools.</div></div></div>
+          <div class="ch"><span class="ix">02</span><div><span class="src">First Citizens Bank</span><div class="t">Co-op banking terms that cut real cost for the firm and the associations it manages.</div></div></div>
+          <div class="ch"><span class="ix">03</span><div><span class="src">Peer network &middot; 80+ firms</span><div class="t">Owners trading what actually works &mdash; pricing, hiring, software, the hard calls.</div></div></div>
         </div>
+        <a class="ch-link" href="/for-cams/why-innovia">See all membership benefits
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
-  <section class="v-cta" id="contact">
+  <!-- ============ WHY THEY LOVE IT ============ -->
+  <section class="v-love">
+    <div class="container">
+      <div class="eyebrow on-dark"><span class="rule-mini"></span>Why we love being a member</div>
+      <blockquote>“Our membership in Innovia lets us stay <span class="hl">independent</span> while having the buying power and thought leadership of the best management companies in the country.”</blockquote>
+      <div class="who">
+        <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);"></div>
+        <div><div class="nm">Tom Brennan</div><div class="rl">Founder &amp; President, Landmarc</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MEMBERSHIP CTA + FORM ============ -->
+  <section class="v-cta" id="join">
     <div class="container">
       <div class="frame">
         <div>
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Talk to Sonoran Vista</div>
-          <h2>Your Phoenix community deserves a <em>local team.</em></h2>
-          <p>Independent, locally owned, and backed by a national cooperative. Ask Sonoran Vista for a no-obligation proposal — a real manager from the Valley will be in touch within two business days.</p>
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Could the co-op do this for your firm?</div>
+          <h2>See what membership would mean for <em>your firm.</em></h2>
+          <p>Innovia is invitation-only and owned by its members &mdash; independent CAM companies like yours. Tell us a little about your company and we'll set up a confidential, no-pressure conversation. Owner to owner.</p>
+          <ul class="join-points">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No vendor floor, no obligation</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Confidential &mdash; your details stay in the cooperative office</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You'll hear from a member-owner, not a salesperson</li>
+          </ul>
         </div>
-        <form class="v-contact-form" onsubmit="event.preventDefault(); this.classList.add('sent'); var b=this.querySelector('button[type=submit]'); if(b){ b.textContent='Thanks — Sonoran Vista will be in touch'; }">
-          <div class="row2">
-            <label>Name<input type="text" name="name" autocomplete="name" placeholder="Your name" required></label>
-            <label>Email<input type="email" name="email" autocomplete="email" placeholder="you@email.com" required></label>
+        <form class="lead-form" id="joinForm" onsubmit="event.preventDefault(); this.classList.add('is-sent');">
+          <div class="form-head"><span class="form-label">Talk to Innovia about membership</span><span class="form-count">~2 min</span></div>
+          <div class="form-body">
+            <fieldset>
+              <div class="grid-2"><input type="text" placeholder="First name" aria-label="First name" autocomplete="given-name" required><input type="text" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required></div>
+              <div class="grid-2"><input type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required><input type="tel" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel"></div>
+              <div class="grid-2"><input type="text" placeholder="Company name" aria-label="Company name" autocomplete="organization" required><input type="text" placeholder="Headquarters (city, state)" aria-label="Headquarters" required></div>
+              <label class="field">Portfolio size<select required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label>
+              <label class="field">What's prompting the look? <span class="opt">Optional</span><textarea rows="2" placeholder="Margin, vendor terms, talent, the long view — what's on your mind"></textarea></label>
+            </fieldset>
+            <div class="submit-row">
+              <small>Confidential. We don't share with vendors or sell your details.</small>
+              <button type="submit">Request a conversation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+              </button>
+            </div>
           </div>
-          <label>Community or company <span class="opt">— optional</span><input type="text" name="org" autocomplete="organization" placeholder="HOA or company name"></label>
-          <label>How can we help?<textarea name="message" rows="4" placeholder="Tell Sonoran Vista a little about your community…" required></textarea></label>
-          <button type="submit" class="btn btn-primary">Send message
-            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          </button>
-          <p class="form-note">No obligation. Your message goes straight to Sonoran Vista.</p>
+          <div class="sent-state">
+            <div class="seal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h4>Thanks &mdash; we'll be in touch.</h4>
+            <p>A member-owner from the cooperative will reach out within five business days for a confidential conversation.</p>
+          </div>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- ============ FOOTER ============ -->
 
 
 <script is:inline>
