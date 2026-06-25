@@ -49,6 +49,10 @@
         radial-gradient(circle at 76% 22%, color-mix(in srgb, var(--m-accent) 32%, transparent) 0%, transparent 50%),
         radial-gradient(circle at 14% 84%, rgba(149,208,49,0.12) 0%, transparent 46%);
     }
+    .v-stage .v-poster {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%; z-index: 0;
+    }
     .v-stage .poster-slot {
       position: absolute; inset: 0; z-index: 0;
       display: flex; align-items: center; justify-content: center;
@@ -132,6 +136,13 @@
       background: var(--m-accent); color: #fff;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--font-display); font-weight: 800; font-size: 38px;
+    }
+    .v-founder .card .av.has-photo {
+      background-image: url("/assets/photos/interview-temp.jpg");
+      background-size: 320%;
+      background-position: 48% 19%;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--m-accent) 60%, transparent);
     }
     .v-founder .card .nm { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #fff; letter-spacing: -0.014em; }
     .v-founder .card .rl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--m-accent); margin-top: 8px; }
