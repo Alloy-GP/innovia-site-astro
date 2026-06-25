@@ -1,0 +1,417 @@
+---
+// Member Highlight — video-led editorial profile (Innovia member firm).
+// Ported from the AGP design handoff (member-highlight-d-video). Standalone page chrome
+// (its own header/footer) like the prototype; mega-menu JS intentionally omitted.
+// Sample firm: Sonoran Vista Community Management. Demo data — template per the handoff.
+import "../styles/tokens.css";
+import "../styles/site.css";
+import "../styles/member-highlight.css";
+import "../styles/member-highlight-page.css";
+---
+
+  <header class="site-header">
+    <div class="container row">
+      <a href="/" class="brand"><img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op"></a>
+      <nav>
+        <a href="/about">About</a>
+        <a href="/for-cams/why-innovia" class="nav-item-mega" data-mega="cams">For CAMs <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+        <a href="/find-a-management-company" class="nav-item-mega" data-mega="boards">For Boards <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+        <a href="/member-spotlights" class="active">Members</a>
+        <a href="/summit">Summit</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#" class="member-signin">Member sign in</a>
+        <a href="#contact" class="btn btn-navy">Contact this firm
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="v-hero" id="top">
+    <div class="container">
+      <div class="crumb-wrap">
+        <div class="mh-crumb">
+          <a href="/">Innovia</a><span>/</span>
+          <a href="/member-spotlights">Members</a><span>/</span>
+          <span class="here">Sonoran Vista Community Management</span>
+          <span class="verified">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Verified Innovia member
+          </span>
+        </div>
+      </div>
+
+      <div class="v-dateline">
+        <span class="place">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Phoenix, Arizona
+        </span>
+        <span class="sep"></span>
+        <span>33.4484° N · 112.0740° W</span>
+        <span class="sep"></span>
+        <span>Maricopa County</span>
+        <span class="sep"></span>
+        <span>Member since 2018</span>
+      </div>
+
+      <div class="v-namerow">
+        <h1>Sonoran Vista <em>Community Management.</em></h1>
+      </div>
+      <p class="region-tag">A Phoenix-built management company that treats the desert it serves like home — because it is. Hear it from the people who run it.</p>
+
+      <!-- ===== VIDEO CENTERPIECE =====
+           Swap the .poster-slot + .play markup for an <iframe> (YouTube/Vimeo)
+           or a <video poster="…"> when the interview file is ready. -->
+      <div class="v-stage-wrap">
+        <div class="v-stage" id="videoStage" role="button" tabindex="0" aria-label="Play member interview">
+          <div class="poster-slot ph">
+            <div class="ph-mark">
+              <img src="/assets/logos/innovia-white-green.png" alt="" style="height:24px;opacity:.7;">
+              <span class="lbl">Interview video · client supplies — poster frame + embed · 1920×1080</span>
+            </div>
+          </div>
+          <span class="chip-tl">Member interview</span>
+          <span class="corner-tag">Video · client supplies</span>
+          <div class="play">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="caption">
+            <div class="av">MR</div>
+            <div>
+              <div class="ttl">Inside Sonoran Vista</div>
+              <div class="sub">Marisol Reyes, Founder &amp; President · on staying independent</div>
+            </div>
+            <span class="runtime">4:12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="v-substats tight">
+    <div class="container">
+      <div class="mh-stats">
+        <div class="s"><span class="v">16<span class="u">yrs</span></span><span class="k">Serving the Valley</span></div>
+        <div class="s"><span class="v">140<span class="u">+</span></span><span class="k">Communities managed</span></div>
+        <div class="s"><span class="v">31k<span class="u">+</span></span><span class="k">Doors under management</span></div>
+        <div class="s"><span class="v">4.9<span class="u">★</span></span><span class="k">Avg. board rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="v-story">
+    <div class="container">
+      <div class="head">
+        <div class="eyebrow on-accent"><span class="rule-mini"></span>The story</div>
+        <h2>Built one Phoenix community at a time.</h2>
+      </div>
+      <div class="body">
+        <div class="col">
+          <p class="drop">Sonoran Vista started in 2009 with a single self-managed HOA in Arcadia and a founder who was tired of watching national roll-ups treat Valley communities like spreadsheet rows. The pitch was simple: a manager who actually lives here, answers the phone, and shows up at the annual meeting.</p>
+          <p>That stubborn locality became the company's edge. While competitors chased volume across state lines, Sonoran Vista grew by referral — board president to board president — across Phoenix, Scottsdale, and the East Valley.</p>
+        </div>
+        <div class="col">
+          <p>By 2018, the firm faced the question every successful independent eventually does: sell to a national for the resources, or stay independent and fall behind on buying power. Joining Innovia made it a false choice.</p>
+          <p>Today, 48 team members manage 140+ communities with co-op-negotiated vendor pricing behind every budget — and the same founder still personally onboards every new association.</p>
+        </div>
+        <div class="pull">
+          <p>"We never wanted to be the biggest. We wanted to be the one a board would <em>recommend without being asked.</em>"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOUNDER ============ -->
+  <section class="v-founder">
+    <div class="container">
+      <div class="frame">
+        <div class="card">
+          <div class="av">MR</div>
+          <div class="nm">Marisol Reyes</div>
+          <div class="rl">Founder &amp; President</div>
+          <div class="creds"><span>CMCA</span><span>AMS</span><span>PCAM</span></div>
+        </div>
+        <div class="copy">
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Leadership</div>
+          <h3>The person behind the firm — and the interview.</h3>
+          <p>Marisol founded Sonoran Vista after a decade managing master-planned communities across Maricopa County. She holds the PCAM — the industry's highest management credential — and sits on the Arizona chapter board of CAI. Under her, the firm has never lost a community to a competitor on service.</p>
+          <p>She brought the company into Innovia in 2018, and now represents the Southwest region on the co-op's vendor council. Hear her tell it in the interview above.</p>
+        </div>
+      </div>
+
+      <div class="accred">
+        <div class="accred-head">
+          <div>
+            <div class="eyebrow on-accent"><span class="rule-mini"></span>Accreditations &amp; standing</div>
+            <h4>Credentialed at the firm, not just the desk.</h4>
+          </div>
+          <p>Beyond Marisol's personal designations, Sonoran Vista holds company-level accreditation and is a verified member in good standing of the Innovia cooperative.</p>
+        </div>
+        <div class="accred-grid">
+          <div class="cred">
+            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <div class="ac">AAMC</div>
+            <div class="fn">Accredited Association Management Company — CAI's highest firm designation</div>
+          </div>
+          <div class="cred">
+            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div class="ac">CAI</div>
+            <div class="fn">Community Associations Institute member — Arizona Chapter</div>
+          </div>
+          <div class="cred">
+            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="m9 15 2 2 4-4"/></svg>
+            <div class="ac">Licensed &amp; bonded</div>
+            <div class="fn">Registered and bonded in the State of Arizona</div>
+          </div>
+          <div class="cred is-innovia">
+            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7a4 4 0 1 1-8 0"/><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M9 19h6"/></svg>
+            <div class="ac">Innovia Verified</div>
+            <div class="fn">Member in good standing of the Innovia co-op since 2018</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMMUNITIES ============ -->
+  <section class="v-comm">
+    <div class="container">
+      <div class="head">
+        <div>
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Communities</div>
+          <h2>A few of the places we call clients.</h2>
+        </div>
+        <p>From historic Arcadia enclaves to master-planned communities on the Valley's edge — single-family, condo, and mixed-use, managed end to end.</p>
+      </div>
+      <div class="grid">
+        <div class="cell"><div class="nm">Arcadia Vista</div><div class="meta">Phoenix · 84 doors · since 2011</div><div class="type">Historic single-family HOA</div></div>
+        <div class="cell"><div class="nm">Camelback Heights</div><div class="meta">Phoenix · 220 doors · since 2014</div><div class="type">Condominium association</div></div>
+        <div class="cell"><div class="nm">Verde Crossing</div><div class="meta">Tempe · 410 doors · since 2016</div><div class="type">Master-planned community</div></div>
+        <div class="cell"><div class="nm">Saguaro Bluffs</div><div class="meta">Scottsdale · 156 doors · since 2017</div><div class="type">Townhome / PUD</div></div>
+        <div class="cell"><div class="nm">North Reserve</div><div class="meta">N. Scottsdale · 1,040 doors · since 2019</div><div class="type">Master-planned community</div></div>
+        <div class="cell"><div class="nm">Mill District Lofts</div><div class="meta">Tempe · 188 doors · since 2021</div><div class="type">Mixed-use condominium</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOOGLE REVIEWS ============ -->
+  <section class="v-reviews">
+    <div class="container">
+      <div class="rev-top">
+        <div class="rev-brand">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+            <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+            <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
+            <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+          </svg>
+          <div class="gl">Google Reviews<small>Verified by Google</small></div>
+        </div>
+        <div class="rev-score">
+          <span class="num">4.9</span>
+          <div class="meta">
+            <div class="stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <div class="count">Based on <strong>127</strong> Google reviews</div>
+          </div>
+        </div>
+        <div class="rev-cta">
+          <a href="#" class="btn btn-outline" target="_blank" rel="noopener">See all reviews
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="rev-grid">
+        <div class="rcard">
+          <div class="who">
+            <div class="av" style="background:#3B6FB5;">RT</div>
+            <div><div class="nm">Robert Tran</div><div class="ago">2 weeks ago</div></div>
+            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+          </div>
+          <div class="rstars stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <p>Switched our HOA to Sonoran Vista two years ago and never looked back. They actually answer the phone, and our manager knows every vendor in the Valley by name.<span class="role">Board President · Arcadia Vista</span></p>
+        </div>
+        <div class="rcard">
+          <div class="who">
+            <div class="av" style="background:#C2531C;">LM</div>
+            <div><div class="nm">Linda Marsh</div><div class="ago">1 month ago</div></div>
+            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+          </div>
+          <div class="rstars stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <p>The vendor pricing they bring through the co-op genuinely lowered our annual budget. Our reserve study finally pencils out without a special assessment.<span class="role">Treasurer · Verde Crossing</span></p>
+        </div>
+        <div class="rcard">
+          <div class="who">
+            <div class="av" style="background:#2F7D5B;">CD</div>
+            <div><div class="nm">Carlos Delgado</div><div class="ago">3 months ago</div></div>
+            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+          </div>
+          <div class="rstars stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <p>Responsive, transparent, and they know Phoenix. When the monsoon took out our retention basin, they had a vetted crew on-site the next morning.<span class="role">Board Member · Saguaro Bluffs</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICE AREA (location flavour) ============ -->
+  <section class="v-area">
+    <div class="wordmark" aria-hidden="true">PHOENIX</div>
+    <div class="container">
+      <div class="sec-head" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:46px;">
+        <div>
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Where we work</div>
+          <h2 style="color:#fff;margin-top:14px;font-size:clamp(30px,3.4vw,46px);letter-spacing:-0.024em;">The Valley of the Sun, end to end.</h2>
+        </div>
+        <p class="lead on-dark">Boots-on-the-ground coverage across Phoenix and Maricopa County. If a community is on this map, a local manager can be on-site the same day.</p>
+      </div>
+      <div class="frame">
+        <div class="map">
+          <div class="grid-bg"></div>
+          <span class="label">Service Area · Maricopa County, AZ</span>
+          <svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <path class="road" d="M 60 250 H 580"/><path class="road" d="M 320 40 V 420"/>
+            <path class="road" d="M 120 120 L 520 360"/><path class="road" d="M 520 120 L 160 360"/>
+            <circle class="ring" cx="305" cy="232" r="192"/>
+            <g>
+              <circle class="pin" cx="190" cy="150" r="6"/><text class="pin-lbl" x="190" y="138" text-anchor="middle">Peoria</text>
+              <circle class="pin" cx="150" cy="225" r="6"/><text class="pin-lbl" x="150" y="213" text-anchor="middle">Glendale</text>
+              <circle class="pin" cx="250" cy="195" r="5"/><text class="pin-lbl" x="250" y="183" text-anchor="middle">Tempe</text>
+              <circle class="pin" cx="420" cy="178" r="7"/><text class="pin-lbl" x="420" y="166" text-anchor="middle">Scottsdale</text>
+              <circle class="pin" cx="452" cy="272" r="7"/><text class="pin-lbl" x="454" y="292" text-anchor="middle">Mesa</text>
+              <circle class="pin" cx="392" cy="332" r="6"/><text class="pin-lbl" x="392" y="352" text-anchor="middle">Gilbert</text>
+              <circle class="pin" cx="300" cy="346" r="6"/><text class="pin-lbl" x="300" y="366" text-anchor="middle">Chandler</text>
+              <circle class="pin" cx="470" cy="130" r="5"/><text class="pin-lbl" x="470" y="118" text-anchor="middle">Paradise Vly</text>
+            </g>
+            <rect class="hq" x="293" y="220" width="24" height="24" transform="rotate(45 305 232)"/>
+            <text class="hq-lbl" x="305" y="212" text-anchor="middle">Phoenix · HQ</text>
+          </svg>
+        </div>
+        <div class="coverage">
+          <h3>Cities we serve</h3>
+          <p>Local managers within reach of every community on our roster.</p>
+          <div class="cities">
+            <span>Phoenix</span><span>Scottsdale</span><span>Tempe</span><span>Mesa</span>
+            <span>Chandler</span><span>Gilbert</span><span>Glendale</span><span>Peoria</span>
+            <span>Paradise Valley</span><span>Fountain Hills</span>
+          </div>
+          <div class="foot">HQ · Camelback corridor, Phoenix 85016</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY INNOVIA ============ -->
+  <section class="mh-why-quote">
+    <div class="container">
+      <div class="eyebrow on-dark" style="margin-bottom:32px;"><span class="rule-mini"></span>Why we joined Innovia</div>
+      <div class="frame">
+        <div>
+          <blockquote>Our membership in Innovia lets us stay <span class="hl">independent</span> while having the buying power and thought leadership of the best management companies in the country.</blockquote>
+          <div class="who">
+            <div class="av">MR</div>
+            <div><div class="nm">Marisol Reyes</div><div class="rl">Founder &amp; President, Sonoran Vista</div></div>
+          </div>
+        </div>
+        <div class="aside">
+          <div class="lead-in">What membership changed</div>
+          <p>Co-op-negotiated rates on banking, insurance, and maintenance now sit behind every Sonoran Vista budget — and the firm benchmarks fees and reserves against 1.4M+ households of cooperative data, instead of guessing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="v-cta" id="contact">
+    <div class="container">
+      <div class="frame">
+        <div>
+          <div class="eyebrow on-accent"><span class="rule-mini"></span>Talk to Sonoran Vista</div>
+          <h2>Your Phoenix community deserves a <em>local team.</em></h2>
+          <p>Independent, locally owned, and backed by a national cooperative. Ask Sonoran Vista for a no-obligation proposal — a real manager from the Valley will be in touch within two business days.</p>
+        </div>
+        <div class="actions">
+          <a href="#" class="btn btn-primary">Request a proposal
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a href="tel:+16025550140" class="phone-big">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (602) 555-0140
+          </a>
+          <div class="micro">Mon–Fri · 8am–5pm MST · Phoenix, AZ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="grid">
+        <div class="brand">
+          <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op">
+          <p>A national cooperative of independent community management companies. Owned by members. Built for the communities they serve.</p>
+          <div class="mh-footer-badge">
+            <span><b>Sonoran Vista Community Management</b></span>
+            <span>Independent &amp; locally owned · Member since 2018</span>
+          </div>
+        </div>
+        <div>
+          <h6>This member</h6>
+          <ul>
+            <li><a href="#top">Overview</a></li>
+            <li><a href="#contact">Contact the firm</a></li>
+            <li><a href="/member-spotlights">All member spotlights</a></li>
+            <li><a href="/find-a-management-company">Find a manager</a></li>
+          </ul>
+        </div>
+        <div>
+          <h6>The Co-op</h6>
+          <ul>
+            <li><a href="/for-cams/why-innovia">For CAMs</a></li>
+            <li><a href="/about">About Innovia</a></li>
+            <li><a href="/summit">The Summit</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h6>Contact</h6>
+          <ul>
+            <li>(602) 555-0140</li>
+            <li>hello@sonoranvista.com</li>
+            <li>Camelback corridor<br>Phoenix, AZ 85016</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy">
+        <span>&copy; 2026 Sonoran Vista Community Management · Member of Innovia Co-op.</span>
+        <span class="colophon">We stand apart because we stand together.</span>
+      </div>
+    </div>
+  </footer>
+
+
+<script is:inline>
+  /* Placeholder play interaction — replace stage with the real embed when video is ready. */
+  (function(){
+    var s = document.getElementById('videoStage');
+    if(!s) return;
+    function activate(){ s.classList.add('is-armed'); }
+    s.addEventListener('click', activate);
+    s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); }});
+  })();
+</script>
