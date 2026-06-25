@@ -273,3 +273,17 @@
 /* submit error message */
 .lead-form .form-error { margin: 14px 0 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: #ffb4b4; }
 .lead-form .form-error a { color: var(--innovia-green); text-decoration: underline; }
+
+/* success state — "schedule your call" CTA */
+.done-state .book-call {
+  display: inline-flex; align-items: center; gap: 10px; margin: 8px auto 4px;
+  background: var(--innovia-green); color: var(--innovia-navy);
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  padding: 15px 26px; border-radius: var(--r-sm); white-space: nowrap;
+  transition: background .15s var(--ease-out), transform .12s var(--ease-out);
+}
+.done-state .book-call:hover { background: #fff; }
+.done-state .book-call:active { transform: translateY(1px); }
+.done-state .book-call svg { transition: transform .2s var(--ease-out); }
+.done-state .book-call:hover svg { transform: translateX(3px); }
+.done-state .book-alt { font-size: 13px; color: rgba(255,255,255,0.62); margin: 14px auto 0; }
