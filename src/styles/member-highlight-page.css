@@ -253,3 +253,36 @@
     .v-cta .actions .phone-big svg { color: var(--innovia-green); }
     .v-cta .actions .micro { text-align: center; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
     @media (max-width: 860px){ .v-cta .frame { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ---- contact form (replaces the proposal/phone actions) ---- */
+    .v-cta .v-contact-form { display: grid; gap: 14px; }
+    .v-cta .v-contact-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .v-cta .v-contact-form label {
+      display: flex; flex-direction: column; gap: 7px;
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      color: rgba(255,255,255,0.85); letter-spacing: -0.005em;
+    }
+    .v-cta .v-contact-form label .opt { font-weight: 400; color: rgba(255,255,255,0.5); }
+    .v-cta .v-contact-form input,
+    .v-cta .v-contact-form textarea {
+      width: 100%; box-sizing: border-box; background: #fff;
+      border: 1.5px solid transparent; border-radius: 4px;
+      padding: 13px 14px; font-family: var(--font-body); font-size: 16px; line-height: 1.3;
+      color: var(--innovia-navy);
+      transition: box-shadow .18s var(--ease-out), border-color .18s var(--ease-out);
+    }
+    .v-cta .v-contact-form textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+    .v-cta .v-contact-form input::placeholder,
+    .v-cta .v-contact-form textarea::placeholder { color: rgba(24,51,94,0.45); }
+    .v-cta .v-contact-form input:focus,
+    .v-cta .v-contact-form textarea:focus {
+      outline: none; border-color: var(--innovia-green-deep);
+      box-shadow: 0 0 0 3px rgba(149,208,49,0.4);
+    }
+    .v-cta .v-contact-form button[type="submit"] { justify-content: center; padding: 15px 24px; font-size: 16px; margin-top: 2px; }
+    .v-cta .v-contact-form.sent button[type="submit"] { background: var(--innovia-green-deep); pointer-events: none; }
+    .v-cta .v-contact-form .form-note {
+      margin: 4px 0 0; font-family: var(--font-mono); font-size: 11px;
+      color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+    }
+    @media (max-width: 560px){ .v-cta .v-contact-form .row2 { grid-template-columns: 1fr; } }

@@ -44,8 +44,10 @@ body.mh .site-header nav > a {
 body.mh .site-header nav > a:hover,
 body.mh .site-header nav > a.active { color: #fff; }
 body.mh .site-header .nav-cta { margin-left: auto; display: flex; align-items: center; gap: 18px; }
-body.mh .site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
-body.mh .site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+/* White-pill header CTA on the inverse header — matches the rest of the site
+   (e.g. /partners). This stylesheet only loads on the member page. */
+.site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+.site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
 body.mh .site-header .member-signin {
   font-family: var(--font-display); font-size: 13px; font-weight: 500;
   color: rgba(255,255,255,0.7);
