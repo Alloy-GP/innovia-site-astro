@@ -236,9 +236,12 @@ import "../styles/member-intake.css";
 
             <div class="submit-row">
               <small>Confidential. Your details stay inside the cooperative office — we don't share with vendors or sell. You can come back and finish later; this form saves as you go.</small>
-              <button type="submit">Submit &amp; book the call
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-              </button>
+              <div class="row-actions">
+                <button type="button" class="btn-clear" id="clearForm">Clear form</button>
+                <button type="submit">Submit &amp; book the call
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -456,6 +459,16 @@ import "../styles/member-intake.css";
       try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
       window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth' });
     });
+
+    /* ---------- Clear form ---------- */
+    var clearBtn = document.getElementById('clearForm');
+    if(clearBtn){
+      clearBtn.addEventListener('click', function(){
+        if(!confirm('Clear all fields and your saved draft? This can’t be undone.')) return;
+        try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+        location.reload();
+      });
+    }
   })();
 
 </script>

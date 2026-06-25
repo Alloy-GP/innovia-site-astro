@@ -249,8 +249,21 @@
 .lead-form button[type="submit"]:hover { background: var(--innovia-green-deep); color: #fff; }
 .lead-form button[type="submit"]:active { transform: translateY(1px); }
 
+/* submit-row actions: secondary "Clear form" beside the primary submit */
+.lead-form .submit-row .row-actions { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
+.lead-form .btn-clear {
+  background: transparent; border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.7); border-radius: var(--r-sm);
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  padding: 15px 18px; cursor: pointer; white-space: nowrap;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.lead-form .btn-clear:hover { border-color: rgba(255,255,255,0.5); color: #fff; background: rgba(255,255,255,0.05); }
+
 @media (max-width: 1080px) {
   .lead-form .grid-2 { grid-template-columns: 1fr; }
   .lead-form .submit-row { flex-direction: column; align-items: stretch; gap: 16px; }
   .lead-form .submit-row small { max-width: none; }
+  .lead-form .submit-row .row-actions { flex-direction: column-reverse; align-items: stretch; }
+  .lead-form .btn-clear { text-align: center; }
 }
