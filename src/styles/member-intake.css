@@ -41,7 +41,7 @@
     @media (max-width: 620px){ .page-hero .flow-timeline { grid-template-columns: 1fr; gap: 16px; } .page-hero .flow-timeline .step::before { display: none; } .page-hero .flow-timeline .step { display: flex; align-items: flex-start; gap: 14px; padding-right: 0; } .page-hero .flow-timeline .tx { margin-top: 4px; } }
 
     /* ---- Layout: form + sticky rail ---- */
-    .intake { padding: 8px 0 96px; }
+    .intake { padding: 52px 0 96px; }
     .intake .grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 48px; align-items: start; }
 
     /* aside rail */
