@@ -21,6 +21,12 @@ const html = `
         <h1>
           What members <em>actually say</em> when the recorder is on.
         </h1>
+        <div class="hero-stats">
+          <div class="stat"><span class="v">10</span><span class="k">Voices on record</span></div>
+          <div class="stat"><span class="v">22</span><span class="k">Summit films in production</span></div>
+          <div class="stat"><span class="v">28</span><span class="k">States represented</span></div>
+          <div class="stat"><span class="v">80+</span><span class="k">Member firms eligible to be quoted</span></div>
+        </div>
       </div>
 
     </div>
@@ -51,18 +57,6 @@ const html = `
       </div>
     </div>
   </div>
-
-  <!-- STAT STRAP -->
-  <section class="stat-strap">
-    <div class="container">
-      <div class="frame">
-        <div class="stat"><span class="v">10</span><span class="k">Voices on record</span></div>
-        <div class="stat"><span class="v">22</span><span class="k">Summit films in production</span></div>
-        <div class="stat"><span class="v">28</span><span class="k">States represented</span></div>
-        <div class="stat"><span class="v">80+</span><span class="k">Member firms eligible to be quoted</span></div>
-      </div>
-    </div>
-  </section>
 
   <!-- TESTIMONIAL GRID -->
   <section class="listing">
@@ -310,19 +304,40 @@ const html = `
       }
 
       // Filters
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.tcard'));
       var activeVoice = 'all';
       var activeTopic = 'all';
 
+      function matches(card, voice, topic) {
+        var voiceOk = voice === 'all' || card.dataset.voice === voice;
+        var topicOk = topic === 'all' || card.dataset.topic === topic;
+        return voiceOk && topicOk;
+      }
+      function countFor(voice, topic) {
+        var n = 0;
+        for (var i = 0; i < cards.length; i++) { if (matches(cards[i], voice, topic)) n++; }
+        return n;
+      }
+
       function applyFilters() {
-        document.querySelectorAll('.tcard').forEach(function(card) {
-          var voiceOk = activeVoice === 'all' || card.dataset.voice === activeVoice;
-          var topicOk = activeTopic === 'all' || card.dataset.topic === activeTopic;
-          card.style.display = (voiceOk && topicOk) ? '' : 'none';
+        cards.forEach(function(card) {
+          card.style.display = matches(card, activeVoice, activeTopic) ? '' : 'none';
+        });
+        // Gray out (disable) any pill that would return zero results given the
+        // other group's current selection. The active pill is never disabled.
+        document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(p) {
+          var empty = !p.classList.contains('active') && countFor(p.dataset.filter, activeTopic) === 0;
+          p.classList.toggle('disabled', empty);
+        });
+        document.querySelectorAll('[data-filter-group="topic"] .pill').forEach(function(p) {
+          var empty = !p.classList.contains('active') && countFor(activeVoice, p.dataset.filter) === 0;
+          p.classList.toggle('disabled', empty);
         });
       }
 
       document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(btn) {
         btn.addEventListener('click', function() {
+          if (btn.classList.contains('disabled')) return;
           document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(p) { p.classList.remove('active'); });
           btn.classList.add('active');
           activeVoice = btn.dataset.filter;
@@ -332,12 +347,15 @@ const html = `
 
       document.querySelectorAll('[data-filter-group="topic"] .pill').forEach(function(btn) {
         btn.addEventListener('click', function() {
+          if (btn.classList.contains('disabled')) return;
           document.querySelectorAll('[data-filter-group="topic"] .pill').forEach(function(p) { p.classList.remove('active'); });
           btn.classList.add('active');
           activeTopic = btn.dataset.filter;
           applyFilters();
         });
       });
+
+      applyFilters();
     });
   </script>
 </BaseLayout>

@@ -76,6 +76,29 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.1em; text-transform: uppercase;
 }
+/* Hero stat grid — 2x2 to the right of the headline */
+.page-hero .hero-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 2px solid var(--innovia-green);
+  border-left: 1px solid rgba(255,255,255,0.14);
+}
+.page-hero .hero-stats .stat {
+  padding: 18px 20px 20px;
+  border-right: 1px solid rgba(255,255,255,0.14);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.page-hero .hero-stats .stat .v {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(30px, 3vw, 42px);
+  color: var(--innovia-green);
+  letter-spacing: -0.025em; line-height: 0.95;
+}
+.page-hero .hero-stats .stat .k {
+  font-family: var(--font-mono); font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.06em; line-height: 1.4;
+}
 
 /* Filter band */
 .filter-sticky {
@@ -129,6 +152,11 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   letter-spacing: 0.04em;
 }
 .filter-band .pill.active .ct { color: rgba(24,51,94,0.6); }
+.filter-band .pill.disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
 /* ---------- Featured quote ---------- */
 .featured-quote-section {
