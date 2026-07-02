@@ -82,6 +82,9 @@ const orgLd = {
 
 const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
+// Review widgets (Pastel + Simple Commenter) — staging/preview only, never on production.
+const isProduction = import.meta.env.PUBLIC_ENV === 'production';
+
 ---
 
 <!DOCTYPE html>
@@ -128,6 +131,11 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
     <!-- Per-page styles / preloads -->
     <slot name="head" />
+
+    <!-- Simple Commenter review widget: staging/preview only, never on production. -->
+    {!isProduction && (
+      <script is:inline src="https://simplecommenter.com/js/comments.min.js?id=sc_a5b95f74760e080b" defer></script>
+    )}
 
     <!-- Google Analytics: deferred until after page paint -->
     {gaMeasurementId && (
