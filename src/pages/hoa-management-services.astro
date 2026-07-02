@@ -21,14 +21,12 @@ const html = `<style>
   
     .services-grid { padding: 24px 0 32px; }
     .services-grid .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 2px solid var(--innovia-green); border-bottom: 1px solid rgba(255,255,255,0.18); }
-    .services-grid .svc { padding: 36px 32px; border-right: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; transition: background .2s; }
+    .services-grid .svc { padding: 36px 32px; border-right: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 14px; color: inherit; }
     .services-grid .svc:nth-child(2n) { border-right: 0; }
     .services-grid .svc:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.12); }
-    .services-grid .svc:hover { background: rgba(149,208,49,0.06); }
     .services-grid .svc .ix { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
     .services-grid .svc h3 { font-family: var(--font-display); font-weight: 700; font-size: 24px; color: #fff; letter-spacing: -0.014em; margin: 0; }
     .services-grid .svc p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.65); margin: 0; }
-    .services-grid .svc .go { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
 
     .sub-services { padding: 32px 0 96px; }
     .sub-services .head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 32px; }
@@ -79,30 +77,26 @@ const html = `<style>
   <section class="services-grid">
     <div class="container">
       <div class="grid">
-        <a class="svc" href="/hoa-management-services/single-family-hoa/">
+        <div class="svc">
           <span class="ix">Service 01</span>
           <h3>Single-Family HOA Management</h3>
           <p>Covenants, common-area maintenance, capital planning, board support &mdash; for single-family-home associations of every size.</p>
-          <span class="go">Read more &rarr;</span>
-        </a>
-        <a class="svc" href="/hoa-management-services/condominium-management/">
+        </div>
+        <div class="svc">
           <span class="ix">Service 02</span>
           <h3>Condominium Association Management</h3>
           <p>The building-level expertise condominiums need: structural reserves, statutory reporting, capital projects, and unit-owner communications.</p>
-          <span class="go">Read more &rarr;</span>
-        </a>
-        <a class="svc" href="/hoa-management-services/townhome-management/">
+        </div>
+        <div class="svc">
           <span class="ix">Service 03</span>
           <h3>Townhome Association Management</h3>
           <p>The shared-wall, shared-yard middle ground: townhome and PUD management that respects both the homeowner and the association.</p>
-          <span class="go">Read more &rarr;</span>
-        </a>
-        <a class="svc" href="/hoa-management-services/financial-only/">
+        </div>
+        <div class="svc">
           <span class="ix">Service 04</span>
           <h3>Financial-Only Association Management</h3>
           <p>For boards that handle the day-to-day themselves but want the books done right: accounting, financial reporting, budgets and reserves, plus dues billing and collection.</p>
-          <span class="go">Read more &rarr;</span>
-        </a>
+        </div>
       </div>
     </div>
   </section>
