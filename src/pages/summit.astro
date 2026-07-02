@@ -580,13 +580,7 @@ const html = `<style>
       border: 1px solid var(--border-subtle);
       padding: 28px;
       display: flex; flex-direction: column; gap: 14px;
-      text-decoration: none;
       color: inherit;
-      transition: border-color .2s, transform .2s;
-    }
-    .past .edition:hover {
-      border-color: var(--innovia-navy);
-      transform: translateY(-2px);
     }
     .past .edition .yr {
       font-family: var(--font-summit); font-weight: 700;
@@ -1022,21 +1016,21 @@ const html = `<style>
 
       <!-- Older editions -->
       <div class="archive-row">
-        <a class="edition" href="/summit/2026/">
+        <div class="edition">
           <span class="yr">25</span>
           <span class="v">JW Marriott &middot; Downtown Miami</span>
           <span class="m">Annual Summit &middot; February 2025</span>
-        </a>
-        <a class="edition" href="/summit/2026/">
+        </div>
+        <div class="edition">
           <span class="yr">24</span>
           <span class="v">JW Marriott Hill Country Resort &middot; San Antonio</span>
           <span class="m">Annual Summit &middot; February 2024</span>
-        </a>
-        <a class="edition" href="/summit/2026/">
+        </div>
+        <div class="edition">
           <span class="yr">23</span>
           <span class="v">Kimpton Hotel Palomar &middot; Phoenix</span>
           <span class="m">Annual Summit &middot; February 2023</span>
-        </a>
+        </div>
       </div>
 
     </div>
