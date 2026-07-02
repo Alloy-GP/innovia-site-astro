@@ -76,28 +76,31 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.1em; text-transform: uppercase;
 }
-/* Hero stat grid — 2x2 to the right of the headline */
+/* Hero stat grid — 2x2 to the right of the headline.
+   Numbers use the site-standard proof-stat scale (display 800, clamp 40-60)
+   so they read as intentional metrics, not an afterthought. */
 .page-hero .hero-stats {
   display: grid; grid-template-columns: 1fr 1fr;
   border-top: 2px solid var(--innovia-green);
   border-left: 1px solid rgba(255,255,255,0.14);
 }
 .page-hero .hero-stats .stat {
-  padding: 18px 20px 20px;
+  padding: 32px 32px 34px;
   border-right: 1px solid rgba(255,255,255,0.14);
   border-bottom: 1px solid rgba(255,255,255,0.14);
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column;
 }
 .page-hero .hero-stats .stat .v {
-  font-family: var(--font-display); font-weight: 900;
-  font-size: clamp(30px, 3vw, 42px);
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(40px, 4.4vw, 60px);
   color: var(--innovia-green);
-  letter-spacing: -0.025em; line-height: 0.95;
+  letter-spacing: -0.028em; line-height: 1;
 }
 .page-hero .hero-stats .stat .k {
-  font-family: var(--font-mono); font-size: 11px;
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.06em; line-height: 1.4;
+  font-family: var(--font-mono); font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em; line-height: 1.45;
+  margin-top: 14px;
 }
 
 /* Filter band */
