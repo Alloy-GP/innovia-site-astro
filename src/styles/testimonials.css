@@ -392,6 +392,64 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   border-color: rgba(149,208,49,0.22);
 }
 
+/* ---------- Video testimonial cards + featured video ---------- */
+.vthumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(149,208,49,0.16), transparent 60%),
+    linear-gradient(135deg, rgba(24,51,94,0.55), rgba(10,25,54,0.92));
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  cursor: default;
+}
+.vthumb .vplay {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--innovia-green);
+  color: #12233f;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.vthumb .vplay svg { width: 22px; height: 22px; margin-left: 3px; }
+.vthumb .vbadge {
+  position: absolute; top: 10px; left: 10px;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  background: rgba(0,0,0,0.42);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 4px 8px;
+}
+.tcard.video .vthumb { margin-bottom: 4px; }
+.tcard.video:hover .vthumb .vplay { transform: scale(1.08); }
+
+/* Featured (lead) video card — bigger, spans 2 columns */
+.tcard.video.featured {
+  border-color: rgba(149,208,49,0.40);
+  background: rgba(149,208,49,0.06);
+}
+.tcard.video.long .vthumb { max-height: 300px; }
+.tcard.video.featured .vthumb .vplay { width: 66px; height: 66px; }
+.tcard.video.featured .vthumb .vplay svg { width: 27px; height: 27px; }
+.tcard.video.featured .vthumb .vbadge {
+  background: var(--innovia-green); color: #12233f; border-color: transparent;
+}
+
+.featured-quote.featured-video {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.featured-quote.featured-video .fv-body { display: flex; flex-direction: column; gap: 22px; }
+.featured-quote.featured-video .quote-mark { display: none; }
+.featured-quote.featured-video .fv-media .vthumb { border-color: rgba(149,208,49,0.35); }
+.featured-quote.featured-video .vthumb .vplay { width: 66px; height: 66px; }
+.featured-quote.featured-video .vthumb .vplay svg { width: 27px; height: 27px; }
+
 /* ---------- Spotlights teaser ---------- */
 .spotlights-teaser {
   padding: 120px 0;
@@ -559,6 +617,7 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   .featured-quote { padding: 40px 32px 32px; }
   .featured-quote .quote-mark { right: 20px; font-size: 160px; }
   .featured-quote .attrib .recorded { text-align: left; }
+  .featured-quote.featured-video { grid-template-columns: 1fr; gap: 28px; }
   .stat-strap .frame { grid-template-columns: repeat(2, 1fr); }
   .stat-strap .stat:nth-child(2) { border-right: 0; }
   .stat-strap .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.12); }

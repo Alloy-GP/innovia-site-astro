@@ -2,6 +2,7 @@
 // Dynamic page: one static landing page per member in src/data/members.ts
 // Output URL: /find-a-management-company/<slug>/
 import MemberLanding from "../../components/MemberLanding.astro";
+import ReviewWidget from "../../components/ReviewWidget.astro";
 import { members } from "../../data/members";
 
 // Site runs in `output: 'server'` mode — prerender these data-driven
@@ -37,5 +38,6 @@ const { member } = Astro.props;
   </head>
   <body data-screen-label="Member Landing">
     <MemberLanding member={member} />
+    <ReviewWidget />
   </body>
 </html>

@@ -694,7 +694,7 @@ const html = `<style>
           </div>
           <div class="cell">
             <div class="label">Avg. tenure</div>
-            <div class="v placeholder placeholder-inline">22yr</div>
+            <div class="v">22yr</div>
             <div class="note">Management company operating history</div>
           </div>
         </div>
@@ -912,20 +912,34 @@ const html = `<style>
         }).addTo(map);
 
         var members = [
-          { lat: 36.12, lng: -119.68, name: 'California',      abbr: 'CA', count: 12 },
-          { lat: 27.99, lng: -81.76,  name: 'Florida',         abbr: 'FL', count: 14 },
-          { lat: 31.50, lng: -99.44,  name: 'Texas',           abbr: 'TX', count: 10 },
-          { lat: 35.63, lng: -79.80,  name: 'North Carolina',  abbr: 'NC', count: 7  },
-          { lat: 42.82, lng: -75.54,  name: 'New York',        abbr: 'NY', count: 9  },
-          { lat: 40.35, lng: -88.99,  name: 'Illinois',        abbr: 'IL', count: 6  },
-          { lat: 39.11, lng: -105.35, name: 'Colorado',        abbr: 'CO', count: 5  },
-          { lat: 32.69, lng: -83.44,  name: 'Georgia',         abbr: 'GA', count: 5  },
-          { lat: 47.54, lng: -121.83, name: 'Washington',      abbr: 'WA', count: 3  },
-          { lat: 40.29, lng: -82.79,  name: 'Ohio',            abbr: 'OH', count: 4  },
-          { lat: 33.73, lng: -111.43, name: 'Arizona',         abbr: 'AZ', count: 3  },
-          { lat: 39.05, lng: -76.64,  name: 'Maryland',        abbr: 'MD', count: 2  },
-          { lat: 40.59, lng: -77.20,  name: 'Pennsylvania',    abbr: 'PA', count: 3  },
-          { lat: 38.44, lng: -92.33,  name: 'Missouri',        abbr: 'MO', count: 3  }
+          { lat: 36.78, lng: -119.42, name: 'California',      abbr: 'CA', count: 13 },
+          { lat: 27.99, lng: -81.76,  name: 'Florida',         abbr: 'FL', count: 9  },
+          { lat: 41.60, lng: -72.70,  name: 'Connecticut',     abbr: 'CT', count: 7  },
+          { lat: 39.05, lng: -76.64,  name: 'Maryland',        abbr: 'MD', count: 6  },
+          { lat: 39.06, lng: -105.31, name: 'Colorado',        abbr: 'CO', count: 5  },
+          { lat: 42.23, lng: -71.53,  name: 'Massachusetts',   abbr: 'MA', count: 5  },
+          { lat: 40.35, lng: -88.99,  name: 'Illinois',        abbr: 'IL', count: 4  },
+          { lat: 32.69, lng: -83.44,  name: 'Georgia',         abbr: 'GA', count: 3  },
+          { lat: 43.45, lng: -71.56,  name: 'New Hampshire',   abbr: 'NH', count: 3  },
+          { lat: 31.05, lng: -97.56,  name: 'Texas',           abbr: 'TX', count: 3  },
+          { lat: 34.05, lng: -111.09, name: 'Arizona',         abbr: 'AZ', count: 2  },
+          { lat: 43.33, lng: -84.54,  name: 'Michigan',        abbr: 'MI', count: 2  },
+          { lat: 46.28, lng: -94.30,  name: 'Minnesota',       abbr: 'MN', count: 2  },
+          { lat: 38.44, lng: -92.33,  name: 'Missouri',        abbr: 'MO', count: 2  },
+          { lat: 35.63, lng: -79.80,  name: 'North Carolina',  abbr: 'NC', count: 2  },
+          { lat: 40.59, lng: -77.20,  name: 'Pennsylvania',    abbr: 'PA', count: 2  },
+          { lat: 39.32, lng: -111.09, name: 'Utah',            abbr: 'UT', count: 2  },
+          { lat: 37.43, lng: -78.66,  name: 'Virginia',        abbr: 'VA', count: 2  },
+          { lat: 44.24, lng: -114.48, name: 'Idaho',           abbr: 'ID', count: 1  },
+          { lat: 44.69, lng: -69.38,  name: 'Maine',           abbr: 'ME', count: 1  },
+          { lat: 41.49, lng: -99.90,  name: 'Nebraska',        abbr: 'NE', count: 1  },
+          { lat: 40.06, lng: -74.41,  name: 'New Jersey',      abbr: 'NJ', count: 1  },
+          { lat: 42.75, lng: -75.50,  name: 'New York',        abbr: 'NY', count: 1  },
+          { lat: 40.29, lng: -82.79,  name: 'Ohio',            abbr: 'OH', count: 1  },
+          { lat: 43.94, lng: -120.55, name: 'Oregon',          abbr: 'OR', count: 1  },
+          { lat: 33.86, lng: -80.95,  name: 'South Carolina',  abbr: 'SC', count: 1  },
+          { lat: 35.75, lng: -86.69,  name: 'Tennessee',       abbr: 'TN', count: 1  },
+          { lat: 44.50, lng: -89.50,  name: 'Wisconsin',       abbr: 'WI', count: 1  }
         ];
 
         members.forEach(function (m) {
