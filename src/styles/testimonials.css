@@ -49,15 +49,15 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
   box-shadow: 0 0 12px rgba(149,208,49,0.7);
 }
 .page-hero .title-row {
-  display: grid; grid-template-columns: 1.5fr 1fr;
-  gap: 80px;
-  align-items: end;
+  display: grid; grid-template-columns: 1.35fr 1fr;
+  gap: 64px;
+  align-items: center;
 }
 .page-hero h1 {
   font-family: var(--font-display); font-weight: 900;
-  font-size: clamp(48px, 6.6vw, 104px);
-  line-height: 0.95;
-  letter-spacing: -0.038em;
+  font-size: clamp(44px, 5.2vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.034em;
   color: #fff; margin: 0;
   text-wrap: balance;
 }
