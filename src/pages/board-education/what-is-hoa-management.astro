@@ -1,0 +1,365 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const html = `<style>
+    body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
+    .site-header { background: rgba(15,36,71,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .site-header nav > a { color: rgba(255,255,255,0.7); }
+    .site-header nav > a:hover, .site-header nav > a.active { color: #fff; }
+    .site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+    .site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+
+    .page-hero { padding: 56px 0 56px; position: relative; overflow: hidden; }
+    .page-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 92% 8%, rgba(149,208,49,0.14) 0%, transparent 38%), radial-gradient(circle at 4% 96%, rgba(42,74,120,0.5) 0%, transparent 50%); pointer-events: none; }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero .crumb { display: flex; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 36px; }
+    .page-hero .crumb a:hover { color: #fff; }
+    .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 6vw, 88px); letter-spacing: -0.034em; color: #fff; line-height: 1; margin: 0; text-wrap: balance; }
+    .page-hero h1 em { color: var(--innovia-green); font-style: normal; }
+    .page-hero h1 .light { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.55); font-size: 0.48em; letter-spacing: -0.02em; }
+    .page-hero .lede { font-size: 17px; line-height: 1.62; color: rgba(255,255,255,0.78); max-width: 56ch; margin: 24px 0 0; }
+
+    .page-hero { padding: 56px 0 40px; }
+    .page-hero .meta-row { display: flex; gap: 24px; align-items: center; margin: 20px 0 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.18); font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    .page-hero .meta-row .green { color: var(--innovia-green); }
+
+
+    .article-body { padding: 32px 0 96px; }
+    .article-body .layout { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+    .article-body .toc { position: sticky; top: 96px; }
+    .article-body .toc h6 { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+    .article-body .toc ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: tocnum; }
+    .article-body .toc li { counter-increment: tocnum; }
+    .article-body .toc a { font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; padding-left: 24px; position: relative; display: block; line-height: 1.4; transition: color .15s; }
+    .article-body .toc a::before { content: counter(tocnum, decimal-leading-zero); position: absolute; left: 0; color: var(--innovia-green); font-size: 10px; }
+    .article-body .toc a:hover { color: #fff; }
+
+    .article-body .content { max-width: 68ch; }
+    .article-body .content .lede-graf { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.45; color: #fff; margin: 0 0 32px; letter-spacing: -0.01em; }
+    .article-body .content .lede-graf::first-letter { font-family: var(--font-display); font-weight: 900; font-size: 84px; float: left; line-height: 0.8; margin: 6px 14px 0 0; color: var(--innovia-green); }
+    .article-body .content h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 38px); color: #fff; letter-spacing: -0.018em; margin: 56px 0 18px; line-height: 1.1; scroll-margin-top: 96px; }
+    .article-body .content h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.008em; margin: 32px 0 10px; scroll-margin-top: 96px; }
+    .article-body .content p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); margin: 0 0 18px; }
+    .article-body .content a:not(.btn) { color: var(--innovia-green); text-decoration: underline; text-underline-offset: 2px; }
+    .article-body .content a:not(.btn):hover { color: #fff; }
+    .article-body .content strong { color: #fff; }
+    .article-body .content ul, .article-body .content ol { padding-left: 24px; margin: 0 0 18px; }
+    .article-body .content li { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 8px; }
+
+    /* Comparison tables */
+    .article-body .content .table-wrap { margin: 24px 0; overflow-x: auto; }
+    .article-body .content table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+    .article-body .content th { background: rgba(149,208,49,0.10); color: #fff; text-align: left; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.16); font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+    .article-body .content td { padding: 12px 14px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); line-height: 1.5; vertical-align: top; }
+    .article-body .content td strong { color: #fff; }
+
+    /* Callout + disclaimer */
+    .article-body .content .callout { margin: 28px 0; padding: 14px 22px; background: rgba(149,208,49,0.05); border-left: 3px solid var(--innovia-green); }
+    .article-body .content .callout p { font-size: 16px; line-height: 1.6; margin: 0; }
+    .article-body .content .disclaimer { margin: 28px 0; padding: 14px 22px; border-left: 3px solid rgba(255,255,255,0.28); }
+    .article-body .content .disclaimer p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.55); margin: 0; }
+
+    .inline-cta { margin: 48px 0; padding: 28px 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; gap: 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .inline-cta strong { display: block; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 17px; }
+    .inline-cta span { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; display: block; }
+
+    .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+    .article-foot .share { display: flex; gap: 14px; }
+    .article-foot .share a { color: rgba(255,255,255,0.6); }
+    .article-foot .share a:hover { color: var(--innovia-green); }
+
+    .related-spokes { padding: 80px 0 96px; background: var(--innovia-navy-deep); border-top: 1px solid rgba(255,255,255,0.08); }
+    .related-spokes h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: #fff; margin: 0 0 24px; letter-spacing: -0.014em; }
+    .related-spokes .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .related-spokes a { padding: 24px 26px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color .15s; }
+    .related-spokes a:hover { border-color: var(--innovia-green); }
+    .related-spokes a .cat { font-family: var(--font-mono); font-size: 10px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
+    .related-spokes a h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; letter-spacing: -0.005em; margin: 0; line-height: 1.3; }
+
+    @media (max-width: 1080px) { .article-body .layout { grid-template-columns: 1fr; gap: 32px; } .article-body .toc { position: static; } .related-spokes .grid { grid-template-columns: 1fr; } }
+  </style>
+
+
+
+  <section class="page-hero">
+    <div class="container">
+
+      <div class="crumb">
+        <a href="/">Innovia</a>
+        <span>/</span>
+        <a href="/board-education/">Board Resources</a>
+        <span>/</span>
+        <span style="color:#fff;">What Is HOA Management?</span>
+      </div>
+      <h1>What is <em>HOA management</em>?<span class="light">and what it actually costs.</span></h1>
+      <p class="lede">What HOA management is, what a management company actually does, how it differs from property management, the two staffing models boards should understand, and roughly how fees are structured &mdash; in plain English.</p>
+      <div class="meta-row">
+        <span><span class="green">Topic</span> &middot; HOA Basics</span>
+        <span><span class="green">Read</span> &middot; 6 min</span>
+        <span><span class="green">Updated</span> &middot; July 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="article-body">
+    <div class="container">
+      <div class="layout">
+        <aside class="toc">
+          <h6>In this guide</h6>
+          <ol>
+            <li><a href="#definition">A plain-English definition</a></li>
+            <li><a href="#services">What a company does</a></li>
+            <li><a href="#vs-property">HOA vs. property management</a></li>
+            <li><a href="#models">Portfolio vs. onsite</a></li>
+            <li><a href="#cost">What it costs</a></li>
+            <li><a href="#mistakes">What boards get wrong</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ol>
+        </aside>
+
+        <article class="content">
+          <p class="lede-graf">Maybe your community is brand new and the developer just handed the keys to a volunteer board. Maybe you have been self-managing for years and the workload &mdash; or the financial and legal stakes &mdash; has finally outgrown a few neighbors with day jobs. Either way, you have started hearing the term &ldquo;HOA management&rdquo; and you are not entirely sure what it covers or what it costs.</p>
+
+          <p>This guide answers that plainly: what HOA management is, what a management company actually does, how it differs from ordinary property management, the two staffing models boards should understand, and roughly how fees are structured. Think of it as a starting point &mdash; by the end you should know enough to decide whether exploring professional management is worth your board&rsquo;s time.</p>
+
+          <h2 id="definition">What Is HOA Management? A Plain-English Definition</h2>
+          <p>HOA management is the professional administration of a community association&rsquo;s finances, operations, records, and governance support, carried out by a management company on behalf of the volunteer board. The board still makes the decisions. The management company advises and executes them.</p>
+          <p><strong>The simplest way to understand HOA management is this: the board governs, and the manager runs the day-to-day work the board directs.</strong> That distinction is the root of most confusion boards run into. A management company does not &ldquo;take over&rdquo; the association or replace the board&rsquo;s authority. It collects the dues, keeps the books, coordinates the vendors, prepares the meeting materials, and helps the board stay consistent with its governing documents, so the board can make informed decisions instead of drowning in administrative work. That is the whole HOA management definition in one sentence: professional support for the association, under the board&rsquo;s direction.</p>
+
+          <h2 id="services">What Does an HOA Management Company Do? The Four Core Service Categories</h2>
+          <p>An HOA management company handles four broad categories of work for the association. Most day-to-day duties a board deals with fall into one of them, and understanding the four is the fastest way to grasp what an HOA management company does in practice.</p>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Service category</th>
+                <th>What it covers</th>
+              </tr>
+              <tr>
+                <td><strong>Financial</strong></td>
+                <td>Preparing the annual budget, collecting dues and handling delinquencies, reserve fund accounting, monthly financial reporting, and audit support.</td>
+              </tr>
+              <tr>
+                <td><strong>Administrative</strong></td>
+                <td>Maintaining records, issuing meeting notices, managing homeowner communication and requests, and keeping association documents organized and accessible.</td>
+              </tr>
+              <tr>
+                <td><strong>Operational</strong></td>
+                <td>Coordinating and vetting vendors, overseeing maintenance and repairs, conducting property inspections, and managing capital projects.</td>
+              </tr>
+              <tr>
+                <td><strong>Governance support</strong></td>
+                <td>Helping the board follow its governing documents, facilitating meetings, and administering compliance and covenant enforcement consistently and on the record.</td>
+              </tr>
+            </table>
+          </div>
+          <p><strong>Across all four categories, the manager supports and executes while the board governs &mdash; the company handles the work, but the decisions stay with the board.</strong> The financial category is often what tips a self-managed board toward professional help, because dues collection, <a href="/hoa-management-services/">reserve fund accounting</a>, and audit-ready reporting carry real fiduciary weight. The governance category matters for a different reason: consistent, documented enforcement is what protects a board legally, and it ties directly to the board&rsquo;s own <a href="/board-education/">responsibilities and fiduciary duties</a>. For the full picture of what a professional firm delivers, see Innovia&rsquo;s overview of <a href="/hoa-management-services/">HOA management services</a>.</p>
+
+          <h2 id="vs-property">HOA Management vs. Property Management: What&rsquo;s the Difference?</h2>
+          <p>HOA management and property management are not the same thing, and hiring the wrong kind of firm is a common and costly mistake. HOA (community association) management serves a board and an entire community&rsquo;s common areas and governance. Property management typically serves an individual owner or landlord renting out units to tenants. Different clients, different goals, different expertise.</p>
+          <p><strong>The distinction comes down to who the client is: a community association manager works for the whole association, while a property manager works for a single property owner.</strong> That difference shapes everything else, as the comparison below shows. When a board hires a rental-focused property manager to run an association, the gaps tend to show up fast: association budgeting, reserve planning, covenant enforcement, and board governance are specialized skills a landlord-focused manager usually has not developed.</p>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th></th>
+                <th>HOA / community association management</th>
+                <th>Property management</th>
+              </tr>
+              <tr>
+                <td><strong>Who the client is</strong></td>
+                <td>The association and its volunteer board</td>
+                <td>An individual owner or landlord</td>
+              </tr>
+              <tr>
+                <td><strong>What&rsquo;s managed</strong></td>
+                <td>Common areas, shared finances, and governance for the whole community</td>
+                <td>Individual rental units and tenant relationships</td>
+              </tr>
+              <tr>
+                <td><strong>Typical credentials</strong></td>
+                <td>CMCA, AMS, PCAM (community association credentials)</td>
+                <td>Real estate or landlord-tenant focused licensing</td>
+              </tr>
+              <tr>
+                <td><strong>Primary goal</strong></td>
+                <td>Serve the community&rsquo;s collective interest and protect the board</td>
+                <td>Maximize an owner&rsquo;s rental return</td>
+              </tr>
+            </table>
+          </div>
+
+          <h2 id="models">Portfolio vs. Onsite Management: Two Models Boards Should Understand</h2>
+          <p>Management companies staff communities in one of two ways. A portfolio manager (also called a community association manager, or CAM) handles several associations at once, while a dedicated onsite manager is based full-time at a single, usually larger, community. Knowing which model you are buying matters as much as the fee.</p>
+          <p><strong>Portfolio management is the standard, cost-efficient fit for most associations; a dedicated onsite manager suits large or amenity-heavy communities that need full-time attention, at a higher cost.</strong> The variable that most affects service quality in either model is caseload. A portfolio manager stretched across too many communities is one of the most common reasons boards feel neglected. Quality independent firms deliberately cap manager workloads so no single community gets lost in the shuffle. When you evaluate a company, ask how many associations each manager carries; the answer tells you a lot about the service you will actually receive.</p>
+
+          <h2 id="cost">What Does HOA Management Cost?</h2>
+          <p>HOA management is usually priced one of three ways, and the total depends on community size, property type, and the scope of services included. Here is the overview; for a full breakdown, see the dedicated guide on <a href="/board-education/what-is-hoa-management/">HOA management fees</a>.</p>
+          <ul>
+            <li><strong>Per-door:</strong> a set amount per unit per month. Scales cleanly with community size and is the most common structure.</li>
+            <li><strong>Flat monthly fee:</strong> one fixed price for a defined scope of services, regardless of unit count.</li>
+            <li><strong>Hybrid:</strong> a base management fee plus itemized charges for specific services.</li>
+          </ul>
+          <p><strong>The headline management fee is rarely the whole story; the scope of services behind it is what actually determines value.</strong> Watch for common extras that sit outside the base fee, such as onboarding and setup, after-hours or emergency service, mailing and printing, and special-project or transition fees. A low per-door quote that excludes half the services your community needs is not a bargain. When you compare proposals, compare the scope, not just the number at the top of the page.</p>
+
+          <h2 id="mistakes">What Boards Typically Get Wrong About HOA Management</h2>
+          <p>The single most common misconception is that hiring a management company means the company &ldquo;takes over&rdquo; the association. It does not. The board still governs, still holds the fiduciary duty, and still makes every real decision; the manager carries out the board&rsquo;s direction. Getting that relationship right prevents most of the frustration boards report.</p>
+          <p><strong>The most expensive mistake a board makes is treating the cheapest per-door quote as the best value, when scope and manager caseload matter far more.</strong> A few other misjudgments show up again and again:</p>
+          <ul>
+            <li>Confusing HOA management with rental property management, and hiring a firm without community association expertise.</li>
+            <li>Underestimating the financial and fiduciary workload volunteers are quietly carrying, especially around budgets, reserves, and enforcement.</li>
+            <li>Expecting the manager to make decisions the board is legally responsible for making itself.</li>
+          </ul>
+          <p>If your board is weighing whether to bring in professional help, the honest question is not &ldquo;can we technically do this ourselves,&rdquo; but &ldquo;should we still be.&rdquo; That is exactly the decision covered in our guide on <a href="/solutions/switching-hoa-management/">moving from self-managed to professional management</a>, and the <a href="/solutions/switching-hoa-management/">checklist of questions to ask before signing</a> is a good next step once you have decided to explore your options.</p>
+
+          <div class="callout">
+            <p>A note on credentials: several states regulate community association managers. States including Florida, Georgia, Illinois, Nevada, Connecticut, Alaska, and Virginia require some form of CAM licensure, and California runs a voluntary certification program. Regardless of state, the recognized industry credential path is the CMCA (Certified Manager of Community Associations), followed by the AMS and PCAM designations. A credentialed manager is a strong signal of a qualified firm. Licensing rules vary and change, so confirm your state&rsquo;s current requirements before relying on them.</p>
+          </div>
+
+          <div class="disclaimer">
+            <p>This guide is educational and is not legal or accounting advice. Governance, enforcement, and licensing rules vary by state and by association. Consult your association&rsquo;s attorney and CPA for guidance specific to your community and state.</p>
+          </div>
+
+          <div class="inline-cta">
+            <div>
+              <strong>Not sure whether professional management is right for your community?</strong>
+              <span>Innovia will match your board with a vetted, independently owned member firm near you. No obligation, just a helpful introduction to a firm that fits your community.</span>
+            </div>
+            <a href="/find-a-management-company/" class="btn btn-primary">Find a management company
+              <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <h2 id="faq">Frequently Asked Questions</h2>
+
+          <h3>What&rsquo;s the difference between an HOA and an HOA management company?</h3>
+          <p>The HOA is the association of homeowners, governed by an elected volunteer board; the management company is the professional firm the board hires to administer day-to-day operations. The board keeps all decision-making authority. The management company works on the board&rsquo;s behalf and carries out the board&rsquo;s direction.</p>
+
+          <h3>What does an HOA management company do?</h3>
+          <p>An HOA management company handles the association&rsquo;s finances, administration, operations, and governance support on the board&rsquo;s behalf. In practice that means budgeting and dues collection, records and homeowner communication, vendor and maintenance coordination, and helping the board follow its governing documents, all under the board&rsquo;s direction.</p>
+
+          <h3>How much does HOA management cost?</h3>
+          <p>Most companies charge per-door (a set amount per unit per month), a flat monthly fee, or a hybrid of the two, with the total driven by community size and scope of services. For a full breakdown of fee structures and common extras, see our dedicated guide to HOA management fees.</p>
+
+          <h3>Is HOA management the same as property management?</h3>
+          <p>No. HOA (community association) management serves a board and a whole community&rsquo;s common areas and governance, while property management usually serves an individual owner renting out units to tenants. They involve different clients and different expertise, which is why using a rental-focused property manager for an association often goes wrong.</p>
+
+          <h3>Do HOA managers need a license or certification?</h3>
+          <p>Several states license community association managers, and the recognized industry credential path is the CMCA, followed by the AMS and PCAM designations through CAI. A license or credential is a mark of a qualified manager. Because state licensing rules vary, confirm the current requirements where your community is located.</p>
+
+          <h2 id="bottom-line">The Bottom Line for Your Board</h2>
+          <p>HOA management is professional support for the four areas a volunteer board cannot easily carry alone: finances, administration, operations, and governance. The board stays in charge throughout, and when choosing a partner, the fee model and scope matter far more than the lowest quote. If your board is weighing professional management, Innovia can <a href="/find-a-management-company/">match you with a vetted, independently owned member firm near you</a>. Each is a credentialed, independent operator backed by the resources of a nationwide network, so you get local accountability without the risk of your manager disappearing into a national roll-up.</p>
+
+          <div class="article-foot">
+            <span>By the Innovia editorial team</span>
+            <div class="share">
+              <a href="#">LinkedIn</a>
+              <a href="#">Email</a>
+              <a href="#">Print</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-spokes">
+    <div class="container">
+      <h2>Read next.</h2>
+      <div class="grid">
+        <a href="/board-education/hoa-reserve-study/">
+          <span class="cat">Financials</span>
+          <h3>The HOA Reserve Study Guide</h3>
+        </a>
+        <a href="/board-education/hoa-transition-from-developer/">
+          <span class="cat">Turnover</span>
+          <h3>HOA Developer Transition</h3>
+        </a>
+        <a href="/solutions/switching-hoa-management/">
+          <span class="cat">Solutions</span>
+          <h3>Switching HOA Management</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Is HOA Management? Definition, Services & Costs Explained",
+    "description": "What HOA management actually means, the four service categories, portfolio vs onsite models, and what typical fees look like — explained in plain English.",
+    "author": { "@type": "Organization", "name": "Innovia Co-op" },
+    "publisher": { "@type": "Organization", "name": "Innovia Co-op" },
+    "mainEntityOfPage": "https://innoviaco-op.com/board-education/what-is-hoa-management/"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Innovia", "item": "https://innoviaco-op.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Board Resources", "item": "https://innoviaco-op.com/board-education/" },
+      { "@type": "ListItem", "position": 3, "name": "What Is HOA Management?", "item": "https://innoviaco-op.com/board-education/what-is-hoa-management/" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's the difference between an HOA and an HOA management company?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The HOA is the association of homeowners, governed by an elected volunteer board; the management company is the professional firm the board hires to administer day-to-day operations. The board keeps all decision-making authority. The management company works on the board's behalf and carries out the board's direction."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does an HOA management company do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An HOA management company handles the association's finances, administration, operations, and governance support on the board's behalf. In practice that means budgeting and dues collection, records and homeowner communication, vendor and maintenance coordination, and helping the board follow its governing documents, all under the board's direction."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does HOA management cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most companies charge per-door (a set amount per unit per month), a flat monthly fee, or a hybrid of the two, with the total driven by community size and scope of services. For a full breakdown of fee structures and common extras, see our dedicated guide to HOA management fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is HOA management the same as property management?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. HOA (community association) management serves a board and a whole community's common areas and governance, while property management usually serves an individual owner renting out units to tenants. They involve different clients and different expertise, which is why using a rental-focused property manager for an association often goes wrong."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do HOA managers need a license or certification?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Several states license community association managers, and the recognized industry credential path is the CMCA, followed by the AMS and PCAM designations through CAI. A license or credential is a mark of a qualified manager. Because state licensing rules vary, confirm the current requirements where your community is located."
+        }
+      }
+    ]
+  }
+  </script>
+`;
+---
+<BaseLayout
+  title="What Is HOA Management? · Definition, Services & Costs Explained | Innovia"
+  description="What HOA management actually means, the four service categories, portfolio vs onsite models, and what typical fees look like — explained in plain English."
+  ogImage="/assets/og/option-1-type-led.png"
+  ctaLabel="Find a Management Company"
+  ctaHref="/find-a-management-company/#request"
+>
+  <Fragment set:html={html} />
+</BaseLayout>

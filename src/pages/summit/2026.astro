@@ -32,6 +32,15 @@ const html = `<style>
         linear-gradient(105deg, rgba(15,36,71,0.92) 0%, rgba(15,36,71,0.45) 65%, rgba(15,36,71,0.62) 100%),
         linear-gradient(180deg, transparent 50%, rgba(15,36,71,0.6) 100%);
     }
+
+    /* ---------- Recap film ---------- */
+    .recap-film { padding: 80px 0; background: var(--innovia-navy-deep); }
+    .recap-film .film-head { text-align: center; max-width: 640px; margin: 0 auto 36px; }
+    .recap-film .film-eyebrow { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; }
+    .recap-film .film-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4vw, 48px); color: #fff; letter-spacing: -0.02em; margin: 14px 0 12px; }
+    .recap-film .film-head p { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.72); margin: 0; }
+    .recap-film .film-frame { max-width: 960px; margin: 0 auto; position: relative; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.12); overflow: hidden; }
+    .recap-film .film-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .summit-hero .crumb {
       display: flex; gap: 10px; align-items: center;
       font-family: var(--font-mono); font-size: 12px;
@@ -403,6 +412,20 @@ const html = `<style>
     </div>
   </section>
 
+  <!-- RECAP FILM -->
+  <section class="recap-film">
+    <div class="container">
+      <div class="film-head">
+        <span class="film-eyebrow">The 2026 film</span>
+        <h2>Experience it for yourself.</h2>
+        <p>Three days in Newport Beach &mdash; the working sessions, the hallway problem-solving, and the camaraderie of the country&rsquo;s best independent operators in one place. If you weren&rsquo;t there, this is the next best thing.</p>
+      </div>
+      <div class="film-frame">
+        <iframe src="https://player.vimeo.com/video/1191655679?dnt=1" title="Innovia Summit 2026 film" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- RECAP INTRO -->
   <section class="recap-intro">
     <div class="container">
@@ -507,42 +530,42 @@ const html = `<style>
       </div>
       <div class="grid">
         <article class="session">
-          <div class="photo"><img src="/assets/photos/speaker-rocket-launch.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/summit-2026-plenary.jpg" alt=""></div>
           <span class="num">Plenary · Day 02</span>
           <h4>State of the Co-Op</h4>
           <p>Day 2 opened with a candid look at where Innovia stands &mdash; the Member Portal in development and the 2026 priorities: expanded focus groups, portal build-out, and a national industry perception campaign.</p>
           <div class="speaker">Co-op leadership &middot; plenary</div>
         </article>
         <article class="session">
-          <div class="photo"><img src="/assets/photos/speaker-finance.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/summit-2026-track-01.jpg" alt=""></div>
           <span class="num">Track 01 · Technology</span>
           <h4>Technology, AI &amp; Digital Transformation</h4>
           <p>Members moved past experimentation into measurable wins: company-specific AI trained on governing docs, voice assistants fielding routine calls, and freed capacity redeployed into high-touch &ldquo;Ambassador&rdquo; roles.</p>
           <div class="speaker">Facilitated by Marty Stowe &middot; Vistage Chair, former CEO &amp; COO</div>
         </article>
         <article class="session">
-          <div class="photo"><img src="/assets/photos/panel-discussion.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/summit-2026-track-02.jpg" alt=""></div>
           <span class="num">Track 02 · Revenue</span>
           <h4>Financial Innovation, Revenue &amp; Partnerships</h4>
           <p>A three-level profit model: plug scope-creep leaks, layer in Schedule A add-ons, and build new revenue streams. Refreshed contracts, billing-capture logs, and incentives on billed extras led the takeaways.</p>
           <div class="speaker">Facilitated by Mark Murphy &middot; Vistage Chair, former CEO, COO &amp; CFO</div>
         </article>
         <article class="session">
-          <div class="photo"><img src="/assets/photos/audience-listening.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/summit-2026-track-03.jpg" alt=""></div>
           <span class="num">Track 03 · Talent</span>
           <h4>HR, Talent Management &amp; Scalability</h4>
           <p>Hire for attitude over experience. Pre-interview assessments, sourcing from hospitality and retail, and structured check-ins that catch burnout early &mdash; built on a Hire, Retention, Culture, Scalability framework.</p>
           <div class="speaker">Facilitated by Tri Nguyen &middot; Vistage Chair, former SVP of HR</div>
         </article>
         <article class="session">
-          <div class="photo"><img src="/assets/photos/roundtable-discussion.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/summit-2026-track-04.jpg" alt=""></div>
           <span class="num">Track 04 · Metrics</span>
           <h4>Business Intelligence &amp; Performance Metrics</h4>
           <p>Set a minimum client margin target, forecast with weighted pipelines, and use business intelligence tools layered over your management and accounting software for profit by client, manager, and service line. The right metrics, acted on.</p>
           <div class="speaker">Facilitated by Manvir Heir &middot; Founder &amp; CEO, CAM Advisors</div>
         </article>
         <article class="session">
-          <div class="photo"><img src="/assets/photos/working-session.jpg" alt=""></div>
+          <div class="photo"><img src="/assets/photos/roundtable-discussion.jpg" alt=""></div>
           <span class="num">Recaps · Day 03</span>
           <h4>Panel recaps &amp; the road ahead</h4>
           <p>Facilitators and team captains recapped each track&rsquo;s takeaways, and the cooperative introduced Alloy Growth Partners as its new agency for national campaigns and shared digital resources.</p>
@@ -601,7 +624,7 @@ const html = `<style>
           <p>2027 heads to Florida the first week of February &mdash; an expanded program of member focus groups. Attendance is members only, by invitation through a member company.</p>
           <div class="pulses">
             <div><span class="k">Dates</span><span class="v">First week of February 2027</span></div>
-            <div><span class="k">Venue</span><span class="v placeholder placeholder-inline">Florida · venue reveal soon</span></div>
+            <div><span class="k">Venue</span><span class="v">Tampa, Florida</span></div>
             <div><span class="k">Format</span><span class="v">3 days · closed-door</span></div>
           </div>
           <div class="actions">

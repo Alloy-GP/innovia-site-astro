@@ -160,6 +160,14 @@ const html = `<style>
       .tp-bench .bench-head, .tp-bench .bench-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 16px; }
       .tp-bench .bench-row .v::before { content: attr(data-label) " · "; color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
     }
+    .partner-wall { padding: 80px 0; background: var(--innovia-navy); }
+    .partner-wall .pw-head { max-width: 62ch; margin-bottom: 36px; }
+    .partner-wall .pw-head .pw-eyebrow { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; }
+    .partner-wall .pw-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.4vw, 40px); color: #fff; letter-spacing: -0.02em; margin: 14px 0 12px; }
+    .partner-wall .pw-head p { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); margin: 0; }
+    .partner-wall .logo-wall { display: flex; flex-wrap: wrap; gap: 12px; }
+    .partner-wall .logo-chip { flex: 1 1 180px; background: #fff; border-radius: 6px; min-height: 96px; display: flex; align-items: center; justify-content: center; padding: 20px 26px; }
+    .partner-wall .logo-chip img { max-height: 46px; max-width: 100%; width: auto; object-fit: contain; }
   </style>
 
 
@@ -174,9 +182,9 @@ const html = `<style>
         <span>/</span>
         <a href="/for-cams/three-pillars/">Three Pillars</a>
         <span>/</span>
-        <span style="color:#fff;">Vendor Program</span>
+        <span style="color:#fff;">Preferred Vendor Program</span>
       </div>
-      <h1>Vendor <em>program.</em><span class="light">Six pillars of pre-negotiated agreements. Industry-specific. Member-only.</span></h1>
+      <h1>Preferred vendor <em>program.</em><span class="light">Pre-negotiated agreements across the categories that matter. Industry-specific. Member-only.</span></h1>
       <p class="lede">The vendor program is the pillar that didn&rsquo;t need a rename. Members bring vendor partners onto the lineup, and partners defend the slot through ongoing, member-rated performance. The cooperative never takes vendor money for placement.</p>
     </div>
   </section>
@@ -199,19 +207,23 @@ const html = `<style>
           </div>
           <div class="facet">
             <span class="ix">03</span>
-            <div><h4>AI &amp; Data Tooling</h4><p>AI tooling for the back office of community management. Vetted for security and accuracy before it lands in front of a manager.</p></div>
+            <div><h4>Growth &amp; Marketing</h4><p>Brand, web, and demand-generation partners that help member firms win the next board &mdash; at cooperative rates.</p></div>
           </div>
           <div class="facet">
             <span class="ix">04</span>
-            <div><h4>Staffing &amp; Talent</h4><p>Recruiting and contract staffing partners that understand the seats CAM companies actually need to fill.</p></div>
+            <div><h4>AI &amp; Automation</h4><p>Tools that take real work off the back office of community management &mdash; vetted for security and accuracy before they reach a manager.</p></div>
           </div>
           <div class="facet">
             <span class="ix">05</span>
-            <div><h4>Insurance <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--innovia-green); letter-spacing: 0.08em; text-transform: uppercase; vertical-align: middle; margin-left: 8px;">Coming soon</span></h4><p>D&amp;O, GL, cyber, crime &mdash; carriers that price independent CAMs fairly because they understand the risk profile.</p></div>
+            <div><h4>Staffing &amp; Talent</h4><p>Recruiting and contract staffing partners that understand the seats CAM companies actually need to fill.</p></div>
           </div>
           <div class="facet">
             <span class="ix">06</span>
-            <div><h4>Growth &amp; Marketing</h4><p>Brand, web, and demand-generation partners that help member firms win the next board &mdash; at cooperative rates.</p></div>
+            <div><h4>Community Benefits</h4><p>Vendors that serve the property and its residents &mdash; reserve studies, roofing, telecom infrastructure, and security and camera systems.</p></div>
+          </div>
+          <div class="facet">
+            <span class="ix">+</span>
+            <div><h4>&hellip; and more</h4><p>Insurance, collections, estoppels, compliance, operational savings, and the other line items every CAM company runs. Categories grow as members bring partners forward.</p></div>
           </div>
         </div>
       </div>
@@ -268,7 +280,7 @@ const html = `<style>
   <section class="tp-proof">
     <div class="container">
       <div class="strip">
-        <div class="stat"><span class="num">6</span><span class="label">Vendor categories covered</span></div>
+        <div class="stat"><span class="num">6+</span><span class="label">Vendor categories, and growing</span></div>
         <div class="stat"><span class="num" style="font-size: clamp(22px, 2.4vw, 30px);">Member savings &amp; rebates</span><span class="label">Validated figures coming soon</span></div>
         <div class="stat"><span class="num" style="font-size: clamp(22px, 2.4vw, 30px);">Member-rated</span><span class="label">Continuously evaluated</span></div>
         <div class="stat"><span class="num" style="font-size: clamp(22px, 2.4vw, 30px);">No placement fees</span><span class="label">Vendors never pay for a seat</span></div>
@@ -290,12 +302,12 @@ const html = `<style>
         </div>
         <div>
           <p class="subhead" style="margin: 0 0 4px;">How rebates flow.</p>
-          <p>Aggregate member spend earns negotiated terms with each preferred partner. When a member drives engagement, the money it generates flows back on a 50/50 share &mdash; half to the cooperative, half to the member company that generated it. Members see the math.</p>
+          <p>Aggregate member spend earns negotiated terms with each preferred partner. When a member drives engagement, a share of the revenue it generates flows back to the member company that generated it, with the balance pooled for the cooperative. Members see the math.</p>
           <div class="tp-flow">
             <div class="node"><span class="ix-small">01</span><h5>Aggregate spend</h5><p>Members direct vendor spend through cooperative agreements.</p></div>
             <div class="node"><span class="ix-small">02</span><h5>Negotiated terms</h5><p>Pricing and rebate negotiated on total member volume.</p></div>
             <div class="node"><span class="ix-small">03</span><h5>Tracked &amp; reported</h5><p>Cooperative tracks accruals and reports the math to members.</p></div>
-            <div class="node"><span class="ix-small">04</span><h5>Shared 50/50</h5><p>Money generated flows back to Innovia and the member company that generated the engagement.</p></div>
+            <div class="node"><span class="ix-small">04</span><h5>Shared back</h5><p>Money generated flows back to Innovia and the member company that generated the engagement.</p></div>
           </div>
         </div>
       </div>
@@ -317,14 +329,31 @@ const html = `<style>
       </details>
       <details>
         <summary>How does the cooperative get paid?</summary>
-        <div class="a placeholder">
-          <p>[Client to confirm: membership fee structure. Working answer: the cooperative is funded by member dues, not by vendor placement fees or rebate skims. Rebates negotiated by the cooperative pass through to the member firm in full.]</p>
+        <div class="a">
+          <p>Not through placement fees. Vendor partners share a portion of the business the cooperative sends them, and that revenue is pooled and flowed back to stockholder members rather than kept as outside profit. A vendor never pays to be featured &mdash; a seat is earned on member-rated performance and re-earned over time.</p>
         </div>
       </details>
       <details>
         <summary>What happens if a preferred vendor underperforms?</summary>
         <div class="a"><p>Members evaluate each partner on an ongoing basis and surface issues as they come up &mdash; service problems, pricing creep, account-team turnover. Persistent underperformance can end a vendor&rsquo;s seat. The seat is then opened to a member proposal cycle, which starts the four-step process from the top.</p></div>
       </details>
+    </div>
+  </section>
+
+  <section class="partner-wall">
+    <div class="container">
+      <div class="pw-head">
+        <span class="pw-eyebrow">Partners include</span>
+        <h2>A sample of what your membership unlocks.</h2>
+        <p>A cross-section of the vendor partners active in the cooperative today &mdash; members get preferred terms across all of them, and the roster keeps growing.</p>
+      </div>
+      <div class="logo-wall">
+        <div class="logo-chip"><img src="/assets/logos/wall/first-citizens.png" alt="First Citizens Bank" loading="lazy"></div>
+        <div class="logo-chip"><img src="/assets/logos/wall/alloy.png" alt="Alloy Growth Partners" loading="lazy"></div>
+        <div class="logo-chip"><img src="/assets/logos/wall/vantaca.svg" alt="Vantaca" loading="lazy"></div>
+        <div class="logo-chip"><img src="/assets/logos/wall/condocerts.png" alt="CondoCerts" loading="lazy"></div>
+        <div class="logo-chip"><img src="/assets/logos/wall/smart-property.png" alt="SmartProperty" loading="lazy"></div>
+      </div>
     </div>
   </section>
 
@@ -370,8 +399,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Vendor Program · The Three Pillars · Innovia Co-op"
-  description="Vendor Program · The Three Pillars · Innovia Co-op"
+  title="Preferred Vendor Program · The Three Pillars · Innovia Co-op"
+  description="Preferred Vendor Program · The Three Pillars · Innovia Co-op"
   ogImage="/assets/og/option-1-type-led.png"
   activeNav="cams"
   ctaLabel="Schedule a Conversation"

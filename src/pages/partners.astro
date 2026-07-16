@@ -25,13 +25,13 @@ const html = `<style>
     .pillars-row .head h2 em { color: var(--innovia-green); font-style: italic; font-weight: 400; }
     .pillars-row .head p { font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.74); max-width: 52ch; margin: 0; }
     .pillars-row .categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 1px solid rgba(255,255,255,0.18); }
+    .pillars-row .more-note { margin: 28px 0 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.6); max-width: 74ch; }
     .pillars-row .cat { padding: 32px 28px; border-right: 1px solid rgba(255,255,255,0.10); border-bottom: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: column; gap: 12px; }
     .pillars-row .cat:nth-child(3n) { border-right: 0; }
     .pillars-row .cat:nth-last-child(-n+3) { border-bottom: 0; }
     .pillars-row .cat .ix { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
     .pillars-row .cat h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: #fff; letter-spacing: -0.012em; margin: 0; }
     .pillars-row .cat p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.62); margin: 0; }
-    .pillars-row .cat .logo-slot { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; }
 
     .partner-cta { padding: 96px 0; background: var(--innovia-navy-deep); border-top: 1px solid rgba(255,255,255,0.08); }
     .partner-cta .frame { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
@@ -54,8 +54,8 @@ const html = `<style>
         <span>/</span>
         <span style="color:#fff;">Partners</span>
       </div>
-      <h1>The vendor program<span class="light">cooperatively curated. Continuously evaluated.</span></h1>
-      <p class="lede">Six categories of vendor partners, each curated by the member council to serve every level of a CAM company&rsquo;s operation. Partnerships are evaluated on an ongoing basis &mdash; partners earn and keep their place through the value they deliver, not a one-time slot. The cooperative doesn&rsquo;t take vendor money for placement.</p>
+      <h1>Think you&rsquo;re a fit for the cooperative?<span class="light">Vendor partnerships are earned, not bought &mdash; the right fit starts with a conversation.</span></h1>
+      <p class="lede">The Innovia Preferred Vendor Program is a curated set of vendors serving a national cooperative of independent community management companies. Partners earn their place through the value they deliver &mdash; not a one-time slot &mdash; and the cooperative never takes vendor money for placement.</p>
     </div>
   </section>
 
@@ -63,50 +63,45 @@ const html = `<style>
     <div class="container">
       <div class="head">
         <div>
-          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 01</span><span class="rule-mini"></span>The six pillars</div>
-          <h2>Six categories. <em>Hand-picked.</em></h2>
+          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 01</span><span class="rule-mini"></span>Where the program reaches</div>
+          <h2>A sample, <em>not a checklist.</em></h2>
         </div>
-        <p>Names and logos are kept inside the member portal until partners are published. <span class="placeholder placeholder-inline">Real partner names and lockup will land here once the client confirms the current lineup.</span></p>
+        <p>A snapshot of the categories the cooperative covers today &mdash; not an exhaustive list. The lineup grows as members bring partners forward, so a strong product rarely needs to fit a predefined box.</p>
       </div>
       <div class="categories">
-        
+
         <div class="cat">
           <span class="ix">01</span>
           <h3>Banking &amp; Treasury</h3>
-          <p>Operating + reserve banking partners with CAM-fluent product teams and member-rate fee structures.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
+          <p>Operating and reserve banking partners with CAM-fluent product teams and member-rate fee structures.</p>
         </div>
         <div class="cat">
           <span class="ix">02</span>
           <h3>Software &amp; AMS</h3>
           <p>Association management software, accounting platforms, and the integrations that connect them.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
         </div>
         <div class="cat">
           <span class="ix">03</span>
-          <h3>AI &amp; Data Tooling</h3>
-          <p>AI partners working specifically inside the back office of community association management.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
+          <h3>Growth &amp; Marketing</h3>
+          <p>Brand, web, and demand-generation partners that help member firms win the next board.</p>
         </div>
         <div class="cat">
           <span class="ix">04</span>
-          <h3>Staffing &amp; Talent</h3>
-          <p>Recruiting and contract staffing partners who understand the seats CAM companies are trying to fill.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
+          <h3>AI &amp; Automation</h3>
+          <p>Tools that take real work off the back office of community management, vetted before they reach a manager.</p>
         </div>
         <div class="cat">
           <span class="ix">05</span>
-          <h3>Insurance</h3>
-          <p>D&amp;O, GL, cyber, and crime carriers that understand independently-owned CAM companies.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
+          <h3>Staffing &amp; Talent</h3>
+          <p>Recruiting and contract staffing partners who understand the seats CAM companies are trying to fill.</p>
         </div>
         <div class="cat">
           <span class="ix">06</span>
-          <h3>Security</h3>
-          <p>Cybersecurity and payment security partners suited to the data CAM companies hold.</p>
-          <div class="logo-slot placeholder placeholder-inline">Partner logo &middot; TBD</div>
+          <h3>Community Benefits</h3>
+          <p>Vendors that serve the property and its residents &mdash; reserve studies, roofing, telecom infrastructure, and security and camera systems.</p>
         </div>
       </div>
+      <p class="more-note">&hellip; and more &mdash; insurance, collections, estoppels, compliance, operational savings, and the other line items every CAM company runs. The lineup isn&rsquo;t fixed; categories grow as members bring partners forward.</p>
     </div>
   </section>
 
@@ -114,12 +109,12 @@ const html = `<style>
     <div class="container">
       <div class="frame">
         <div>
-          <h2>Run a product or service for CAM companies? <em>Talk to us.</em></h2>
-          <p>Vendor partnerships start with a call with an Innovia team member. We&rsquo;re not looking for sponsorships &mdash; we&rsquo;re looking for products that materially improve a CAM company&rsquo;s day. Bring data.</p>
+          <h2>Run a product or service for CAM companies? <em>Tell us.</em></h2>
+          <p>Interest doesn&rsquo;t guarantee a spot &mdash; partners are member-nominated and vetted &mdash; but if your product materially improves a CAM company&rsquo;s day, we want to know about it. We&rsquo;re not looking for sponsorships. Bring data.</p>
         </div>
         <div class="actions">
-          <a href="/for-cams/why-innovia/#talk" class="btn btn-primary">
-            Talk to partnerships
+          <a href="/contact/" class="btn btn-primary">
+            Introduce your company
             <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
           <a href="/for-cams/why-innovia/" class="btn btn-outline-light">Or join as a member firm</a>
@@ -135,8 +130,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Partners · Innovia Co-op"
-  description="Partners · Innovia Co-op"
+  title="Vendor Partnerships · Innovia Co-op"
+  description="Innovia's Preferred Vendor Program is a curated, member-nominated lineup of vendors serving independent community management companies. Think you're a fit? Start the conversation."
   ogImage="/assets/og/option-1-type-led.png"
   headerVariant="inverse"
   ctaLabel="Talk to Partnerships"
