@@ -33,14 +33,26 @@ const html = `<style>
         linear-gradient(180deg, transparent 50%, rgba(15,36,71,0.6) 100%);
     }
 
-    /* ---------- Recap film ---------- */
-    .recap-film { padding: 80px 0; background: var(--innovia-navy-deep); }
-    .recap-film .film-head { text-align: center; max-width: 640px; margin: 0 auto 36px; }
-    .recap-film .film-eyebrow { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; }
-    .recap-film .film-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 4vw, 48px); color: #fff; letter-spacing: -0.02em; margin: 14px 0 12px; }
-    .recap-film .film-head p { font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.72); margin: 0; }
-    .recap-film .film-frame { max-width: 960px; margin: 0 auto; position: relative; aspect-ratio: 16 / 9; background: #000; border: 1px solid rgba(255,255,255,0.12); overflow: hidden; }
-    .recap-film .film-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    /* ---------- Film (cinematic interstitial) ---------- */
+    .film { background: var(--innovia-navy-deep); padding: 100px 0; }
+    .film .head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 44px; }
+    .film .head h2 { color: #fff; }
+    .film .head p { color: rgba(255,255,255,0.74); font-size: 17px; line-height: 1.6; margin: 0; max-width: 48ch; }
+    .film-stage { position: relative; aspect-ratio: 16/9; border-radius: var(--r-lg); overflow: hidden; cursor: pointer; background: var(--innovia-navy); border: 1px solid rgba(255,255,255,0.12); }
+    .film-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9); transition: transform .8s var(--ease-out); }
+    .film-stage:hover img { transform: scale(1.03); }
+    .film-stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,36,71,0.12) 0%, rgba(15,36,71,0.55) 100%); }
+    .film-stage .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 88px; height: 88px; border-radius: 50%; background: var(--innovia-green); display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 10px 34px rgba(0,0,0,0.34); transition: transform .22s var(--ease-out), background .22s; }
+    .film-stage:hover .play { transform: translate(-50%,-50%) scale(1.06); background: #fff; }
+    .film-stage .play svg { width: 30px; height: 30px; margin-left: 4px; }
+    .film-stage .play path { fill: var(--innovia-navy); }
+    .film-stage .chip { position: absolute; left: 20px; top: 20px; z-index: 2; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: rgba(11,27,53,0.55); border-left: 2px solid var(--innovia-green); padding: 7px 12px; }
+    .film-stage .dur { position: absolute; right: 20px; bottom: 18px; z-index: 2; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.85); letter-spacing: 0.06em; }
+    .film-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .film-stage.is-playing .play,
+    .film-stage.is-playing .chip,
+    .film-stage.is-playing .dur,
+    .film-stage.is-playing::after { display: none; }
     .summit-hero .crumb {
       display: flex; gap: 10px; align-items: center;
       font-family: var(--font-mono); font-size: 12px;
@@ -372,6 +384,7 @@ const html = `<style>
 
     @media (max-width: 1080px) {
       .summit-hero .row, .recap-intro .layout, .agenda .head, .sessions .head, .save-date .frame { grid-template-columns: 1fr; gap: 32px; }
+      .film .head { grid-template-columns: 1fr; gap: 24px; }
       .agenda .days { grid-template-columns: 1fr; }
       .agenda .day { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.18); }
       .sessions .grid { grid-template-columns: 1fr; }
@@ -412,16 +425,21 @@ const html = `<style>
     </div>
   </section>
 
-  <!-- RECAP FILM -->
-  <section class="recap-film">
+  <!-- FILM (cinematic interstitial) -->
+  <section class="film">
     <div class="container">
-      <div class="film-head">
-        <span class="film-eyebrow">The 2026 film</span>
-        <h2>Experience it for yourself.</h2>
+      <div class="head">
+        <div>
+          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">Film</span><span class="rule-mini"></span>The 2026 film</div>
+          <h2 class="t-h2" style="margin-top: 14px;">Experience it for yourself.</h2>
+        </div>
         <p>Three days in Newport Beach &mdash; the working sessions, the hallway problem-solving, and the camaraderie of the country&rsquo;s best independent operators in one place. If you weren&rsquo;t there, this is the next best thing.</p>
       </div>
-      <div class="film-frame">
-        <iframe src="https://player.vimeo.com/video/1191655679?dnt=1" title="Innovia Summit 2026 film" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <div class="film-stage" id="filmStage" role="button" tabindex="0" aria-label="Play the 2026 Summit film" data-vimeo="1191655679">
+        <img src="/assets/photos/reception-firepit-night.jpg" alt="Innovia Summit 2026">
+        <span class="chip">Innovia Summit 2026</span>
+        <span class="dur">Watch &middot; 2:30</span>
+        <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
       </div>
     </div>
   </section>
@@ -655,4 +673,24 @@ const html = `<style>
   ctaHref="/for-cams/why-innovia/#talk"
 >
   <Fragment set:html={html} />
+  <script is:inline>
+    (function () {
+      var stage = document.getElementById('filmStage');
+      if (!stage) return;
+      function play() {
+        if (stage.classList.contains('is-playing')) return;
+        var f = document.createElement('iframe');
+        f.src = 'https://player.vimeo.com/video/' + stage.dataset.vimeo + '?dnt=1&autoplay=1&title=0&byline=0&portrait=0';
+        f.title = 'Innovia Summit 2026 film';
+        f.allow = 'autoplay; fullscreen; picture-in-picture';
+        f.allowFullscreen = true;
+        stage.appendChild(f);
+        stage.classList.add('is-playing');
+      }
+      stage.addEventListener('click', play);
+      stage.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+      });
+    })();
+  </script>
 </BaseLayout>
