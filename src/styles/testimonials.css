@@ -426,6 +426,16 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
 .tcard.video .vthumb { margin-bottom: 4px; }
 .tcard.video:hover .vthumb .vplay { transform: scale(1.08); }
 .vthumb[data-vimeo] { cursor: pointer; }
+/* Navy scrim overlay — fades out on hover/focus so the still goes full-color */
+.vthumb::before {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(10,25,54,0.30), rgba(10,25,54,0.55));
+  transition: opacity .3s ease;
+}
+.vthumb:hover::before,
+.vthumb:focus-visible::before { opacity: 0; }
+.vthumb .vbadge { z-index: 2; }
+.vthumb .vplay { position: relative; z-index: 2; }
 .vthumb.playing { cursor: default; }
 .vthumb .vframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .vthumb.loading::after {
