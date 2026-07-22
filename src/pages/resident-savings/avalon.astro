@@ -1,0 +1,217 @@
+---
+// Static route: /resident-savings/avalon/
+// Community-specific Resident Savings page (Avalon). Templated page type —
+// per-community data lives in `community` + `vendors[]` below.
+//
+// Uses the global BaseLayout chrome (shared SiteHeader + SiteFooter). NOT linked
+// from nav/menus and excluded from the sitemap; noindex via robots prop.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// ── Per-community data (only this block changes per community) ──────────────
+const community = 'Avalon';
+
+const vendors = [
+  {
+    category: 'Paint',
+    save: 'Save up to 40% on paint &amp; related products',
+    desc: 'Sherwin-Williams &mdash; resident pricing on interior and exterior paint plus supplies.',
+    type: 'PDF',
+    logo: 'https://innoviaco-op.com/wp-content/uploads/2024/09/logo_sw.png',
+    alt: 'Sherwin-Williams',
+    href: 'https://innoviaco-op.com/wp-content/uploads/2024/09/Sherwin-Williams-Innovia.pdf',
+  },
+  {
+    category: 'Lighting',
+    save: '5% off all GAMA SONIC products',
+    desc: 'Gama Sonic &mdash; solar and outdoor lighting, with free shipping in the lower 48 states.',
+    type: 'PDF',
+    logo: 'https://innoviaco-op.com/wp-content/uploads/2024/09/Hi-Res_Logo-300x196-1.jpg',
+    alt: 'Gama Sonic',
+    href: 'https://innoviaco-op.com/wp-content/uploads/2024/09/Innovia-Resident-Benefits-Gama-Sonic.pdf',
+  },
+  {
+    category: 'Office Supplies',
+    save: 'Save $25 on your order, plus up to 65% off',
+    desc: 'Office Depot &mdash; discounts on everyday office and home-office supplies.',
+    type: 'PDF',
+    logo: 'https://innoviaco-op.com/wp-content/uploads/2024/09/Office-Depot-Logo.png',
+    alt: 'Office Depot',
+    href: 'https://innoviaco-op.com/wp-content/uploads/2024/09/684742.pdf',
+  },
+  {
+    category: 'Flooring',
+    save: 'Get up to $100 off new floors',
+    desc: 'Flooring America &mdash; savings on the latest carpet, hardwood, tile and vinyl styles.',
+    type: 'Web',
+    logo: 'https://innoviaco-op.com/wp-content/uploads/2024/09/FA_H_462_RGB.png',
+    alt: 'Flooring America',
+    href: 'https://www.flooringamerica.com/coupon',
+  },
+  {
+    category: 'Roofing Solutions',
+    save: 'Save up to 80% versus a full replacement',
+    desc: 'Roof Maxx &mdash; a sustainable roof treatment that extends the life of your existing roof.',
+    type: 'Web',
+    logo: 'https://innoviaco-op.com/wp-content/uploads/2024/09/RM-Logo_Color.svg',
+    alt: 'Roof Maxx',
+    href: 'https://roofmaxx.com/innovia/',
+  },
+];
+
+const arrow = `<svg class="arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>`;
+
+const cards = vendors.map((v) => `
+        <a class="vendor" href="${v.href}" target="_blank" rel="noopener">
+          <div class="plate"><img src="${v.logo}" alt="${v.alt}" loading="lazy"></div>
+          <div class="body">
+            <div class="cat"><span class="k">${v.category}</span><span class="type">${v.type}</span></div>
+            <p class="save">${v.save}</p>
+            <p class="desc">${v.desc}</p>
+            <span class="go">Start saving now ${arrow}</span>
+          </div>
+        </a>`).join('');
+
+const html = `<style>
+    body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
+
+    /* Navy header (matches the site's other dark pages) */
+    .site-header { background: rgba(15,36,71,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .site-header nav > a { color: rgba(255,255,255,0.7); }
+    .site-header nav > a:hover, .site-header nav > a.active { color: #fff; }
+    .site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+    .site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+    .site-header .row { height: 76px; }
+
+    /* ---------- Hero ---------- */
+    .page-hero { padding: 56px 0 44px; position: relative; overflow: hidden; }
+    .page-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 92% 6%, rgba(149,208,49,0.15) 0%, transparent 40%), radial-gradient(circle at 2% 98%, rgba(42,74,120,0.5) 0%, transparent 52%); }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero .crumb { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 34px; }
+    .page-hero .crumb a:hover { color: #fff; }
+    .page-hero .layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: end; }
+    .page-hero .eyebrow { margin-bottom: 20px; }
+    .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(40px, 5vw, 74px); letter-spacing: -0.034em; color: #fff; line-height: 0.98; margin: 0; text-wrap: balance; }
+    .page-hero h1 em { color: var(--innovia-green); font-style: normal; }
+    .page-hero .sub { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.9vw, 24px); color: rgba(255,255,255,0.72); letter-spacing: -0.01em; margin: 18px 0 0; }
+    .page-hero .lede { font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.74); margin: 0; }
+    .page-hero .lede strong { color: #fff; font-weight: 600; }
+    .page-hero .community-chip { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 24px; padding: 8px 14px; background: rgba(149,208,49,0.10); border: 1px solid rgba(149,208,49,0.35); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--innovia-green); }
+    .page-hero .community-chip svg { flex: 0 0 auto; }
+    @media (max-width: 940px) { .page-hero .layout { grid-template-columns: 1fr; gap: 28px; align-items: start; } }
+
+    /* ---------- Instruction bar ---------- */
+    .redeem-bar { padding: 0 0 8px; }
+    .redeem-bar .inner { display: flex; align-items: center; gap: 18px; padding: 22px 28px; border: 1px solid rgba(255,255,255,0.14); border-left: 2px solid var(--innovia-green); background: rgba(255,255,255,0.03); }
+    .redeem-bar .n { font-family: var(--font-mono); font-size: 12px; color: var(--innovia-green); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+    .redeem-bar p { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(16px, 1.6vw, 20px); color: #fff; letter-spacing: -0.01em; line-height: 1.4; }
+    @media (max-width: 640px) { .redeem-bar .inner { flex-direction: column; align-items: flex-start; gap: 10px; } }
+
+    /* ---------- Vendor grid ---------- */
+    .vendors { padding: 40px 0 96px; }
+    .vendors .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vendor {
+      display: flex; flex-direction: column; overflow: hidden;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14);
+      text-decoration: none; color: inherit; transition: border-color .18s var(--ease-out), transform .18s var(--ease-out), background .18s var(--ease-out);
+    }
+    .vendor:hover { border-color: var(--innovia-green); background: rgba(149,208,49,0.05); transform: translateY(-3px); }
+    .vendor .plate { height: 128px; background: #fff; display: flex; align-items: center; justify-content: center; padding: 26px 32px; }
+    .vendor .plate img { max-width: 100%; max-height: 76px; width: auto; height: auto; object-fit: contain; }
+    .vendor .body { padding: 26px 28px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .vendor .cat { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .vendor .cat .k { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; }
+    .vendor .cat .type { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; border: 1px solid rgba(255,255,255,0.16); }
+    .vendor .save { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -0.012em; line-height: 1.35; margin: 0; }
+    .vendor .desc { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.66); margin: 0; }
+    .vendor .go { margin-top: auto; padding-top: 18px; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--innovia-green); }
+    .vendor .go .arrow { transition: transform .2s var(--ease-out); }
+    .vendor:hover .go .arrow { transform: translateX(4px); }
+    @media (max-width: 940px) { .vendors .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .vendors .grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Support note ---------- */
+    .support { background: var(--innovia-navy-deep); border-top: 1px solid rgba(255,255,255,0.08); padding: 64px 0; }
+    .support .frame { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .support h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 38px); color: #fff; letter-spacing: -0.02em; margin: 0; max-width: 18ch; }
+    .support h2 em { color: var(--innovia-green); font-style: normal; }
+    .support p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.68); margin: 16px 0 0; max-width: 46ch; }
+    .support .actions { display: flex; flex-direction: column; gap: 12px; }
+    .support .actions .btn { justify-content: center; padding: 16px 24px; font-size: 15px; }
+    .support .fine { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.42); letter-spacing: 0.04em; line-height: 1.6; }
+    @media (max-width: 900px) { .support .frame { grid-template-columns: 1fr; gap: 28px; } }
+  </style>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumb">
+        <a href="/">Innovia</a>
+        <span>/</span>
+        <span>Resident Savings</span>
+        <span>/</span>
+        <span style="color:#fff;">${community}</span>
+      </div>
+      <div class="layout">
+        <div>
+          <div class="community-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${community} Community
+          </div>
+          <div class="eyebrow on-dark"><span class="rule-mini"></span>Resident Savings</div>
+          <h1>Your dedicated <em>savings</em> page.</h1>
+          <p class="sub">Special pricing on flooring, carpet, lighting and more.</p>
+        </div>
+        <div>
+          <p class="lede">Your community HOA uses the Community Base app to do far more than simplify communication. As an added benefit, you automatically qualify for discounts from national brands &mdash; just for living where you do. Access savings on renovation materials, supplies, and homeowner services anytime, <strong>exclusively for residents like you</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REDEEM BAR -->
+  <section class="redeem-bar">
+    <div class="container">
+      <div class="inner">
+        <span class="n">How it works</span>
+        <p>Click the link on any card below to access savings from that participating vendor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENDOR GRID -->
+  <section class="vendors">
+    <div class="container">
+      <div class="grid">
+${cards}
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT / QUESTIONS -->
+  <section class="support">
+    <div class="container">
+      <div class="frame">
+        <div>
+          <h2>Questions about your <em>resident benefits?</em></h2>
+          <p>These savings are provided to ${community} residents through your community&rsquo;s membership in Innovia Co-op. Reach out and we&rsquo;ll point you in the right direction.</p>
+        </div>
+        <div class="actions">
+          <a href="/contact/" class="btn btn-primary">Contact us
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <span class="fine">Offers and promo codes are set by each participating vendor and may change without notice.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+`;
+---
+<BaseLayout
+  title={`Resident Savings · ${community} · Innovia Co-op`}
+  description={`${community} residents automatically qualify for exclusive discounts from national brands — paint, flooring, lighting, roofing and more.`}
+  ogImage="/assets/og/option-1-type-led.png"
+  robots="noindex, nofollow"
+  activeNav={null}
+>
+  <Fragment set:html={html} />
+</BaseLayout>
