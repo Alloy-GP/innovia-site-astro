@@ -473,6 +473,16 @@ const html = `
       var closeBtn  = modal.querySelector('.v-modal-close');
       var lastFocused = null;
 
+      // Load the Vimeo Player SDK once so we can auto-close the modal when a video ends.
+      var vimeoReady = new Promise(function (resolve) {
+        if (window.Vimeo && window.Vimeo.Player) { resolve(); return; }
+        var s = document.createElement('script');
+        s.src = 'https://player.vimeo.com/api/player.js';
+        s.onload = resolve;
+        s.onerror = resolve; // fail-safe — manual close still works
+        document.head.appendChild(s);
+      });
+
       function openModal(id, label) {
         lastFocused = document.activeElement;
         var iframe = document.createElement('iframe');
@@ -487,6 +497,16 @@ const html = `
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         closeBtn.focus();
+
+        // Auto-close when this video finishes. Guarded so a stale player (from a
+        // previously-opened video) can't close a newer one.
+        vimeoReady.then(function () {
+          if (!iframe.isConnected || !window.Vimeo || !window.Vimeo.Player) return;
+          try {
+            var player = new window.Vimeo.Player(iframe);
+            player.on('ended', function () { if (iframe.isConnected) closeModal(); });
+          } catch (e) { /* ignore — manual close remains available */ }
+        });
       }
       function closeModal() {
         if (!modal.classList.contains('open')) return;
