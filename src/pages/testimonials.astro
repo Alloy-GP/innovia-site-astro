@@ -457,36 +457,56 @@ const html = `
 
       applyFilters();
 
-      // Click-to-play: swap the thumbnail for an autoplaying Vimeo embed.
-      // Only one plays at a time; clicking another stops (and restores) the previous.
-      var playing = null;
-      function stopVideo(thumb) {
-        if (!thumb || !thumb.classList.contains('playing')) return;
-        thumb.classList.remove('playing', 'loading');
-        if (thumb.dataset.placeholder != null) thumb.innerHTML = thumb.dataset.placeholder;
+      // Click-to-play in a modal lightbox. One reusable modal; the Vimeo iframe
+      // is injected on open and cleared on close (which also stops playback).
+      var modal = document.createElement('div');
+      modal.className = 'v-modal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.innerHTML =
+        '<div class="v-modal-backdrop"></div>' +
+        '<div class="v-modal-dialog" role="dialog" aria-modal="true" aria-label="Video testimonial">' +
+          '<button type="button" class="v-modal-close" aria-label="Close video">&times;</button>' +
+          '<div class="v-modal-frame"></div>' +
+        '</div>';
+      document.body.appendChild(modal);
+      var frameWrap = modal.querySelector('.v-modal-frame');
+      var closeBtn  = modal.querySelector('.v-modal-close');
+      var lastFocused = null;
+
+      function openModal(id, label) {
+        lastFocused = document.activeElement;
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('title', label || 'Video testimonial');
+        frameWrap.innerHTML = '';
+        frameWrap.appendChild(iframe);
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
       }
+      function closeModal() {
+        if (!modal.classList.contains('open')) return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        frameWrap.innerHTML = '';           // unloads the player → stops audio/video
+        document.body.style.overflow = '';
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+      closeBtn.addEventListener('click', closeModal);
+      modal.querySelector('.v-modal-backdrop').addEventListener('click', closeModal);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
       document.querySelectorAll('.vthumb[data-vimeo]').forEach(function(thumb) {
-        thumb.dataset.placeholder = thumb.innerHTML;
-        function play() {
-          if (thumb.classList.contains('playing')) return;
-          if (playing && playing !== thumb) stopVideo(playing);
-          playing = thumb;
-          var id = thumb.getAttribute('data-vimeo');
-          var iframe = document.createElement('iframe');
-          iframe.className = 'vframe';
-          iframe.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
-          iframe.setAttribute('frameborder', '0');
-          iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-          iframe.setAttribute('allowfullscreen', '');
-          iframe.setAttribute('title', thumb.getAttribute('aria-label') || 'Video testimonial');
-          iframe.addEventListener('load', function() { thumb.classList.remove('loading'); });
-          thumb.innerHTML = '';
-          thumb.classList.add('playing', 'loading');
-          thumb.appendChild(iframe);
-        }
-        thumb.addEventListener('click', play);
+        function open() { openModal(thumb.getAttribute('data-vimeo'), thumb.getAttribute('aria-label')); }
+        thumb.addEventListener('click', open);
         thumb.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
         });
       });
     });

@@ -417,37 +417,6 @@ const html = `<style>
       margin: 0;
     }
 
-    /* ---------- Recognition (placeholder) ---------- */
-    .recognition {
-      padding: 80px 0;
-      background: var(--innovia-navy-deep);
-      color: rgba(255,255,255,0.6);
-    }
-    .recognition .frame {
-      display: grid; grid-template-columns: 1fr 2fr;
-      gap: 64px; align-items: center;
-    }
-    .recognition .label {
-      font-family: var(--font-display); font-size: 12px;
-      font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .recognition .marks {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-    .recognition .marks .mark-slot {
-      aspect-ratio: 3 / 1;
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-mono); font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-
     /* ---------- CTA ---------- */
     .cta-finale {
       padding: 140px 0;
@@ -482,7 +451,7 @@ const html = `<style>
     .cta-finale .actions .btn-outline:hover { background: var(--innovia-navy); color: #fff; }
 
     @media (max-width: 1080px) {
-      .page-hero .below, .origin .layout, .model .head, .governance .head, .partners .head, .recognition .frame, .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
+      .page-hero .below, .origin .layout, .model .head, .governance .head, .partners .head, .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
       .model .principles { grid-template-columns: repeat(2, 1fr); }
       .model .principle:nth-child(2) { border-right: 0; }
       .model .principle:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.12); }
@@ -491,7 +460,6 @@ const html = `<style>
       .governance .gov-card:last-child { border-bottom: 0; }
       .governance .gov-creed { grid-template-columns: 1fr; gap: 14px; }
       .partners .row { grid-template-columns: repeat(2, 1fr); }
-      .recognition .marks { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 
