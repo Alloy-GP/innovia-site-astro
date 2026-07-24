@@ -730,7 +730,8 @@ const html = `<style>
           </div>
         </aside>
 
-        <form class="request-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks \\u2014 we\\u2019ll be in touch within 2 business days';">
+        <form class="request-form" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 2 business days.">
+          <input type="hidden" name="source" value="Find a Management Company — board inquiry">
           <div class="form-head">
             <span class="form-label">Inquiry &middot; HOA / Condo Board</span>
             <span class="form-count">10 fields &middot; ~3 min</span>
@@ -740,15 +741,15 @@ const html = `<style>
             <legend>About your community</legend>
             <div class="grid-2">
               <label>Community name
-                <input type="text" placeholder="e.g. Mariner Cove HOA" autocomplete="organization" required>
+                <input type="text" name="company" placeholder="e.g. Mariner Cove HOA" autocomplete="organization" required>
               </label>
               <label>City, State
-                <input type="text" placeholder="e.g. San Diego, CA" autocomplete="address-level2" required>
+                <input type="text" name="community_location" placeholder="e.g. San Diego, CA" autocomplete="address-level2" required>
               </label>
             </div>
             <div class="grid-2">
               <label>Property type
-                <select required>
+                <select name="property_type" required>
                   <option value="">Choose one</option>
                   <option>Single-family HOA</option>
                   <option>Condominium</option>
@@ -759,7 +760,7 @@ const html = `<style>
                 </select>
               </label>
               <label>Number of units
-                <select required>
+                <select name="units" required>
                   <option value="">Choose a range</option>
                   <option>Under 50</option>
                   <option>50&ndash;150</option>
@@ -775,7 +776,7 @@ const html = `<style>
             <legend>Your situation</legend>
             <div class="grid-2">
               <label>Current management
-                <select required>
+                <select name="current_management" required>
                   <option value="">Choose one</option>
                   <option>Self-managed today</option>
                   <option>Working with a company we&rsquo;re evaluating changing</option>
@@ -785,7 +786,7 @@ const html = `<style>
                 </select>
               </label>
               <label>Timeline
-                <select required>
+                <select name="timeline" required>
                   <option value="">Choose one</option>
                   <option>Immediate &middot; within 30 days</option>
                   <option>Soon &middot; 1&ndash;3 months</option>
@@ -795,7 +796,7 @@ const html = `<style>
               </label>
             </div>
             <label>Anything specific we should know? <span class="opt">Optional</span>
-              <textarea rows="3" placeholder="Concerns about your current arrangement, what matters most to your community, anything we should pass along"></textarea>
+              <textarea name="goal" rows="3" placeholder="Concerns about your current arrangement, what matters most to your community, anything we should pass along"></textarea>
             </label>
           </fieldset>
 
@@ -803,10 +804,10 @@ const html = `<style>
             <legend>How to reach you</legend>
             <div class="grid-2">
               <label>Your name
-                <input type="text" placeholder="Jordan Reyes" autocomplete="name" required>
+                <input type="text" name="name" placeholder="Jordan Reyes" autocomplete="name" required>
               </label>
               <label>Role on the board
-                <select required>
+                <select name="board_role" required>
                   <option value="">Choose one</option>
                   <option>President</option>
                   <option>Vice President</option>
@@ -820,10 +821,10 @@ const html = `<style>
             </div>
             <div class="grid-2">
               <label>Email
-                <input type="email" placeholder="you@yourcommunity.org" autocomplete="email" required>
+                <input type="email" name="email" placeholder="you@yourcommunity.org" autocomplete="email" required>
               </label>
               <label>Phone <span class="opt">Optional</span>
-                <input type="tel" placeholder="(555) 555-0123" autocomplete="tel">
+                <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
               </label>
             </div>
           </fieldset>

@@ -341,15 +341,16 @@ import "../styles/member-highlight-page.css";
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You'll hear from a member-owner, not a salesperson</li>
           </ul>
         </div>
-        <form class="lead-form" id="joinForm" onsubmit="event.preventDefault(); this.classList.add('is-sent');">
+        <form class="lead-form" id="joinForm" data-endpoint="/api/lead" data-success="Thanks — a member-owner will reach out within five business days for a confidential conversation.">
+          <input type="hidden" name="source" value="Member spotlight — membership inquiry">
           <div class="form-head"><span class="form-label">Talk to Innovia about membership</span><span class="form-count">~2 min</span></div>
           <div class="form-body">
             <fieldset>
-              <div class="grid-2"><input type="text" placeholder="First name" aria-label="First name" autocomplete="given-name" required><input type="text" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required></div>
-              <div class="grid-2"><input type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required><input type="tel" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel"></div>
-              <div class="grid-2"><input type="text" placeholder="Company name" aria-label="Company name" autocomplete="organization" required><input type="text" placeholder="Headquarters (city, state)" aria-label="Headquarters" required></div>
-              <label class="field">Portfolio size<select required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label>
-              <label class="field">What's prompting the look? <span class="opt">Optional</span><textarea rows="2" placeholder="Margin, vendor terms, talent, the long view — what's on your mind"></textarea></label>
+              <div class="grid-2"><input type="text" name="firstName" placeholder="First name" aria-label="First name" autocomplete="given-name" required><input type="text" name="lastName" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required></div>
+              <div class="grid-2"><input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required><input type="tel" name="phone" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel"></div>
+              <div class="grid-2"><input type="text" name="company" placeholder="Company name" aria-label="Company name" autocomplete="organization" required><input type="text" name="hq" placeholder="Headquarters (city, state)" aria-label="Headquarters" required></div>
+              <label class="field">Portfolio size<select name="portfolio" required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label>
+              <label class="field">What's prompting the look? <span class="opt">Optional</span><textarea name="goal" rows="2" placeholder="Margin, vendor terms, talent, the long view — what's on your mind"></textarea></label>
             </fieldset>
             <div class="submit-row">
               <small>Confidential. We don't share with vendors or sell your details.</small>

@@ -517,7 +517,8 @@ import "../styles/charter-offer.css";
           </div>
         </div>
 
-        <form class="lead-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks — we&rsquo;ll be in touch within 5 business days';">
+        <form class="lead-form" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll be in touch within 5 business days.">
+          <input type="hidden" name="source" value="Charter offer — fit-check inquiry">
           <div class="form-head">
             <span class="form-label">Charter inquiry</span>
             <span class="form-count">~2 min</span>
@@ -525,19 +526,19 @@ import "../styles/charter-offer.css";
           <fieldset>
             <legend>About you</legend>
             <div class="grid-2">
-              <input type="text" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
-              <input type="text" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required>
+              <input type="text" name="firstName" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
+              <input type="text" name="lastName" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required>
             </div>
-            <input type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
+            <input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
           </fieldset>
           <fieldset>
             <legend>About your firm</legend>
             <div class="grid-2">
-              <input type="text" placeholder="Company name" aria-label="Company name" autocomplete="organization" required>
-              <input type="text" placeholder="Your metro (city, state)" aria-label="Your metro" autocomplete="address-level2" required>
+              <input type="text" name="company" placeholder="Company name" aria-label="Company name" autocomplete="organization" required>
+              <input type="text" name="metro" placeholder="Your metro (city, state)" aria-label="Your metro" autocomplete="address-level2" required>
             </div>
             <label class="field">Units under management
-              <select required>
+              <select name="portfolio" required>
                 <option value="">Choose a range</option>
                 <option>Under 1,000</option>
                 <option>1,000&ndash;5,000</option>
@@ -551,32 +552,32 @@ import "../styles/charter-offer.css";
             <legend>Which of these sound like you? <span class="opt">Select any</span></legend>
             <div class="fit-checks">
               <label class="fit-check">
-                <input type="checkbox" data-fit="0" aria-label="I own the firm">
+                <input type="checkbox" name="fit" value="I own the firm" data-fit="0" aria-label="I own the firm">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">I own the firm</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="1" aria-label="Best in my market, or aiming to be">
+                <input type="checkbox" name="fit" value="Best in my market, or aiming to be" data-fit="1" aria-label="Best in my market, or aiming to be">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Best in my market &mdash; or aiming to be</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="2" aria-label="Staying independent">
+                <input type="checkbox" name="fit" value="Staying independent" data-fit="2" aria-label="Staying independent">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Staying independent &mdash; not selling to a national</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="3" aria-label="Want leverage, not a logo">
+                <input type="checkbox" name="fit" value="Want leverage, not a logo" data-fit="3" aria-label="Want leverage, not a logo">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Want leverage, not a logo</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="4" aria-label="I will show up for the cooperative">
+                <input type="checkbox" name="fit" value="Will show up for the cooperative" data-fit="4" aria-label="I will show up for the cooperative">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">I&rsquo;ll show up for the cooperative</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="5" aria-label="Ready to move when the timing is right">
+                <input type="checkbox" name="fit" value="Ready to move when the timing is right" data-fit="5" aria-label="Ready to move when the timing is right">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Ready to move when the timing&rsquo;s right</span>
               </label>
@@ -585,7 +586,7 @@ import "../styles/charter-offer.css";
           <fieldset>
             <legend>The conversation</legend>
             <label class="field">What&rsquo;s prompting your interest? <span class="opt">Optional</span>
-              <textarea rows="3" placeholder="Growth, vendor terms, banking, owning your market — what&rsquo;s on your mind"></textarea>
+              <textarea name="goal" rows="3" placeholder="Growth, vendor terms, banking, owning your market — what&rsquo;s on your mind"></textarea>
             </label>
           </fieldset>
           <div class="submit-row">

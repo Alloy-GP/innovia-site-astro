@@ -34,6 +34,19 @@ export const POST: APIRoute = async ({ request }) => {
     const states     = get('states');
     const referredBy = get('referred_by');
 
+    // Any other named fields the form sends (property type, units, timeline, role,
+    // relationship, etc.) — rendered generically so no submission is silently dropped.
+    const KNOWN = new Set([
+      'firstName', 'lastName', 'name', 'email', 'company', 'phone',
+      'goal', 'source', 'hq', 'portfolio', 'states', 'referred_by',
+    ]);
+    const extras = [...data.entries()]
+      .filter(([k, v]) => !KNOWN.has(k) && typeof v === 'string' && v.trim())
+      .map(([k, v]) => [
+        k.replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+        (v as string).trim(),
+      ]);
+
     if (!email || !name) {
       return new Response(JSON.stringify({ error: 'Name and email are required.' }), { status: 400 });
     }
@@ -55,6 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
           ${phone   ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
           ${referredBy ? `<p><strong>Referred by:</strong> ${referredBy}</p>` : ''}
           ${goal    ? `<p><strong>What's prompting the conversation:</strong> ${goal}</p>` : ''}
+          ${extras.map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`).join('')}
           ${source  ? `<hr><p style="color:#888;font-size:13px"><strong>Source</strong><br>${source.replace(/\n/g, '<br>')}</p>` : ''}
         `,
       });

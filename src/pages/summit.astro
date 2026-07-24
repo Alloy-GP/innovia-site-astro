@@ -1049,26 +1049,27 @@ const html = `<style>
           <p class="strap">Attendance is member-only and by invitation &mdash; but anyone can sign up for the reveal. Drop your details and we&rsquo;ll send the venue reveal and dates the moment they&rsquo;re live. Not yet a member? Seeing what the cooperative is building is the best reason to join.</p>
         </div>
 
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Thanks — we\\u2019ll be in touch';">
+        <form data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll send the Summit 2027 reveal the moment it&rsquo;s live.">
+          <input type="hidden" name="source" value="Summit 2027 — reveal signup">
           <div class="row">
             <label>First name
-              <input type="text" placeholder="Jordan" autocomplete="given-name" required>
+              <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
             </label>
             <label>Last name
-              <input type="text" placeholder="Reyes" autocomplete="family-name" required>
+              <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
             </label>
           </div>
           <div class="row single">
             <label>Work email
-              <input type="email" placeholder="you@yourcompany.com" autocomplete="email" required>
+              <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
             </label>
           </div>
           <div class="row">
             <label>Company
-              <input type="text" placeholder="Your CAM company" autocomplete="organization" required>
+              <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
             </label>
             <label>Relationship
-              <select required>
+              <select name="relationship" required>
                 <option value="">Choose one</option>
                 <option>Innovia member company</option>
                 <option>Prospective member</option>
