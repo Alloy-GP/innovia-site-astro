@@ -120,10 +120,12 @@ export const POST: APIRoute = async ({ request }) => {
     if (!RESEND_KEY) throw new Error('RESEND_API_KEY not configured');
     const resend = new Resend(RESEND_KEY);
 
-    // Notify the co-op office
+    // Notify the co-op office (CC admin@; Reply-To the applicant so the office
+    // can respond to the firm directly)
     await resend.emails.send({
       from: EMAIL_CONFIG.from.notifications,
       to: EMAIL_CONFIG.notify,
+      cc: EMAIL_CONFIG.notifyCc,
       replyTo: get('contact_email'),
       subject: `New member profile intake — ${get('firm_name')}`,
       html,
@@ -134,6 +136,7 @@ export const POST: APIRoute = async ({ request }) => {
     await resend.emails.send({
       from: EMAIL_CONFIG.from.hello,
       to: get('contact_email'),
+      replyTo: EMAIL_CONFIG.replyTo,
       subject: 'We received your Innovia member profile',
       html: `<div style="font-family:Arial,Helvetica,sans-serif;color:#18335E">
         <p>Hi ${esc(first) || 'there'},</p>

@@ -22,10 +22,15 @@ export const EMAIL_CONFIG = {
   // Everyone here gets a copy of every form submission
   notify: [
     // TEMP: route member-intake notifications to Alloy inboxes for now
-    'admin@alloygp.co',
     'cameron@alloygp.co',
     'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
+
+  // CC'd on every internal notification (the office copy) — not customer confirmations
+  notifyCc: ['admin@alloygp.co'],
+
+  // Reply-To on customer confirmation mail (interim — until final routing confirmed)
+  replyTo: 'nzuccala@ccaglobal.com',
 
   mailchimp: {
     enabled:     true,      // set false if client has no Mailchimp
