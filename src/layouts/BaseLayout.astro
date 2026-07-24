@@ -88,8 +88,9 @@ const isProduction = import.meta.env.PUBLIC_ENV === 'production';
 
 // Robots: honor an explicit per-page `robots` prop; otherwise auto-noindex every
 // non-production deployment (staging/preview) so Google never indexes them.
-// Production (PUBLIC_ENV=production) indexes normally.
-const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow');
+// 'follow' (not 'nofollow') keeps staging fully crawlable for QA tools like
+// Screaming Frog while staying out of the index. Production indexes normally.
+const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, follow');
 
 ---
 
