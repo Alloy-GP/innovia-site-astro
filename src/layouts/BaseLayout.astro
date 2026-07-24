@@ -521,11 +521,19 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
         addEventListener('keydown', function (e) { if (e.key === 'Tab') kb = true; }, true);
         addEventListener('mousedown', function () { kb = false; }, true);
         addEventListener('touchstart', function () { kb = false; }, true);
+        function openPicker(el) {
+          if (!el || el.tagName !== 'SELECT' || typeof el.showPicker !== 'function') return;
+          // Defer one tick: showPicker() called synchronously during the focus
+          // event is suppressed by some browsers. Transient activation from the
+          // Tab keypress persists, so this still counts as a user gesture.
+          setTimeout(function () {
+            if (document.activeElement === el) {
+              try { el.showPicker(); } catch (_) {}
+            }
+          }, 0);
+        }
         document.addEventListener('focusin', function (e) {
-          var el = e.target;
-          if (kb && el && el.tagName === 'SELECT' && typeof el.showPicker === 'function') {
-            try { el.showPicker(); } catch (_) {}
-          }
+          if (kb) openPicker(e.target);
         });
       })();
     </script>
