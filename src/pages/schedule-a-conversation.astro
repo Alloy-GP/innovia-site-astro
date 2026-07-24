@@ -76,19 +76,19 @@ const html = `<style>
             <div class="step"><span class="ix">03</span><div><h5>You take the call if it fits.</h5><p>We&rsquo;ll be in touch within 24&ndash;48 hours. If now isn&rsquo;t the moment, we keep you on the Summit list.</p></div></div>
           </div>
         </div>
-        <form onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks \\u2014 we\\u2019ll be in touch';">
+        <form data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 24&ndash;48 hours.">
           <div class="head"><span>Member-company inquiry</span><span style="color:rgba(255,255,255,0.5);">10 fields &middot; ~3 min</span></div>
           <fieldset><legend>About you</legend>
-            <div class="row"><label>First name<input type="text" placeholder="Jordan" required></label><label>Last name<input type="text" placeholder="Reyes" required></label></div>
-            <div class="row"><label>Work email<input type="email" placeholder="you@yourcompany.com" required></label><label>Phone<input type="tel" placeholder="(555) 555-0123"></label></div>
+            <div class="row"><label>First name<input type="text" name="firstName" placeholder="Jordan" required></label><label>Last name<input type="text" name="lastName" placeholder="Reyes" required></label></div>
+            <div class="row"><label>Work email<input type="email" name="email" placeholder="you@yourcompany.com" required></label><label>Phone<input type="tel" name="phone" placeholder="(555) 555-0123"></label></div>
           </fieldset>
           <fieldset><legend>About your company</legend>
-            <div class="row"><label>Company name<input type="text" required></label><label>Headquartered<input type="text" placeholder="City, State" required></label></div>
-            <div class="row"><label>Portfolio size<select required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label><label>States we operate in<input type="text" placeholder="e.g. CA, NV, AZ" required></label></div>
+            <div class="row"><label>Company name<input type="text" name="company" required></label><label>Headquartered<input type="text" name="hq" placeholder="City, State" required></label></div>
+            <div class="row"><label>Portfolio size<select name="portfolio" required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label><label>States we operate in<input type="text" name="states" placeholder="e.g. CA, NV, AZ" required></label></div>
           </fieldset>
           <fieldset><legend>The conversation</legend>
-            <label>Were you referred by a member?<input type="text" placeholder="Member company or founder name"></label>
-            <label>What&rsquo;s prompting the conversation?<textarea rows="3" placeholder="Margin, talent, vendor terms, the long view — what's on your mind"></textarea></label>
+            <label>Were you referred by a member?<input type="text" name="referred_by" placeholder="Member company or founder name"></label>
+            <label>What&rsquo;s prompting the conversation?<textarea name="goal" rows="3" placeholder="Margin, talent, vendor terms, the long view — what's on your mind"></textarea></label>
           </fieldset>
           <button type="submit">Schedule a Conversation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>

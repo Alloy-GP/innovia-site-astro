@@ -1049,7 +1049,7 @@ const html = `<style>
           </div>
         </div>
 
-        <form class="connect-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks \\u2014 we\\u2019ll be in touch within 5 business days';">
+        <form class="connect-form" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 1&ndash;2 business days.">
           <div class="form-head">
             <span class="form-label">Member-company inquiry</span>
             <span class="form-count">10 fields &middot; ~3 min</span>
@@ -1059,18 +1059,18 @@ const html = `<style>
             <legend>About you</legend>
             <div class="grid-2">
               <label>First name
-                <input type="text" placeholder="Jordan" autocomplete="given-name" required>
+                <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
               </label>
               <label>Last name
-                <input type="text" placeholder="Reyes" autocomplete="family-name" required>
+                <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
               </label>
             </div>
             <div class="grid-2">
               <label>Work email
-                <input type="email" placeholder="you@yourcompany.com" autocomplete="email" required>
+                <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
               </label>
               <label>Phone <span class="opt">Optional</span>
-                <input type="tel" placeholder="(555) 555-0123" autocomplete="tel">
+                <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
               </label>
             </div>
           </fieldset>
@@ -1079,15 +1079,15 @@ const html = `<style>
             <legend>About your company</legend>
             <div class="grid-2">
               <label>Company name
-                <input type="text" placeholder="Your CAM company" autocomplete="organization" required>
+                <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
               </label>
               <label>Headquartered
-                <input type="text" placeholder="City, State" autocomplete="address-level2" required>
+                <input type="text" name="hq" placeholder="City, State" autocomplete="address-level2" required>
               </label>
             </div>
             <div class="grid-2">
               <label>Portfolio size
-                <select required>
+                <select name="portfolio" required>
                   <option value="">Households managed</option>
                   <option>Under 1,000</option>
                   <option>1,000&ndash;5,000</option>
@@ -1097,7 +1097,7 @@ const html = `<style>
                 </select>
               </label>
               <label>States we operate in
-                <input type="text" placeholder="e.g. CA, NV, AZ" required>
+                <input type="text" name="states" placeholder="e.g. CA, NV, AZ" required>
               </label>
             </div>
           </fieldset>
@@ -1105,10 +1105,10 @@ const html = `<style>
           <fieldset>
             <legend>The conversation</legend>
             <label>Were you referred by a member? <span class="opt">If yes, who</span>
-              <input type="text" placeholder="Member company or founder name">
+              <input type="text" name="referred_by" placeholder="Member company or founder name">
             </label>
             <label>What&rsquo;s prompting the conversation? <span class="opt">Optional</span>
-              <textarea rows="3" placeholder="Margin pressure, talent, vendor terms, the long view &mdash; what&rsquo;s on your mind"></textarea>
+              <textarea name="goal" rows="3" placeholder="Margin pressure, talent, vendor terms, the long view &mdash; what&rsquo;s on your mind"></textarea>
             </label>
           </fieldset>
 

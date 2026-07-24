@@ -19,12 +19,20 @@ if (EMAIL_CONFIG.mailchimp.enabled) {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data    = await request.formData();
-    const name    = data.get('name')?.toString().trim()    ?? '';
-    const email   = data.get('email')?.toString().trim()   ?? '';
-    const company = data.get('company')?.toString().trim() ?? '';
-    const phone   = data.get('phone')?.toString().trim()   ?? '';
-    const goal    = data.get('goal')?.toString().trim()    ?? '';
-    const source  = data.get('source')?.toString().trim()  ?? '';
+    const get = (k: string) => data.get(k)?.toString().trim() ?? '';
+    const firstName = get('firstName');
+    const lastName  = get('lastName');
+    const name    = get('name') || [firstName, lastName].filter(Boolean).join(' ');
+    const email   = get('email');
+    const company = get('company');
+    const phone   = get('phone');
+    const goal    = get('goal');
+    const source  = get('source');
+    // Extra fields the richer lead forms send (optional)
+    const hq         = get('hq');
+    const portfolio  = get('portfolio');
+    const states     = get('states');
+    const referredBy = get('referred_by');
 
     if (!email || !name) {
       return new Response(JSON.stringify({ error: 'Name and email are required.' }), { status: 400 });
@@ -41,8 +49,12 @@ export const POST: APIRoute = async ({ request }) => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+          ${hq         ? `<p><strong>Headquartered:</strong> ${hq}</p>` : ''}
+          ${portfolio  ? `<p><strong>Portfolio size:</strong> ${portfolio}</p>` : ''}
+          ${states     ? `<p><strong>States:</strong> ${states}</p>` : ''}
           ${phone   ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-          ${goal    ? `<p><strong>Goal:</strong> ${goal}</p>` : ''}
+          ${referredBy ? `<p><strong>Referred by:</strong> ${referredBy}</p>` : ''}
+          ${goal    ? `<p><strong>What's prompting the conversation:</strong> ${goal}</p>` : ''}
           ${source  ? `<hr><p style="color:#888;font-size:13px"><strong>Source</strong><br>${source.replace(/\n/g, '<br>')}</p>` : ''}
         `,
       });

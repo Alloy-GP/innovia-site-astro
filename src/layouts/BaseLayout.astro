@@ -472,6 +472,35 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
 
     <ReviewWidget />
 
+    <!-- Global form handler: any <form data-endpoint="/api/..."> POSTs its fields
+         and swaps to a success message. Falls back to an inline error on failure. -->
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('form[data-endpoint]').forEach(function (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var btn = form.querySelector('button[type=submit]') || form.querySelector('button');
+            var orig = btn ? btn.innerHTML : '';
+            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+            fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+              .then(function (res) { return res.json().catch(function () { return {}; }).then(function (d) { return { ok: res.ok, d: d }; }); })
+              .then(function (r) {
+                if (r.ok && r.d.error == null && r.d.success !== false) {
+                  var msg = form.getAttribute('data-success') || 'Thanks — we’ll be in touch.';
+                  form.innerHTML = '<p role="status" style="font-family:var(--font-display);font-weight:600;color:var(--innovia-green);font-size:17px;line-height:1.5;margin:0;">' + msg + '</p>';
+                } else {
+                  if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+                  var err = form.querySelector('.form-error');
+                  if (!err) { err = document.createElement('p'); err.className = 'form-error'; err.setAttribute('role', 'alert'); err.style.cssText = 'color:#E87D6E;font-size:13px;margin:12px 0 0;'; form.appendChild(err); }
+                  err.textContent = (r.d && r.d.error) || 'Something went wrong. Please try again.';
+                }
+              })
+              .catch(function () { if (btn) { btn.disabled = false; btn.innerHTML = orig; } });
+          });
+        });
+      })();
+    </script>
+
     <slot name="scripts" />
     <SpeedInsights />
   </body>

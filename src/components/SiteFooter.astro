@@ -50,12 +50,11 @@
       <div class="newsletter">
         <h6>Stay in the loop</h6>
         <p>Industry intelligence, summit announcements, and member spotlights &mdash; about once a month.</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); this.classList.add('submitted');">
-          <input type="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
+        <form class="newsletter-form" data-endpoint="/api/subscribe" data-success="Thanks &mdash; you&rsquo;re on the list.">
+          <input type="email" name="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
           <button type="submit" aria-label="Subscribe">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </button>
-          <span class="newsletter-ok">Thanks &mdash; you&rsquo;re on the list.</span>
         </form>
       </div>
     </div>
