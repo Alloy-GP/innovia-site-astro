@@ -686,6 +686,10 @@ const html = `<style>
       .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
       .narrative .left { position: static; }
       .portrait-band { grid-template-columns: 1fr; }
+      /* Narrow screens: stack photo over bio so the text isn't crushed
+         into a ~78px column next to the portrait. */
+      .portrait-band .portrait { grid-template-columns: 1fr; gap: 20px; padding: 28px 24px 24px; }
+      .portrait .frame { width: 148px; }
       .principles .grid { grid-template-columns: repeat(2, 1fr); }
       .principles .card:nth-child(2) { border-right: 0; }
       .principles .card:nth-child(-n+2) { border-bottom: 1px solid var(--border-subtle); }
