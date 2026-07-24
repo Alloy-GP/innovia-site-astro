@@ -41,7 +41,9 @@ const html = `<style>
 
     /* ---------- Hero ---------- */
     .page-hero {
-      padding: 64px 0 0;
+      /* Bottom padding keeps the portrait band off the white section below
+         (it was flush: gap of 0). */
+      padding: 64px 0 88px;
       position: relative; overflow: hidden;
     }
     .page-hero::after {
@@ -122,7 +124,7 @@ const html = `<style>
     }
     .portrait-band .portrait {
       background: var(--innovia-navy-deep);
-      padding: 36px 36px 28px;
+      padding: 36px 36px 40px;
       display: grid;
       grid-template-columns: 168px minmax(0, 1fr);
       gap: 28px;
@@ -217,7 +219,7 @@ const html = `<style>
 
     /* ---------- Long-form narrative (cream) ---------- */
     .narrative {
-      padding: 120px 0;
+      padding: 120px 0 144px;
       background: #FBFAF6;
       color: var(--fg-2);
     }
