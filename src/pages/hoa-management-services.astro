@@ -1,5 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { serviceSchema, breadcrumbSchema } from '../lib/schema.ts';
+
+const pageSchema = [
+  serviceSchema({
+    name: 'HOA & Condominium Management',
+    description: 'Community management delivered by Innovia-backed independent firms — board support, financials, covenant enforcement, capital planning, and vendor coordination for HOAs, condominiums, and townhome associations.',
+    url: 'https://innoviaco-op.com/hoa-management-services/',
+  }),
+  breadcrumbSchema([
+    { name: 'Innovia', url: 'https://innoviaco-op.com/' },
+    { name: 'For Boards', url: 'https://innoviaco-op.com/board-education/' },
+    { name: 'HOA Management Services', url: 'https://innoviaco-op.com/hoa-management-services/' },
+  ]),
+];
 const html = `<style>
     body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
     .site-header { background: rgba(15,36,71,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
@@ -158,6 +172,7 @@ const html = `<style>
   title="HOA Management Services · Innovia Co-op"
   description="HOA Management Services · Innovia Co-op"
   ogImage="/assets/og/option-1-type-led.png"
+  pageSchema={pageSchema}
   ctaLabel="Send Inquiry"
   ctaHref="/find-a-management-company/#request"
 >
