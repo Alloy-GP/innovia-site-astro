@@ -19,9 +19,10 @@ export const EMAIL_CONFIG = {
     hello:         'Innovia Co-op <hello@mail.innoviaco-op.com>',
   },
 
-  // Everyone here gets a copy of every form submission
+  // Everyone here gets a copy of every form submission.
+  // NOTE: notifications@innoviaco-op.com is a SENDING identity (see from.notifications),
+  // not a monitored inbox — do not add it here as a recipient.
   notify: [
-    'notifications@innoviaco-op.com',
     'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
 
