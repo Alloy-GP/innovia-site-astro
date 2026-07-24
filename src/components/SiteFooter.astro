@@ -21,6 +21,7 @@
         <ul>
           <li><a href="/for-cams/why-innovia/">For CAMs</a></li>
           <li><a href="/for-cams/three-pillars/">Three Pillars</a></li>
+          <li><a href="/testimonials/">Testimonials</a></li>
           <li><a href="/about/">About</a></li>
           <li><a href="/about/#governance">Governance</a></li>
           <li><a href="/about/founders/">Our Founders</a></li>
@@ -34,9 +35,6 @@
         <ul>
           <li><a href="/find-a-management-company/">Find a Management Company</a></li>
           <li><a href="/board-education/how-hoa-management-works/">How HOA Management Works</a></li>
-          <li><a href="/member-spotlights/">Member Spotlights</a></li>
-          <li><a href="/case-studies/">Case Studies</a></li>
-          <li><a href="/testimonials/">Testimonials</a></li>
           <li><a href="/hoa-management-services/">Services Overview</a></li>
           <li><a href="/board-education/">Resources &amp; Guides</a></li>
         </ul>
@@ -52,17 +50,16 @@
       <div class="newsletter">
         <h6>Stay in the loop</h6>
         <p>Industry intelligence, summit announcements, and member spotlights &mdash; about once a month.</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); this.classList.add('submitted');">
-          <input type="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
+        <form id="wc-newsletter" class="newsletter-form" data-endpoint="/api/subscribe" data-success="Thanks &mdash; you&rsquo;re on the list.">
+          <input type="email" name="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
           <button type="submit" aria-label="Subscribe">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </button>
-          <span class="newsletter-ok">Thanks &mdash; you&rsquo;re on the list.</span>
         </form>
       </div>
     </div>
     <div class="copy">
-      <span>&copy; 2026 Innovia Co-op. Member-owned. All rights reserved.</span>
+      <span>&copy; 2026 Innovia Co-op. Member-owned. All rights reserved. &middot; <a href="/privacy-policy/">Privacy Policy</a></span>
       <span class="colophon">We stand apart because we stand together.</span>
     </div>
   </div>

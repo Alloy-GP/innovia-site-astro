@@ -10,6 +10,7 @@ import { SITE } from '../config/site.ts';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ReviewWidget from '../components/ReviewWidget.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   /** <title> tag. Required. */
@@ -82,6 +83,15 @@ const orgLd = {
 
 const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
+// Review widgets (Pastel + Simple Commenter) — staging/preview only, never on production.
+const isProduction = import.meta.env.PUBLIC_ENV === 'production';
+
+// Robots: honor an explicit per-page `robots` prop; otherwise auto-noindex every
+// non-production deployment (staging/preview) so Google never indexes them.
+// Production (PUBLIC_ENV=production) indexes normally. Non-prod is noindex+nofollow;
+// flip to 'noindex, follow' temporarily if you need to run a full staging crawl.
+const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow');
+
 ---
 
 <!DOCTYPE html>
@@ -97,7 +107,7 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
     <link rel="icon" type="image/png" href="/assets/innovia-icon.png" />
     <link rel="apple-touch-icon" href="/assets/innovia-icon.png" />
 
-    {robots && <meta name="robots" content={robots} />}
+    {resolvedRobots && <meta name="robots" content={resolvedRobots} />}
 
     <!-- Open Graph -->
     <meta property="og:title"       content={ogTitle ?? title} />
@@ -129,8 +139,13 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
     <!-- Per-page styles / preloads -->
     <slot name="head" />
 
-    <!-- Google Analytics: deferred until after page paint -->
-    {gaMeasurementId && (
+    <!-- Simple Commenter review widget: staging/preview only, never on production. -->
+    {!isProduction && (
+      <script is:inline src="https://simplecommenter.com/js/comments.min.js?id=sc_a5b95f74760e080b" defer></script>
+    )}
+
+    <!-- Google Analytics: production only, deferred until after page paint -->
+    {isProduction && gaMeasurementId && (
       <script is:inline define:vars={{ gaMeasurementId }}>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -142,6 +157,16 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
           document.head.appendChild(s);
         });
       </script>
+    )}
+
+    <!-- WhatConverts: production only -->
+    {isProduction && (
+      <Fragment>
+        <script is:inline>
+          var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};
+        </script>
+        <script is:inline src="//s.ksrndkehqnwntyxlhgto.com/160105.js"></script>
+      </Fragment>
     )}
   </head>
   <body>
@@ -199,7 +224,8 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
             items: [
               { icon: 'map-pin', title: 'Find a Management Company', desc: 'Tell us about your community and we’ll route the inquiry to the Innovia-backed company best positioned to serve you. One match. No call lists.', href: '/find-a-management-company/' },
               { icon: 'building', title: 'HOA Management Services', desc: 'What Innovia-backed companies deliver to associations — by property type. Single-family, condo, townhome, plus accounting and covenant sub-services.', href: '/hoa-management-services/' },
-              { icon: 'book-open', title: 'Board Resources & Guides', desc: 'Cooperatively-authored guides for boards: choosing a manager, reserves, RFPs, governance. Migrating from the old blog.', href: '/board-education/' },
+              { icon: 'layers', title: 'How HOA Management Works', desc: 'The plain-English explainer for boards new to professional management — what a management company actually does day to day, and how the relationship is structured.', href: '/board-education/how-hoa-management-works/' },
+              { icon: 'book-open', title: 'Board Resources & Guides', desc: 'Cooperatively-authored guides for boards: choosing a manager, reserves, and taking over from a developer.', href: '/board-education/' },
             ],
           },
           cams: {
@@ -214,7 +240,7 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
                 heading: 'Membership',
                 items: [
                   { icon: 'users-round', title: 'Why Innovia for your company', desc: 'A peer council, a shared vendor program, and industry intelligence — in service of every level of your operation.', href: '/for-cams/why-innovia/' },
-                  { icon: 'building', title: 'Member Spotlights', desc: 'Operators in action — eight member-company profiles and the 22 summit films producing across 2026.', href: '/member-spotlights/' },
+                  { icon: 'quote', title: 'Testimonials', desc: 'What members say when the recorder is on — real voices on how the cooperative changed their firms.', href: '/testimonials/' },
                   { icon: 'anchor', title: 'The Annual Summit', desc: 'Three days. The whole cooperative in one room — closed-door, no vendor floor. Summit 2027 in February.', href: '/summit/' },
                 ],
               },
@@ -223,7 +249,7 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
                 items: [
                   { icon: 'trophy', title: 'Elite Community', desc: 'An invitation-only circle of the country’s best independent operators.', href: '/for-cams/three-pillars/elite-community/' },
                   { icon: 'trending-up', title: 'Business Growth', desc: 'A national SEO and content engine routes qualified board leads to the closest member.', href: '/for-cams/three-pillars/business-growth/' },
-                  { icon: 'handshake', title: 'Vendor Program', desc: 'Pre-negotiated agreements with vetted partners across the line items every CAM company runs.', href: '/for-cams/three-pillars/vendor-program/' },
+                  { icon: 'handshake', title: 'Preferred Vendor Program', desc: 'Pre-negotiated agreements with vetted partners across the line items every CAM company runs.', href: '/for-cams/three-pillars/vendor-program/' },
                 ],
               },
             ],
@@ -240,6 +266,7 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
           'trophy': '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
           'trending-up': '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
           'handshake': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
+          'quote': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/>',
         };
 
         function svg(name) {
@@ -456,6 +483,36 @@ const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
     <ReviewWidget />
 
+    <!-- Global form handler: any <form data-endpoint="/api/..."> POSTs its fields
+         and swaps to a success message. Falls back to an inline error on failure. -->
+    <script is:inline>
+      (function () {
+        document.querySelectorAll('form[data-endpoint]').forEach(function (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var btn = form.querySelector('button[type=submit]') || form.querySelector('button');
+            var orig = btn ? btn.innerHTML : '';
+            if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+            fetch(form.dataset.endpoint, { method: 'POST', body: new FormData(form) })
+              .then(function (res) { return res.json().catch(function () { return {}; }).then(function (d) { return { ok: res.ok, d: d }; }); })
+              .then(function (r) {
+                if (r.ok && r.d.error == null && r.d.success !== false) {
+                  var msg = form.getAttribute('data-success') || 'Thanks — we’ll be in touch.';
+                  form.innerHTML = '<p role="status" style="font-family:var(--font-display);font-weight:600;color:var(--innovia-green);font-size:17px;line-height:1.5;margin:0;">' + msg + '</p>';
+                } else {
+                  if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+                  var err = form.querySelector('.form-error');
+                  if (!err) { err = document.createElement('p'); err.className = 'form-error'; err.setAttribute('role', 'alert'); err.style.cssText = 'color:#E87D6E;font-size:13px;margin:12px 0 0;'; form.appendChild(err); }
+                  err.textContent = (r.d && r.d.error) || 'Something went wrong. Please try again.';
+                }
+              })
+              .catch(function () { if (btn) { btn.disabled = false; btn.innerHTML = orig; } });
+          });
+        });
+      })();
+    </script>
+
     <slot name="scripts" />
+    <SpeedInsights />
   </body>
 </html>

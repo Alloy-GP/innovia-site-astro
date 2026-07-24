@@ -101,18 +101,19 @@ const faqLd = {
         <!-- BANNER LEAD FORM -->
         <div class="form-wrap" id="inquiry">
           <span class="form-flag">Free proposal</span>
-          <form class="lead-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks — we&rsquo;ll be in touch within 2 business days';">
+          <form class="lead-form" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll be in touch within 2 business days.">
+            <input type="hidden" name="source" value="Member landing — proposal request">
             <h2>Get a proposal for your community</h2>
             <p class="sub">Tell us a little about your association. A local manager &mdash; not a call center &mdash; gets back to you within two business days.</p>
 
             <fieldset>
               <div class="grid-2">
-                <input type="text" placeholder="Community name" aria-label="Community name" autocomplete="organization" required>
-                <input type="text" placeholder="City / area" aria-label="City or area" autocomplete="address-level2" required>
+                <input type="text" name="company" placeholder="Community name" aria-label="Community name" autocomplete="organization" required>
+                <input type="text" name="community_location" placeholder="City / area" aria-label="City or area" autocomplete="address-level2" required>
               </div>
               <div class="grid-2">
                 <label class="field">Property type
-                  <select required>
+                  <select name="property_type" required>
                     <option value="">Choose one</option>
                     <option>Single-family HOA</option>
                     <option>Condominium</option>
@@ -122,7 +123,7 @@ const faqLd = {
                   </select>
                 </label>
                 <label class="field">Number of units
-                  <select required>
+                  <select name="units" required>
                     <option value="">Choose a range</option>
                     <option>Under 50</option>
                     <option>50&ndash;150</option>
@@ -133,7 +134,7 @@ const faqLd = {
                 </label>
               </div>
               <label class="field">Timeline
-                <select required>
+                <select name="timeline" required>
                   <option value="">When are you looking to make a change?</option>
                   <option>Immediate &middot; within 30 days</option>
                   <option>Soon &middot; 1&ndash;3 months</option>
@@ -145,10 +146,10 @@ const faqLd = {
 
             <fieldset>
               <div class="grid-2">
-                <input type="text" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
-                <input type="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
+                <input type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
+                <input type="email" name="email" placeholder="Email" aria-label="Email" autocomplete="email" required>
               </div>
-              <input type="tel" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel">
+              <input type="tel" name="phone" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel">
             </fieldset>
 
             <div class="submit-row">

@@ -17,12 +17,12 @@ const html = `<style>
     .page-hero h1 em { color: var(--innovia-green); font-style: normal; }
     .page-hero h1 .light { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.55); font-size: 0.48em; letter-spacing: -0.02em; }
     .page-hero .lede { font-size: 17px; line-height: 1.62; color: rgba(255,255,255,0.78); max-width: 56ch; margin: 24px 0 0; }
-    
+
     .page-hero { padding: 56px 0 40px; }
     .page-hero .meta-row { display: flex; gap: 24px; align-items: center; margin: 20px 0 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.18); font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
     .page-hero .meta-row .green { color: var(--innovia-green); }
-  
-  
+
+
     .article-body { padding: 32px 0 96px; }
     .article-body .layout { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
     .article-body .toc { position: sticky; top: 96px; }
@@ -33,21 +33,39 @@ const html = `<style>
     .article-body .toc a::before { content: counter(tocnum, decimal-leading-zero); position: absolute; left: 0; color: var(--innovia-green); font-size: 10px; }
     .article-body .toc a:hover { color: #fff; }
 
-    .article-body .content { max-width: 66ch; }
+    .article-body .content { max-width: 68ch; }
     .article-body .content .lede-graf { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.45; color: #fff; margin: 0 0 32px; letter-spacing: -0.01em; }
     .article-body .content .lede-graf::first-letter { font-family: var(--font-display); font-weight: 900; font-size: 84px; float: left; line-height: 0.8; margin: 6px 14px 0 0; color: var(--innovia-green); }
     .article-body .content h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 38px); color: #fff; letter-spacing: -0.018em; margin: 56px 0 18px; line-height: 1.1; scroll-margin-top: 96px; }
-    .article-body .content h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.008em; margin: 32px 0 10px; }
+    .article-body .content h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.008em; margin: 32px 0 10px; scroll-margin-top: 96px; }
     .article-body .content p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); margin: 0 0 18px; }
+    .article-body .content a:not(.btn) { color: var(--innovia-green); text-decoration: underline; text-underline-offset: 2px; }
+    .article-body .content a:not(.btn):hover { color: #fff; }
     .article-body .content strong { color: #fff; }
     .article-body .content .pull { font-family: var(--font-display); font-weight: 500; font-style: italic; font-size: 24px; line-height: 1.4; color: #fff; padding: 24px 28px; margin: 32px 0; background: rgba(149,208,49,0.06); border-left: 3px solid var(--innovia-green); letter-spacing: -0.005em; }
     .article-body .content .pull cite { display: block; margin-top: 14px; font-family: var(--font-mono); font-style: normal; font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
     .article-body .content ul, .article-body .content ol { padding-left: 24px; margin: 0 0 18px; }
     .article-body .content li { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 8px; }
     .article-body .content .figure { margin: 32px 0; padding: 24px 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); }
-    .article-body .content .figure .cap { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+    .article-body .content .figure .cap { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; display: block; }
     .article-body .content .figure h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff; margin: 0 0 8px; letter-spacing: -0.008em; }
     .article-body .content .figure p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.65); margin: 0 0 6px; }
+
+    /* Comparison tables */
+    .article-body .content .table-wrap { margin: 24px 0; overflow-x: auto; }
+    .article-body .content table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+    .article-body .content th { background: rgba(149,208,49,0.10); color: #fff; text-align: left; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.16); font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+    .article-body .content td { padding: 12px 14px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); line-height: 1.5; vertical-align: top; }
+    .article-body .content td strong { color: #fff; }
+
+    /* State / definition callouts */
+    .article-body .content .callout { margin: 16px 0; padding: 14px 22px; background: rgba(149,208,49,0.05); border-left: 3px solid var(--innovia-green); }
+    .article-body .content .callout p { font-size: 16px; line-height: 1.6; margin: 0; }
+    .article-body .content .callout .state { font-weight: 700; color: #fff; }
+
+    /* Educational disclaimer */
+    .article-body .content .disclaimer { margin: 28px 0; padding: 14px 22px; border-left: 3px solid rgba(255,255,255,0.28); }
+    .article-body .content .disclaimer p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.55); margin: 0; }
 
     .inline-cta { margin: 48px 0; padding: 28px 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; gap: 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
     .inline-cta strong { display: block; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 17px; }
@@ -73,7 +91,7 @@ const html = `<style>
 
   <section class="page-hero">
     <div class="container">
-      
+
       <div class="crumb">
         <a href="/">Innovia</a>
         <span>/</span>
@@ -81,12 +99,12 @@ const html = `<style>
         <span>/</span>
         <span style="color:#fff;">Reserve Study Guide</span>
       </div>
-      <h1>The HOA <em>reserve study</em><br><span class="light">guide every board should keep open.</span></h1>
-      <p class="lede">What a reserve study is, the statutory triggers by state, the funding strategies that actually hold up, and the questions a board should be asking their management company about all of it.</p>
+      <h1>The HOA <em>reserve study</em><br><span class="light">guide: levels, costs &amp; funding strategies.</span></h1>
+      <p class="lede">What a reserve study is, how the three study levels differ, whether your state requires one and how often, what it costs, the funding strategies boards choose between, and what happens when a board skips it.</p>
       <div class="meta-row">
         <span><span class="green">Topic</span> &middot; Financials &amp; Reserves</span>
-        <span><span class="green">Read</span> &middot; <span class="placeholder placeholder-inline">12 min</span></span>
-        <span><span class="green">Updated</span> &middot; <span class="placeholder placeholder-inline">May 2026</span></span>
+        <span><span class="green">Read</span> &middot; 11 min</span>
+        <span><span class="green">Updated</span> &middot; July 2026</span>
       </div>
     </div>
   </section>
@@ -98,60 +116,192 @@ const html = `<style>
           <h6>In this guide</h6>
           <ol>
             <li><a href="#what">What a reserve study is</a></li>
-            <li><a href="#levels">Levels 1, 2, 3</a></li>
-            <li><a href="#triggers">State-by-state triggers</a></li>
+            <li><a href="#levels">Levels 1, 2, and 3</a></li>
+            <li><a href="#requirements">State requirements</a></li>
             <li><a href="#funding">Funding strategies</a></li>
-            <li><a href="#mistakes">Common mistakes</a></li>
-            <li><a href="#asking">Questions to ask</a></li>
+            <li><a href="#cost">What it costs</a></li>
+            <li><a href="#skip">If your board skips it</a></li>
+            <li><a href="#management">Management support</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ol>
         </aside>
 
         <article class="content">
-          <p class="lede-graf">A reserve study is the single most important document on your board&rsquo;s shelf. It tells you what needs replacing, when, and what it will cost &mdash; and whether the dues you&rsquo;re collecting today will cover it.</p>
+          <p class="lede-graf">Your association is staring down a big-ticket repair (the roof, the elevators, the private roads, the pool), and the board isn&rsquo;t certain the money is there. Or a homeowner stood up at the last meeting and asked the question every board quietly dreads: are we actually funded for this? An HOA reserve study is how a board answers that with data instead of guesswork, and it sits at the center of the board&rsquo;s fiduciary duty to plan for the community&rsquo;s major repairs before they arrive.</p>
 
-          <h2 id="what">What a reserve study is.</h2>
-          <p>A reserve study is a forward-looking capital plan: an inventory of every major asset the association is responsible for, a projection of when each will need replacement or major repair, and a funding model showing how the association should accumulate reserves to pay for it without a special assessment.</p>
-          <p>It typically covers a <strong>30-year horizon</strong>, gets updated every 3&ndash;5 years, and is performed by a credentialed reserve specialist (RS or PRA designation).</p>
+          <p>This guide covers what a reserve study is, how the three study levels differ, whether your state requires one and how often, what it costs, the funding strategies boards choose between, and what actually happens when a board skips it. Read it end to end, or jump to the section your board needs today.</p>
 
-          <h2 id="levels">The three levels: 1, 2, and 3.</h2>
-          <p>Reserve studies come in three flavors. Understanding which one your association has &mdash; and which one it needs &mdash; matters.</p>
+          <h2 id="what">What Is an HOA Reserve Study?</h2>
+          <p>An HOA reserve study is a professional assessment of an association&rsquo;s major common-area components paired with a long-term plan to fund their repair or replacement. It answers three questions in one document: what does the association own, when will each item wear out, and how much should the community be saving now to be ready.</p>
+          <p>Every study contains two halves. The <strong>physical analysis</strong> is a component inventory: the analyst identifies the major assets the association must maintain (roofs, paving, siding, elevators, pool equipment, mechanical systems), then estimates each one&rsquo;s remaining useful life and current replacement cost. The <strong>financial analysis</strong> takes that inventory and layers on the numbers: the current reserve balance, the recommended annual contribution, and the &ldquo;percent funded&rdquo; figure that tells a board how healthy its reserve fund really is.</p>
+          <p><strong>A reserve study turns a vague worry about future repairs into a dated, dollar-figured funding plan the board can actually budget around.</strong> It is typically prepared by an independent reserve analyst, often one holding the Reserve Specialist (RS) credential from the Community Associations Institute or the Professional Reserve Analyst (PRA) credential from the Association of Professional Reserve Analysts. In most cases the board commissions the study and the management company coordinates it. The board and manager do not write it themselves, which is what keeps the analysis independent and defensible.</p>
 
-          <div class="figure">
-            <span class="cap">Reference</span>
-            <h4>Level 1: Full study</h4>
-            <p>On-site visual inspection, complete inventory measurement, full financial analysis. Recommended every 5&ndash;7 years.</p>
-            <h4 style="margin-top: 14px;">Level 2: Update with on-site review</h4>
-            <p>Re-inspect, but use existing inventory data. Refresh costs and reserves balance.</p>
-            <h4 style="margin-top: 14px;">Level 3: Update with no site visit</h4>
-            <p>Desk-only refresh of the funding model. Cheapest but least reliable.</p>
+          <h2 id="levels">Level 1, Level 2, and Level 3 Reserve Studies Explained</h2>
+          <p>The &ldquo;level&rdquo; of a reserve study describes how much on-site work the analyst performs, not the quality of the report. All three levels follow the same <a href="https://www.caionline.org/advocacy/public-policies/reserve-study-and-funding/" target="_blank" rel="noopener">CAI National Reserve Study Standards</a>; the difference is whether the analyst is building the study from scratch, updating it with a site visit, or refreshing the numbers from the desk.</p>
+          <p><strong>Most associations commission a full Level 1 study, then keep it current with Level 2 or Level 3 updates in the years between.</strong> A common rhythm is a full study every five years or so, with lighter updates annually or every couple of years to keep the funding plan aligned with real costs. Here is how the three levels compare:</p>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Study level</th>
+                <th>What the analyst does</th>
+                <th>On-site work</th>
+                <th>When to use it</th>
+              </tr>
+              <tr>
+                <td><strong>Level 1 &mdash; Full study</strong></td>
+                <td>Builds the study from scratch: full component inventory, condition assessment, useful-life and replacement-cost estimates, and a multi-year funding plan.</td>
+                <td>Yes &mdash; full on-site inspection and measurement.</td>
+                <td>A first study, or a periodic reset (commonly every ~5 years, or after major changes to the property).</td>
+              </tr>
+              <tr>
+                <td><strong>Level 2 &mdash; Update with site visit</strong></td>
+                <td>Revisits the existing inventory and re-verifies component conditions on site, then updates the financial plan.</td>
+                <td>Yes &mdash; a new visual inspection.</td>
+                <td>Between full studies when a physical re-check is warranted.</td>
+              </tr>
+              <tr>
+                <td><strong>Level 3 &mdash; Update, no site visit</strong></td>
+                <td>Refreshes the financial projections (balances, contributions, inflation, costs) using the prior inventory, without a new inspection.</td>
+                <td>No &mdash; an off-site financial update.</td>
+                <td>Interim years, to keep the funding plan current between site visits.</td>
+              </tr>
+            </table>
+          </div>
+          <p>A quick note on terminology: some providers add a fourth type for brand-new, pre-construction communities. For an established association, the Level 1 through Level 3 framework above is what you will encounter.</p>
+
+          <h2 id="requirements">Do You Need a Reserve Study, and How Often? State Requirements</h2>
+          <p>Many states legally require reserve studies or reserve funding on a set schedule, some only recommend them, but in every state the board&rsquo;s fiduciary duty makes a current study effectively necessary. Reserve study requirements by state vary widely in both the trigger and the timing, so the first job for any board is to confirm what its own state (and its governing documents) demand.</p>
+          <p>As a national baseline, the industry standard, and the cadence lenders such as Fannie Mae and Freddie Mac look for, is a full study kept current within about three years. Below are the current rules in five states with well-defined frameworks. Verify the specifics against the official statute before you rely on them; these laws change, and Florida&rsquo;s in particular has moved several times since 2022.</p>
+
+          <div class="callout">
+            <p><span class="state">In California, boards should know:</span> the Davis-Stirling Act (Civil Code &sect;5550) requires a full reserve study with an on-site visual inspection at least every three years, with an annual review of the study between full updates. Each year the board must also send owners an Assessment and Reserve Funding Disclosure Summary (Civil Code &sect;5570) that reports the community&rsquo;s percent funded. California&rsquo;s reserve study requirements are among the most prescriptive in the country.</p>
           </div>
 
-          <p class="pull">"A board with no reserve study is a board running on luck. A board with a 10-year-old reserve study is a board running on luck that hasn&rsquo;t caught up to them yet."<cite>&mdash; <span class="placeholder placeholder-inline">Member-firm reserve specialist · paraphrased</span></cite></p>
+          <div class="callout">
+            <p><span class="state">In Florida, boards should know:</span> Florida&rsquo;s Structural Integrity Reserve Study (SIRS) law (Fla. Stat. &sect;718.112(2)(g), created by SB 4-D in 2022 and amended by SB 154 in 2023 and HB 913 in 2025) requires condominium and cooperative buildings that are three or more habitable stories to complete a SIRS at least every ten years, covering eight structural components. The initial SIRS compliance deadline was December 31, 2025. For budgets adopted on or after December 31, 2024, owners can no longer vote to waive or reduce reserve funding for those structural components. The SIRS works alongside the milestone inspection program (Fla. Stat. &sect;553.899). Chapter 720 HOAs are treated differently and generally have no equivalent study mandate. Florida HOA reserve study requirements are still settling, so confirm current thresholds and deadlines before acting.</p>
+          </div>
 
-          <h2 id="triggers">State-by-state statutory triggers.</h2>
-          <p><span class="placeholder placeholder-inline">[Section: cover the states with statutory requirements &mdash; California (Davis-Stirling), Florida (post-Surfside), Colorado, Washington, Nevada. Note Federal lending requirements for FHA / Fannie / Freddie eligibility.]</span></p>
+          <div class="callout">
+            <p><span class="state">In Colorado, boards should know:</span> the Colorado Common Interest Ownership Act (CCIOA, C.R.S. &sect;38-33.3-209.5) clearly requires every association to adopt a written reserve study policy, addressing when a study is prepared, whether a funding plan exists, and whether the study is based on both a physical and a financial analysis. Whether Colorado now mandates the study itself on a fixed schedule is genuinely unsettled in current guidance, so a Colorado board should confirm its obligations with association counsel. Either way, the board&rsquo;s fiduciary duty and lender expectations point toward a professional study every three to five years.</p>
+          </div>
+
+          <div class="callout">
+            <p><span class="state">In Washington, boards should know:</span> the Washington Uniform Common Interest Ownership Act (WUCIOA, RCW 64.90.545) requires a reserve study, updated annually, with a full study based on a visual site inspection at least every three years. As of January 1, 2026, this requirement reaches essentially all common interest communities, including older ones formed under the Condominium Act (RCW 64.34) and the Homeowners&rsquo; Associations Act (RCW 64.38), which are being consolidated into WUCIOA by 2028. Narrow exemptions exist (for example, where the study cost would exceed a set share of the budget).</p>
+          </div>
+
+          <div class="callout">
+            <p><span class="state">In Nevada, boards should know:</span> NRS 116.31152 requires common-interest communities to conduct a reserve study at least every five years and to review it annually, and NRS 116.3115 requires associations to fund reserves adequately for the repair and replacement of major common elements.</p>
+          </div>
+
+          <p>These five are illustrative, not exhaustive. Other states set their own intervals, and many communities are bound by CC&amp;Rs or lender requirements that are stricter than state law. When in doubt, treat a current professional study as the standard of care regardless of what the statute&rsquo;s floor happens to be. (For how the board&rsquo;s financial duties fit alongside its other obligations, see our guide to <a href="/board-education/">HOA board member responsibilities</a>.)</p>
 
           <div class="inline-cta">
             <div>
               <strong>Need a manager who actually reads your reserve study?</strong>
-              <span>Innovia-backed companies treat the reserve study as the operating document, not a binder. We&rsquo;ll match you to a member in your area.</span>
+              <span>Innovia-backed companies treat the reserve study as the operating document, not a binder. We&rsquo;ll match you to a member firm in your area.</span>
             </div>
             <a href="/find-a-management-company/#request" class="btn btn-primary">Send the inquiry
               <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </a>
           </div>
 
-          <h2 id="funding">Funding strategies: fully funded, threshold, baseline.</h2>
-          <p><span class="placeholder placeholder-inline">[Section: explain the three funding approaches, with the trade-offs. Include a worked example of how dues change under each.]</span></p>
+          <h2 id="funding">Reserve Funding Strategies: Fully Funded vs. Threshold vs. Baseline</h2>
+          <p>A funding strategy is simply how aggressively an association builds its HOA reserve fund toward the ideal balance. Using the same reserve study, a board can choose among three common approaches, and the choice is really a trade-off between higher contributions now and higher special-assessment risk later.</p>
 
-          <h2 id="mistakes">Common mistakes.</h2>
-          <p><span class="placeholder placeholder-inline">[Section: the five mistakes boards make &mdash; postponing the study, choosing the cheapest reserve specialist, ignoring the funding recommendation, treating the study as static, not informing owners.]</span></p>
+          <div class="callout">
+            <p><span class="state">Percent funded:</span> the ratio of the association&rsquo;s actual reserve balance to its &ldquo;fully funded balance,&rdquo; the amount the fund would hold if the community had been saving in exact proportion to every component&rsquo;s age and expected replacement cost. Industry benchmarks treat roughly 70% or higher as strong and below about 30% as critically underfunded and at high risk of a special assessment.</p>
+          </div>
 
-          <h2 id="asking">Questions every board should ask.</h2>
-          <p><span class="placeholder placeholder-inline">[Section: 8&ndash;10 specific questions a board can ask its management company about how they use the reserve study.]</span></p>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Funding strategy</th>
+                <th>Target</th>
+                <th>Contribution level</th>
+                <th>Special-assessment risk</th>
+              </tr>
+              <tr>
+                <td><strong>Fully / ideal funded</strong></td>
+                <td>Reach roughly 100% funded over the study period.</td>
+                <td>Highest steady contributions.</td>
+                <td>Lowest.</td>
+              </tr>
+              <tr>
+                <td><strong>Threshold funded</strong></td>
+                <td>Keep the balance above a set floor (a chosen dollar amount or percent funded).</td>
+                <td>Moderate.</td>
+                <td>Moderate, depending on where the floor is set.</td>
+              </tr>
+              <tr>
+                <td><strong>Baseline funded</strong></td>
+                <td>Keep the balance just above zero across the plan.</td>
+                <td>Lowest contributions.</td>
+                <td>Highest &mdash; little cushion for surprises.</td>
+              </tr>
+            </table>
+          </div>
+
+          <p><strong>The fully-funded-vs-baseline-funding decision is the single biggest lever a board has over both current dues and future assessment risk.</strong> A baseline plan keeps dues low today but leaves almost no margin, so a bad winter or a cost spike can force an assessment. A fully funded plan costs owners more each month but makes surprise assessments far less likely. Most boards land somewhere in between, and this is exactly the kind of modeling a capable management company can run against your dues before the budget is set. Because reserve contributions flow straight into the annual operating budget, it is worth understanding how the two connect, which we cover in <a href="/board-education/what-is-hoa-management/">HOA management fees explained</a>. Keeping the underlying <a href="/hoa-management-services/">reserve fund accounting</a> clean and current is what makes any of these strategies work in practice.</p>
+
+          <h2 id="cost">How Much Does an HOA Reserve Study Cost?</h2>
+          <p>For most associations, a full HOA reserve study is a four-figure expense, generally ranging from about $1,500 to $8,000, with larger or more complex properties running higher. Small communities with a few shared elements sit at the low end; large or multi-building communities with pools, elevators, and extensive infrastructure can reach $10,000 or more, and specialized work such as a Florida SIRS on a large condo building can run higher still.</p>
+          <p>Several variables move the price: the number of units and components, whether it is a first study or an update, the property type (a high-rise condo takes more analysis than a small single-family HOA), and the region. Updates cost meaningfully less than a full Level 1 study, because the inventory already exists and only the numbers and conditions are being refreshed. A useful benchmark from reserve professionals is that a full study often lands under 1% of the association&rsquo;s annual budget.</p>
+          <p>Treat any figure here as a planning range rather than a quote. <strong>The cost of the study is almost always trivial next to the six-figure special assessments that poor reserve planning tends to produce.</strong> Get at least three written proposals, confirm each specifies whether a site visit is included, and verify the analyst holds an RS or PRA credential.</p>
+
+          <h2 id="skip">What Happens If Your Board Skips the Reserve Study?</h2>
+          <p>Skipping a reserve study, or chronically underfunding reserves, exposes the board to financial, legal, and fiduciary consequences, and it usually ends in the outcome owners resent most: a special assessment or an emergency reserve loan. The reason is simple. Without a study, the board is budgeting blind, and the bill for a failed roof or an aging elevator arrives whether or not the money is there.</p>
+          <p>The specific risks compound on one another:</p>
+          <ul>
+            <li><strong>Surprise special assessments.</strong> When reserves fall short, a five- or six-figure per-unit assessment often becomes the only option, and owners rarely see it coming.</li>
+            <li><strong>Higher-cost emergency borrowing.</strong> A reserve loan taken under pressure costs more than money saved steadily over time.</li>
+            <li><strong>Deferred maintenance that gets worse.</strong> Postponed repairs escalate; a small fix today is a large one tomorrow.</li>
+            <li><strong>Lower property values and harder sales.</strong> Lenders and insurers increasingly scrutinize reserves, and a thin reserve fund can complicate financing for every owner trying to sell or refinance.</li>
+            <li><strong>Compliance penalties.</strong> In mandate states, missing a required study or waiver rule can carry fines and legal exposure.</li>
+            <li><strong>Personal exposure for volunteers.</strong> Failing to plan for known, foreseeable costs can be framed as a breach of the board&rsquo;s fiduciary duty, which is precisely the kind of decision a current study helps directors defend.</li>
+          </ul>
+          <p>None of this is meant to alarm a board so much as to explain why the study is worth commissioning: it is the cheapest insurance a community can buy against its own biggest bills.</p>
+
+          <div class="disclaimer">
+            <p>This guide is educational and is not legal, accounting, or investment advice. Reserve study requirements and funding rules vary by state and change over time. Confirm your association&rsquo;s obligations with a qualified reserve analyst, an HOA attorney, and a CPA licensed in your state before making decisions.</p>
+          </div>
+
+          <h2 id="management">How a Management Company Supports Reserve Planning</h2>
+          <p>A professional management company does not perform the reserve study itself, but it makes the entire process work. The manager coordinates the independent analyst, maintains accurate reserve fund accounting throughout the year, and helps the board translate the study&rsquo;s recommendations into a budget owners will actually approve.</p>
+          <p>That day-to-day support is where an experienced firm earns its keep. <strong>The right management partner keeps reserve fund accounting audit-ready year-round, so the study starts from clean numbers and the funding plan holds up under owner, lender, and regulator scrutiny.</strong> Strong member firms bring dedicated back-office accounting teams that track reserves separately from operating funds, and CMCA, AMS, and PCAM-credentialed managers who understand what the board&rsquo;s fiduciary duty actually requires. When a board is weighing management companies, how a firm handles the reserve study process is one of the questions worth asking directly; our guide on <a href="/solutions/switching-hoa-management/">how to choose an HOA management company</a> includes a checklist for exactly that conversation.</p>
+          <p>This is where Innovia fits, without ever getting between your board and its manager. Innovia is a cooperative of more than 80 independently owned community management companies that collectively manage over 8,000 associations across the country. Innovia does not manage communities or prepare reserve studies; its member firms do. When a board asks Innovia to help, it gets matched with a vetted, independently owned member firm near it, one that chose to stay independent rather than be absorbed by a national consolidator and that is backed by the resources of a nationwide network. On a fiduciary matter like reserves, that combination of local accountability and credentialed, back-office depth is exactly the kind of partner a board wants.</p>
+
+          <div class="inline-cta">
+            <div>
+              <strong>Want a management partner who can keep your reserve accounting audit-ready and turn the study into a fundable budget?</strong>
+              <span>Innovia will match your board with a vetted, independently owned member firm near you. No obligation, no sales pitch.</span>
+            </div>
+            <a href="/find-a-management-company/" class="btn btn-primary">Find a management company
+              <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <h2 id="faq">Frequently Asked Questions</h2>
+
+          <h3>How often should an HOA do a reserve study?</h3>
+          <p>Most associations should complete a full reserve study and then update it every one to three years, and many states set a legal minimum (California, for example, requires a full study with a site inspection at least every three years). The study is most useful when it is refreshed annually against the budget so the funding plan keeps pace with real costs and component conditions.</p>
+
+          <h3>Is a reserve study required by law?</h3>
+          <p>It depends on the state: several require reserve studies or reserve funding on a set schedule, others only recommend them, but a board&rsquo;s fiduciary duty makes a current study advisable everywhere. Check your state&rsquo;s statute and your governing documents, and when in doubt consult a qualified reserve analyst or an HOA attorney about your specific association.</p>
+
+          <h3>What&rsquo;s the difference between a Level 1, 2, and 3 reserve study?</h3>
+          <p>The level reflects how much on-site work the analyst performs. A Level 1 study is a full, from-scratch analysis with an on-site inspection; a Level 2 is an update that includes a new site visit; and a Level 3 is an off-site financial update that refreshes the numbers without a new inspection. Many associations do a Level 1 periodically and use Level 2 or Level 3 updates in between.</p>
+
+          <h3>What happens if an HOA doesn&rsquo;t have enough money in reserves?</h3>
+          <p>The association usually has to levy a special assessment, take out a reserve loan, or defer maintenance, and all three cost owners more and can hurt property values. Thin reserves also draw scrutiny from lenders and insurers, which can make units harder to sell or refinance. A current reserve study is the tool boards use to avoid ending up here.</p>
+
+          <h3>Who prepares an HOA reserve study?</h3>
+          <p>An independent reserve analyst prepares the study, often one holding the RS (Reserve Specialist) or PRA (Professional Reserve Analyst) credential. The board commissions the study, and the management company coordinates the process and maintains the reserve fund accounting. Keeping the analyst independent is what makes the study credible if the board later needs to justify a funding decision to owners.</p>
+
+          <h2 id="bottom-line">The Bottom Line for Your Board</h2>
+          <p>A reserve study is your board&rsquo;s roadmap for funding major repairs without blindsiding owners with a special assessment, and keeping it current is core to the board&rsquo;s fiduciary duty. Understand your state&rsquo;s requirements, pick a funding strategy your community can live with, and treat the study as a living document rather than a one-time box to check. If your board wants a management partner who can keep the reserve accounting audit-ready and turn the study into a budget owners will actually pass, Innovia can <a href="/find-a-management-company/">match you with a vetted, independent member firm near you</a>.</p>
 
           <div class="article-foot">
-            <span>By <span class="placeholder placeholder-inline">Innovia editorial team</span></span>
+            <span>By the Innovia editorial team</span>
             <div class="share">
               <a href="#">LinkedIn</a>
               <a href="#">Email</a>
@@ -167,31 +317,99 @@ const html = `<style>
     <div class="container">
       <h2>Read next.</h2>
       <div class="grid">
-        <a href="/board-education/hoa-governance/">
-          <span class="cat">Governance</span>
-          <h3>HOA Governance: A Board&rsquo;s Quick Reference</h3>
-        </a>
-        <a href="/board-education/hoa-management-fees/">
-          <span class="cat">Financials</span>
-          <h3>HOA Management Fees Explained</h3>
+        <a href="/board-education/what-is-hoa-management/">
+          <span class="cat">HOA Basics</span>
+          <h3>What Is HOA Management?</h3>
         </a>
         <a href="/board-education/hoa-transition-from-developer/">
-          <span class="cat">Transition</span>
-          <h3>HOA Transition from Developer: A Board&rsquo;s Guide</h3>
+          <span class="cat">Turnover</span>
+          <h3>HOA Developer Transition</h3>
+        </a>
+        <a href="/solutions/switching-hoa-management/">
+          <span class="cat">Solutions</span>
+          <h3>Switching HOA Management</h3>
         </a>
       </div>
     </div>
   </section>
 
-  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "HOA Reserve Study Guide: Levels, Costs & Funding Strategies",
+    "description": "A complete guide to HOA reserve studies — what they are, Level 1/2/3 explained, state requirements, costs, and what happens if your board skips one.",
+    "author": { "@type": "Organization", "name": "Innovia Co-op" },
+    "publisher": { "@type": "Organization", "name": "Innovia Co-op" },
+    "mainEntityOfPage": "https://innoviaco-op.com/board-education/hoa-reserve-study/"
+  }
+  </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Innovia", "item": "https://innoviaco-op.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Board Resources", "item": "https://innoviaco-op.com/board-education/" },
+      { "@type": "ListItem", "position": 3, "name": "HOA Reserve Study Guide", "item": "https://innoviaco-op.com/board-education/hoa-reserve-study/" }
+    ]
+  }
+  </script>
 
-  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How often should an HOA do a reserve study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most associations should complete a full reserve study and then update it every one to three years, and many states set a legal minimum (California, for example, requires a full study with a site inspection at least every three years). The study is most useful when it is refreshed annually against the budget so the funding plan keeps pace with real costs and component conditions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is a reserve study required by law?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on the state: several require reserve studies or reserve funding on a set schedule, others only recommend them, but a board's fiduciary duty makes a current study advisable everywhere. Check your state's statute and your governing documents, and when in doubt consult a qualified reserve analyst or an HOA attorney about your specific association."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between a Level 1, 2, and 3 reserve study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The level reflects how much on-site work the analyst performs. A Level 1 study is a full, from-scratch analysis with an on-site inspection; a Level 2 is an update that includes a new site visit; and a Level 3 is an off-site financial update that refreshes the numbers without a new inspection. Many associations do a Level 1 periodically and use Level 2 or Level 3 updates in between."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if an HOA doesn't have enough money in reserves?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The association usually has to levy a special assessment, take out a reserve loan, or defer maintenance, and all three cost owners more and can hurt property values. Thin reserves also draw scrutiny from lenders and insurers, which can make units harder to sell or refinance. A current reserve study is the tool boards use to avoid ending up here."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who prepares an HOA reserve study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An independent reserve analyst prepares the study, often one holding the RS (Reserve Specialist) or PRA (Professional Reserve Analyst) credential. The board commissions the study, and the management company coordinates the process and maintains the reserve fund accounting. Keeping the analyst independent is what makes the study credible if the board later needs to justify a funding decision to owners."
+        }
+      }
+    ]
+  }
+  </script>
 `;
 ---
 <BaseLayout
-  title="The HOA Reserve Study Guide · Innovia Co-op"
-  description="The HOA Reserve Study Guide · Innovia Co-op"
+  title="HOA Reserve Study Guide · Levels, Costs &amp; Funding Strategies | Innovia"
+  description="A complete guide to HOA reserve studies — what they are, Level 1/2/3 explained, state requirements, costs, and what happens if your board skips one."
   ogImage="/assets/og/option-1-type-led.png"
   ctaLabel="Send Inquiry"
   ctaHref="/find-a-management-company/#request"

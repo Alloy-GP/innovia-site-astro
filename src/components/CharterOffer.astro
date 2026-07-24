@@ -15,10 +15,10 @@ import "../styles/charter-offer.css";
         <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op" style="height: 38px;">
       </a>
       <nav>
-        <a href="/why-join">For CAMs</a>
-        <a href="/charter-offer" class="active">The Charter</a>
-        <a href="/about">About</a>
-        <a href="/summit">Summit</a>
+        <a href="/for-cams/why-innovia/">For CAMs</a>
+        <a href="/charter-offer/" class="active">The Charter</a>
+        <a href="/about/">About</a>
+        <a href="/summit/">Summit</a>
       </nav>
       <div class="nav-cta">
         <a href="tel:+18885550192" class="phone">
@@ -99,7 +99,7 @@ import "../styles/charter-offer.css";
                 <span class="role">The cooperative</span>
               </div>
               <div class="val">
-                <div class="was placeholder placeholder-inline">$3,600/qtr</div>
+                <div class="was">$1,500/qtr</div>
                 <div class="now">Included</div>
               </div>
             </div>
@@ -127,20 +127,20 @@ import "../styles/charter-offer.css";
           <div class="t-total">
             <div class="tt-value-row">
               <span class="k">Total program value</span>
-              <span class="v">$24,500</span>
+              <span class="v">$22,400</span>
             </div>
             <div class="tt-rate">
               <div class="lab">Your charter rate
                 <span class="sub">All three forces, activated for your first 90 days</span>
               </div>
               <div class="price">
-                <span class="was">$24,500</span>
+                <span class="was">$22,400</span>
                 <span class="now">$1,500<span class="per">first 90 days</span></span>
               </div>
             </div>
             <div class="tt-save">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-              <span><strong>$23,000</strong> in value, put to work for your firm</span>
+              <span><strong>$20,900</strong> in value, put to work for your firm</span>
             </div>
           </div>
         </div>
@@ -172,14 +172,14 @@ import "../styles/charter-offer.css";
             <p>Membership in Innovia is the spine of the stack. You join a national cooperative of independent CAM companies and immediately tap what no single firm negotiates alone &mdash; peer counsel, a shared vendor program, and real industry benchmarks.</p>
             <ul class="gets">
               <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Elite Community &mdash; a peer council of vetted operators</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vendor Program &mdash; pre-negotiated terms on the line items you already run</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Preferred Vendor Program &mdash; pre-negotiated terms on the line items you already run</li>
               <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Business Growth &mdash; a national lead engine that routes board inquiries to you</li>
               <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Benchmarks across the cooperative &mdash; the median, not a guess</li>
             </ul>
           </div>
           <div class="price">
             <span class="was-lbl">Member dues</span>
-            <div class="was placeholder placeholder-inline">$3,600 / quarter</div>
+            <div class="was">$1,500 / quarter</div>
             <div class="free-badge"><span class="n">Included</span><span class="u">in your charter rate</span></div>
             <p class="term">Dues waived through your charter window. Full member benefits live from day one.</p>
           </div>
@@ -274,7 +274,7 @@ import "../styles/charter-offer.css";
       <div class="sumline">
         <div class="l">
           <span class="k">What it adds up to</span>
-          <div class="v"><span class="placeholder placeholder-inline">$24,500+</span> of launch value, working for one firm in your metro &mdash; <em>$1,500 your first 90 days.</em></div>
+          <div class="v"><span class="placeholder placeholder-inline">$22,400+</span> of launch value, working for one firm in your metro &mdash; <em>$1,500 your first 90 days.</em></div>
         </div>
         <div class="r">
           <a href="#start" class="btn btn-primary">Claim your metro
@@ -517,7 +517,8 @@ import "../styles/charter-offer.css";
           </div>
         </div>
 
-        <form class="lead-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks — we&rsquo;ll be in touch within 5 business days';">
+        <form class="lead-form" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll be in touch within 5 business days.">
+          <input type="hidden" name="source" value="Charter offer — fit-check inquiry">
           <div class="form-head">
             <span class="form-label">Charter inquiry</span>
             <span class="form-count">~2 min</span>
@@ -525,19 +526,19 @@ import "../styles/charter-offer.css";
           <fieldset>
             <legend>About you</legend>
             <div class="grid-2">
-              <input type="text" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
-              <input type="text" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required>
+              <input type="text" name="firstName" placeholder="First name" aria-label="First name" autocomplete="given-name" required>
+              <input type="text" name="lastName" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required>
             </div>
-            <input type="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
+            <input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
           </fieldset>
           <fieldset>
             <legend>About your firm</legend>
             <div class="grid-2">
-              <input type="text" placeholder="Company name" aria-label="Company name" autocomplete="organization" required>
-              <input type="text" placeholder="Your metro (city, state)" aria-label="Your metro" autocomplete="address-level2" required>
+              <input type="text" name="company" placeholder="Company name" aria-label="Company name" autocomplete="organization" required>
+              <input type="text" name="metro" placeholder="Your metro (city, state)" aria-label="Your metro" autocomplete="address-level2" required>
             </div>
             <label class="field">Units under management
-              <select required>
+              <select name="portfolio" required>
                 <option value="">Choose a range</option>
                 <option>Under 1,000</option>
                 <option>1,000&ndash;5,000</option>
@@ -551,32 +552,32 @@ import "../styles/charter-offer.css";
             <legend>Which of these sound like you? <span class="opt">Select any</span></legend>
             <div class="fit-checks">
               <label class="fit-check">
-                <input type="checkbox" data-fit="0" aria-label="I own the firm">
+                <input type="checkbox" name="fit" value="I own the firm" data-fit="0" aria-label="I own the firm">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">I own the firm</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="1" aria-label="Best in my market, or aiming to be">
+                <input type="checkbox" name="fit" value="Best in my market, or aiming to be" data-fit="1" aria-label="Best in my market, or aiming to be">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Best in my market &mdash; or aiming to be</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="2" aria-label="Staying independent">
+                <input type="checkbox" name="fit" value="Staying independent" data-fit="2" aria-label="Staying independent">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Staying independent &mdash; not selling to a national</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="3" aria-label="Want leverage, not a logo">
+                <input type="checkbox" name="fit" value="Want leverage, not a logo" data-fit="3" aria-label="Want leverage, not a logo">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Want leverage, not a logo</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="4" aria-label="I will show up for the cooperative">
+                <input type="checkbox" name="fit" value="Will show up for the cooperative" data-fit="4" aria-label="I will show up for the cooperative">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">I&rsquo;ll show up for the cooperative</span>
               </label>
               <label class="fit-check">
-                <input type="checkbox" data-fit="5" aria-label="Ready to move when the timing is right">
+                <input type="checkbox" name="fit" value="Ready to move when the timing is right" data-fit="5" aria-label="Ready to move when the timing is right">
                 <span class="box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
                 <span class="lbl">Ready to move when the timing&rsquo;s right</span>
               </label>
@@ -585,7 +586,7 @@ import "../styles/charter-offer.css";
           <fieldset>
             <legend>The conversation</legend>
             <label class="field">What&rsquo;s prompting your interest? <span class="opt">Optional</span>
-              <textarea rows="3" placeholder="Growth, vendor terms, banking, owning your market — what&rsquo;s on your mind"></textarea>
+              <textarea name="goal" rows="3" placeholder="Growth, vendor terms, banking, owning your market — what&rsquo;s on your mind"></textarea>
             </label>
           </fieldset>
           <div class="submit-row">
@@ -615,41 +616,40 @@ import "../styles/charter-offer.css";
         <div>
           <h6>The Co-op</h6>
           <ul>
-            <li><a href="/why-join">For CAMs</a></li>
-            <li><a href="/charter-offer">The Charter</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/founders">Our Founders</a></li>
-            <li><a href="/partners">Vendor Partners</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/for-cams/why-innovia/">For CAMs</a></li>
+            <li><a href="/charter-offer/">The Charter</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/about/founders/">Our Founders</a></li>
+            <li><a href="/partners/">Vendor Partners</a></li>
+            <li><a href="/contact/">Contact</a></li>
           </ul>
         </div>
         <div>
           <h6>For Boards</h6>
           <ul>
-            <li><a href="/directory">Find a Management Company</a></li>
-            <li><a href="/board-education-how-it-works">How HOA Management Works</a></li>
-            <li><a href="/spotlight">Member Spotlights</a></li>
-            <li><a href="/testimonials">Testimonials</a></li>
-            <li><a href="/resources">Resources &amp; Guides</a></li>
+            <li><a href="/find-a-management-company/">Find a Management Company</a></li>
+            <li><a href="/board-education/how-hoa-management-works/">How HOA Management Works</a></li>
+            <li><a href="/member-spotlights/">Member Spotlights</a></li>
+            <li><a href="/testimonials/">Testimonials</a></li>
+            <li><a href="/board-education/">Resources &amp; Guides</a></li>
           </ul>
         </div>
         <div>
           <h6>Summit</h6>
           <ul>
-            <li><a href="/summit">Summit 2027</a></li>
-            <li><a href="/summit-2026">2026 Archive</a></li>
+            <li><a href="/summit/">Summit 2027</a></li>
+            <li><a href="/summit/2026/">2026 Archive</a></li>
             <li><a href="https://summit.innoviaco-op.com" target="_blank" rel="noopener">Past Summits</a></li>
           </ul>
         </div>
         <div class="newsletter">
           <h6>Stay in the loop</h6>
           <p>Industry intelligence, summit announcements, and member spotlights &mdash; about once a month.</p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); this.classList.add('submitted');">
-            <input type="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
+          <form class="newsletter-form" data-endpoint="/api/subscribe" data-success="Thanks &mdash; you&rsquo;re on the list.">
+            <input type="email" name="email" placeholder="you@yourcompany.com" aria-label="Email address" required>
             <button type="submit" aria-label="Subscribe">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </button>
-            <span class="newsletter-ok">Thanks &mdash; you&rsquo;re on the list.</span>
           </form>
         </div>
       </div>

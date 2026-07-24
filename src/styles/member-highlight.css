@@ -1,0 +1,197 @@
+/* =========================================================
+   Innovia · Member Highlight pages — shared layer
+   One page per member firm (~30). The "non-cookie-cutter"
+   engine is a single per-member accent set on <body>:
+     style="--m-accent:#C2531C; --m-accent-deep:#9E3F12"
+   Innovia navy is the frame; Innovia green stays the ACTION
+   colour; the member accent carries the firm's personality.
+   ========================================================= */
+
+:root,
+body {
+  /* default member accent — overridden per firm on <body> */
+  --m-accent: #a9aaad;
+  --m-accent-deep: #74757a;
+  --m-tint: color-mix(in srgb, var(--m-accent) 14%, transparent);
+  --m-tint-soft: color-mix(in srgb, var(--m-accent) 7%, transparent);
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+[id] { scroll-margin-top: 96px; }
+
+html body {
+  background: var(--innovia-navy);
+  color: rgba(255,255,255,0.80);
+}
+
+/* ---------- Header (navy variant, matches site) ---------- */
+body.mh .site-header {
+  background: rgba(15,36,71,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+body.mh .site-header .row { display: flex; align-items: center; gap: 24px; height: 76px; }
+body.mh .site-header .brand img { height: 34px; }
+body.mh .site-header nav { margin-left: 14px; display: flex; gap: 26px; align-items: center; }
+body.mh .site-header nav > a {
+  font-family: var(--font-display); font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,0.72); transition: color .15s;
+}
+body.mh .site-header nav > a:hover,
+body.mh .site-header nav > a.active { color: #fff; }
+body.mh .site-header .nav-cta { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+.site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+.site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+body.mh .site-header .member-signin {
+  font-family: var(--font-display); font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.7);
+}
+body.mh .site-header .member-signin:hover { color: #fff; }
+@media (max-width: 1000px){ body.mh .site-header nav { display: none; } }
+
+/* ---------- Breadcrumb ---------- */
+.mh-crumb {
+  display: flex; gap: 9px; align-items: center; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 12px;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+}
+.mh-crumb a { transition: color .15s; }
+.mh-crumb a:hover { color: #fff; }
+.mh-crumb .here { color: #fff; }
+.mh-crumb .verified {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 7px;
+  color: var(--innovia-green);
+}
+.mh-crumb .verified svg { flex: 0 0 auto; }
+
+/* ---------- Member accent eyebrow ---------- */
+.eyebrow.on-accent { color: var(--m-accent); }
+.eyebrow.on-accent .rule-mini { background: var(--m-accent); }
+
+/* ---------- Innovia endorsement ribbon ---------- */
+.mh-endorse {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 10px 16px 10px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-left: 2px solid var(--innovia-green);
+}
+.mh-endorse img { height: 20px; }
+.mh-endorse .txt {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.62); line-height: 1.4;
+}
+.mh-endorse .txt b { color: #fff; font-weight: 700; }
+
+/* ---------- Photo placeholder (client supplies) ---------- */
+.ph {
+  position: relative; overflow: hidden;
+  background:
+    linear-gradient(135deg, var(--innovia-navy) 0%, var(--innovia-navy-deep) 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.ph::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 78% 14%, color-mix(in srgb, var(--m-accent) 30%, transparent) 0%, transparent 46%),
+    radial-gradient(circle at 8% 92%, rgba(149,208,49,0.14) 0%, transparent 44%);
+}
+.ph .ph-mark {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  text-align: center; padding: 24px;
+}
+.ph .ph-mark img { height: 26px; opacity: 0.9; }
+.ph .ph-mark .lbl {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5); max-width: 24ch; line-height: 1.5;
+}
+.ph .ph-corner {
+  position: absolute; top: 12px; left: 12px; z-index: 1;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--m-accent);
+  padding: 4px 8px; border: 1px solid color-mix(in srgb, var(--m-accent) 50%, transparent);
+}
+
+/* ---------- Stat tiles (shared) ---------- */
+.mh-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+.mh-stats .s {
+  padding: 30px 26px; display: flex; flex-direction: column; gap: 8px;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.mh-stats .s:last-child { border-right: 0; }
+.mh-stats .s .v {
+  font-family: var(--font-display); font-weight: 900; letter-spacing: -0.03em;
+  font-size: clamp(34px, 3.4vw, 50px); color: #fff; line-height: 0.95; white-space: nowrap;
+}
+.mh-stats .s .v .u { color: var(--m-accent); font-size: 0.5em; vertical-align: top; margin-left: 1px; }
+.mh-stats .s .k {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.09em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+}
+@media (max-width: 720px){ .mh-stats { grid-template-columns: 1fr 1fr; }
+  .mh-stats .s:nth-child(2){ border-right: 0; }
+  .mh-stats .s:nth-child(-n+2){ border-bottom: 1px solid rgba(255,255,255,0.12); } }
+
+/* ---------- Credential chips ---------- */
+.mh-creds { display: flex; flex-wrap: wrap; gap: 10px; }
+.mh-creds .c {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.78); padding: 8px 13px;
+  border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.03);
+}
+.mh-creds .c svg { color: var(--innovia-green); flex: 0 0 auto; }
+
+/* ---------- "Why Innovia" member quote ---------- */
+.mh-why-quote {
+  background: var(--innovia-navy-deep); position: relative; overflow: hidden;
+}
+.mh-why-quote::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 88% 8%, var(--m-tint) 0%, transparent 42%);
+}
+.mh-why-quote .frame {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 360px; gap: 56px; align-items: center;
+}
+.mh-why-quote blockquote {
+  margin: 0; font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(24px, 2.8vw, 38px); line-height: 1.28; letter-spacing: -0.018em; color: #fff;
+}
+.mh-why-quote blockquote .hl { color: var(--innovia-green); }
+.mh-why-quote .who { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
+.mh-why-quote .who .av {
+  width: 46px; height: 46px; border-radius: 999px; flex: 0 0 auto;
+  background: var(--m-accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+}
+.mh-why-quote .who .nm { font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 15px; }
+.mh-why-quote .who .rl { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.mh-why-quote .aside {
+  border-left: 1px solid rgba(255,255,255,0.14); padding-left: 40px;
+}
+.mh-why-quote .aside .lead-in {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--innovia-green); margin-bottom: 14px;
+}
+.mh-why-quote .aside p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.74); margin: 0; }
+@media (max-width: 860px){ .mh-why-quote .frame { grid-template-columns: 1fr; gap: 32px; }
+  .mh-why-quote .aside { border-left: 0; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 28px; } }
+
+/* ---------- Footer note (member of Innovia) ---------- */
+body.mh .site-footer { background: #0B1B33; }
+.mh-footer-badge {
+  display: inline-flex; flex-direction: column; gap: 5px;
+  padding: 12px 16px; margin-top: 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+  border-left: 2px solid var(--m-accent);
+}
+.mh-footer-badge span {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55); line-height: 1.4;
+}
+.mh-footer-badge b { color: #fff; font-weight: 700; }

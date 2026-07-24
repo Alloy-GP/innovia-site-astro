@@ -10,16 +10,26 @@ export const EMAIL_CONFIG = {
     team: 'Skyler',
   },
 
-  // Both addresses must be from a domain verified in Resend
+  // Both addresses must be from a domain verified in Resend.
+  // Sending runs on the mail.innoviaco-op.com subdomain (isolates sending
+  // reputation from the root, whose real mail is Microsoft 365). Verified &
+  // authorized in Resend 2026-07-24 — live send + delivery confirmed.
   from: {
-    notifications: 'Innovia Co-op <notifications@innoviaco-op.com>',
-    hello:         'Innovia Co-op <hello@innoviaco-op.com>',
+    notifications: 'Innovia Co-op <notifications@mail.innoviaco-op.com>',
+    hello:         'Innovia Co-op <hello@mail.innoviaco-op.com>',
   },
 
   // Everyone here gets a copy of every form submission
   notify: [
     'notifications@innoviaco-op.com',
+    'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
+
+  // CC'd on every internal notification (the office copy) — not customer confirmations
+  notifyCc: ['admin@alloygp.co'],
+
+  // Reply-To on all outbound mail (interim — until the client confirms final routing)
+  replyTo: 'nzuccala@ccaglobal.com',
 
   mailchimp: {
     enabled:     true,      // set false if client has no Mailchimp

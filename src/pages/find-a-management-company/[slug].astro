@@ -2,6 +2,7 @@
 // Dynamic page: one static landing page per member in src/data/members.ts
 // Output URL: /find-a-management-company/<slug>/
 import MemberLanding from "../../components/MemberLanding.astro";
+import ReviewWidget from "../../components/ReviewWidget.astro";
 import { members } from "../../data/members";
 
 // Site runs in `output: 'server'` mode — prerender these data-driven
@@ -26,6 +27,8 @@ const { member } = Astro.props;
     <title>{member.metaTitle}</title>
     <meta name="description" content={member.metaDescription} />
     <link rel="canonical" href={member.canonical} />
+    <!-- Member landing pages not active yet — keep out of the index until launch -->
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" href="/assets/innovia-icon.png" />
     <link rel="apple-touch-icon" href="/assets/innovia-icon.png" />
     <meta property="og:type" content="website" />
@@ -37,5 +40,6 @@ const { member } = Astro.props;
   </head>
   <body data-screen-label="Member Landing">
     <MemberLanding member={member} />
+    <ReviewWidget />
   </body>
 </html>

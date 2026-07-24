@@ -81,7 +81,7 @@ const html = `<style>
     }
     .toc-strap .items {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 0;
       border-left: 1px solid var(--border-subtle);
     }
@@ -718,8 +718,7 @@ const html = `<style>
           <a href="#diagram"><span class="n">01</span><span class="t">The relationship, in a diagram</span></a>
           <a href="#does"><span class="n">02</span><span class="t">What a manager does</span></a>
           <a href="#doesnt"><span class="n">03</span><span class="t">What a manager doesn&rsquo;t do</span></a>
-          <a href="#pricing"><span class="n">04</span><span class="t">What it costs &amp; why</span></a>
-          <a href="#signs"><span class="n">05</span><span class="t">8 signs you have the right one</span></a>
+          <a href="#signs"><span class="n">04</span><span class="t">8 signs you have the right one</span></a>
         </div>
       </div>
     </div>
@@ -963,54 +962,12 @@ const html = `<style>
     </div>
   </section>
 
-  <!-- 04 · PRICING -->
-  <section class="pricing-section" id="pricing">
-    <div class="container">
-      <div class="head">
-        <div>
-          <div class="eyebrow"><span class="num">No. 04</span><span class="rule-mini"></span>What it costs &amp; why</div>
-          <h2>Three pricing shapes you&rsquo;ll see <em>in proposals.</em></h2>
-        </div>
-        <p>HOA management is priced by what&rsquo;s included &mdash; not by what you call it. The three shapes below cover ~95% of proposals you&rsquo;ll receive. <strong>Compare scope, not just sticker price.</strong> The cheapest tier with extras unbundled often costs more in year one than the full-service tier with extras included.</p>
-      </div>
-
-      <div class="pricing-grid">
-        <div class="col">
-          <span class="kind">Tier 01</span>
-          <h4>Financial-only</h4>
-          <span class="range">$<span class="placeholder placeholder-inline">[8&ndash;14]</span><span class="lbl">per door / month</span></span>
-          <p>The cheapest tier. The manager runs the books and the AP/AR, and the board runs everything else. Works for small, self-confident, time-rich boards. Falls apart fast in a transition or a hard year.</p>
-          <span class="what-includes">Includes &middot; bookkeeping, AP, AR, reporting</span>
-        </div>
-        <div class="col feat">
-          <span class="kind">Tier 02 &middot; Recommended</span>
-          <h4>Full-service</h4>
-          <span class="range">$<span class="placeholder placeholder-inline">[18&ndash;28]</span><span class="lbl">per door / month</span></span>
-          <p>The category most established HOAs sit in. All four functions above, with a named community manager and a written scope. The 80/20 of value for the price &mdash; and the structure Innovia members are built for.</p>
-          <span class="what-includes">Includes &middot; financial, governance, ops, communications</span>
-        </div>
-        <div class="col">
-          <span class="kind">Tier 03</span>
-          <h4>On-site / hospitality</h4>
-          <span class="range">$<span class="placeholder placeholder-inline">[40&ndash;90]</span><span class="lbl">per door / month</span></span>
-          <p>An on-site general manager plus front desk, concierge, and resident services. Common for large condo towers, master-planned communities, and luxury developments. Negotiated by line item.</p>
-          <span class="what-includes">Includes &middot; full-service + on-site staffing</span>
-        </div>
-      </div>
-
-      <div class="pricing-footnote">
-        <span class="k">Watch&nbsp;for</span>
-        <p>Many low-tier proposals exclude transfer fees, ARC reviews, statutory mailings, special meeting attendance, late-fee processing, and reserve study coordination &mdash; each charged per occurrence. Ask for a one-year illustrative invoice with extras priced. <span class="placeholder placeholder-inline">[Rate ranges above are national averages and vary materially by state, association size, and amenity complexity.]</span></p>
-      </div>
-    </div>
-  </section>
-
   <!-- 05 · 8 SIGNS CHECKLIST -->
   <section class="checklist-section" id="signs">
     <div class="container">
       <div class="head">
         <div>
-          <div class="eyebrow"><span class="num">No. 05</span><span class="rule-mini"></span>Eight signs you have the right one</div>
+          <div class="eyebrow"><span class="num">No. 04</span><span class="rule-mini"></span>Eight signs you have the right one</div>
           <h2>What a <em>good</em> management company looks like, in practice.</h2>
         </div>
         <p>Use this as a self-check on your current relationship, or as the rubric for the next proposal you compare. None of these are subjective &mdash; each can be checked against your last 90 days of activity.</p>
@@ -1024,8 +981,7 @@ const html = `<style>
         <div class="check"><span class="n">05</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>Reserve health is reviewed annually.</h4><p>The reserve study is updated on the cycle, and a 5-year capital plan exists. Not just a document &mdash; a working tool.</p></div></div>
         <div class="check"><span class="n">06</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>Resident complaints have a trail.</h4><p>Every request is logged, routed, and closed. The board can see status without making calls.</p></div></div>
         <div class="check"><span class="n">07</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>The manager defers on policy.</h4><p>The manager identifies the decision and recommends a path &mdash; and the board makes the call. No unilateral rule-making.</p></div></div>
-        <div class="check"><span class="n">08</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>You know who answers the phone.</h4><p>A named community manager. Not a queue, not a ticket. Continuity for at least 18 months running.</p></div></div>
-        <div class="check"><span class="n">09</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>The company invests in board learning.</h4><p>Webinars, courses, and resources beyond the welcome packet. Education that compounds across terms, not a one-time orientation.</p></div></div>
+        <div class="check"><span class="n">08</span><span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="body"><h4>The company invests in board learning.</h4><p>Webinars, courses, and resources beyond the welcome packet. Education that compounds across terms, not a one-time orientation.</p></div></div>
       </div>
     </div>
   </section>
@@ -1035,10 +991,10 @@ const html = `<style>
     <div class="container">
       <div class="head">
         <div>
-          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 06</span><span class="rule-mini"></span>Where Innovia members are different</div>
+          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 05</span><span class="rule-mini"></span>Where Innovia members are different</div>
           <h2>Same model. <em>Different</em> back-end.</h2>
         </div>
-        <p>Innovia members run the same four functions as every other management company. What changes is what they bring with them: a cooperative-negotiated vendor program, a peer council to escalate hard problems, and a structural alignment that says <strong>this firm owns part of the room your manager comes from.</strong></p>
+        <p>Innovia members are independent firms, and each sets its own service model and pricing &mdash; some offer financial-only, some full-service, some full-service with additional services priced separately. There&rsquo;s no single &ldquo;Innovia standard.&rdquo; What they share is what they bring with them: a cooperative-negotiated vendor program, a peer council to escalate hard problems, and a structural alignment that says <strong>this firm owns part of the room your manager comes from.</strong></p>
       </div>
 
       <div class="three">
@@ -1074,7 +1030,7 @@ const html = `<style>
     <div class="container">
       <div class="frame">
         <div>
-          <div class="eyebrow" style="color: var(--innovia-navy); opacity: 0.65;"><span class="num" style="color: var(--innovia-navy);">No. 07</span><span class="rule-mini"></span>Next step</div>
+          <div class="eyebrow" style="color: var(--innovia-navy); opacity: 0.65;"><span class="num" style="color: var(--innovia-navy);">No. 06</span><span class="rule-mini"></span>Next step</div>
           <h2>Ready to compare <em>real proposals?</em></h2>
           <p class="lead">Tell us about your community in five minutes. We&rsquo;ll route the inquiry to the Innovia-backed firm best positioned to serve your county and property type. One match. No call lists. No spam.</p>
         </div>
@@ -1097,8 +1053,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="How HOA Management Works · Board Education · Innovia Co-op"
-  description="How HOA Management Works · Board Education · Innovia Co-op"
+  title="How HOA Management Works · A Plain-English Guide for Boards | Innovia"
+  description="How professional HOA management actually works — the manager's role, association financials, vendor oversight, and board support, explained for board members."
   ogImage="/assets/og/option-1-type-led.png"
   headerLogo="/assets/logos/innovia-primary.png"
   headerLogoHeight={34}

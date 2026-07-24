@@ -694,7 +694,7 @@ const html = `<style>
           </div>
           <div class="cell">
             <div class="label">Avg. tenure</div>
-            <div class="v placeholder placeholder-inline">22yr</div>
+            <div class="v">22yr</div>
             <div class="note">Management company operating history</div>
           </div>
         </div>
@@ -730,7 +730,8 @@ const html = `<style>
           </div>
         </aside>
 
-        <form class="request-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks \\u2014 we\\u2019ll be in touch within 2 business days';">
+        <form id="wc-board-inquiry" class="request-form" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 2 business days.">
+          <input type="hidden" name="source" value="Find a Management Company — board inquiry">
           <div class="form-head">
             <span class="form-label">Inquiry &middot; HOA / Condo Board</span>
             <span class="form-count">10 fields &middot; ~3 min</span>
@@ -740,15 +741,15 @@ const html = `<style>
             <legend>About your community</legend>
             <div class="grid-2">
               <label>Community name
-                <input type="text" placeholder="e.g. Mariner Cove HOA" autocomplete="organization" required>
+                <input type="text" name="company" placeholder="e.g. Mariner Cove HOA" autocomplete="organization" required>
               </label>
               <label>City, State
-                <input type="text" placeholder="e.g. San Diego, CA" autocomplete="address-level2" required>
+                <input type="text" name="community_location" placeholder="e.g. San Diego, CA" autocomplete="address-level2" required>
               </label>
             </div>
             <div class="grid-2">
               <label>Property type
-                <select required>
+                <select name="property_type" required>
                   <option value="">Choose one</option>
                   <option>Single-family HOA</option>
                   <option>Condominium</option>
@@ -759,7 +760,7 @@ const html = `<style>
                 </select>
               </label>
               <label>Number of units
-                <select required>
+                <select name="units" required>
                   <option value="">Choose a range</option>
                   <option>Under 50</option>
                   <option>50&ndash;150</option>
@@ -775,7 +776,7 @@ const html = `<style>
             <legend>Your situation</legend>
             <div class="grid-2">
               <label>Current management
-                <select required>
+                <select name="current_management" required>
                   <option value="">Choose one</option>
                   <option>Self-managed today</option>
                   <option>Working with a company we&rsquo;re evaluating changing</option>
@@ -785,7 +786,7 @@ const html = `<style>
                 </select>
               </label>
               <label>Timeline
-                <select required>
+                <select name="timeline" required>
                   <option value="">Choose one</option>
                   <option>Immediate &middot; within 30 days</option>
                   <option>Soon &middot; 1&ndash;3 months</option>
@@ -795,7 +796,7 @@ const html = `<style>
               </label>
             </div>
             <label>Anything specific we should know? <span class="opt">Optional</span>
-              <textarea rows="3" placeholder="Concerns about your current arrangement, what matters most to your community, anything we should pass along"></textarea>
+              <textarea name="goal" rows="3" placeholder="Concerns about your current arrangement, what matters most to your community, anything we should pass along"></textarea>
             </label>
           </fieldset>
 
@@ -803,10 +804,10 @@ const html = `<style>
             <legend>How to reach you</legend>
             <div class="grid-2">
               <label>Your name
-                <input type="text" placeholder="Jordan Reyes" autocomplete="name" required>
+                <input type="text" name="name" placeholder="Jordan Reyes" autocomplete="name" required>
               </label>
               <label>Role on the board
-                <select required>
+                <select name="board_role" required>
                   <option value="">Choose one</option>
                   <option>President</option>
                   <option>Vice President</option>
@@ -820,10 +821,10 @@ const html = `<style>
             </div>
             <div class="grid-2">
               <label>Email
-                <input type="email" placeholder="you@yourcommunity.org" autocomplete="email" required>
+                <input type="email" name="email" placeholder="you@yourcommunity.org" autocomplete="email" required>
               </label>
               <label>Phone <span class="opt">Optional</span>
-                <input type="tel" placeholder="(555) 555-0123" autocomplete="tel">
+                <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
               </label>
             </div>
           </fieldset>
@@ -836,51 +837,6 @@ const html = `<style>
             </button>
           </div>
         </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- BROWSE BY STATE -->
-  <section style="padding: 80px 0 0; background: var(--innovia-navy);">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; align-items: start;">
-        <div>
-          <div class="eyebrow on-dark"><span class="num" style="color: rgba(255,255,255,0.5)">No. 03</span><span class="rule-mini"></span>Or browse by state</div>
-          <h2 style="color: #fff; font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.022em; line-height: 1.04; margin: 14px 0 14px; max-width: 14ch;">Prefer to look around first?</h2>
-          <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.74); max-width: 42ch; margin: 0;">Each state hub lists the Innovia-backed companies operating there, with metro-level sub-pages for the major markets.</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-          <a href="/find-a-management-company/texas/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color .15s, background .15s;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">Texas</span>
-            <span style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff; letter-spacing: -0.008em;"><span class="placeholder placeholder-inline">10</span> member companies</span>
-            <span style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">5 metros &middot; <span class="placeholder placeholder-inline">280K+</span> households</span>
-          </a>
-          <a href="/find-a-management-company/colorado/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">Colorado</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff;">8 member companies</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">3 metros</span>
-          </a>
-          <a href="/find-a-management-company/florida/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">Florida</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff;">14 member companies</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">4 metros</span>
-          </a>
-          <a href="/find-a-management-company/north-carolina/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">North Carolina</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff;">7 member companies</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">2 metros</span>
-          </a>
-          <a href="/find-a-management-company/arizona/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">Arizona</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff;">5 member companies</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">2 metros</span>
-          </a>
-          <a href="/find-a-management-company/georgia/" style="padding: 22px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase;">Georgia</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff;">5 member companies</span>
-            <span class="placeholder placeholder-inline" style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;">2 metros</span>
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -926,8 +882,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Looking for a Management Company? · Innovia Co-op"
-  description="Looking for a Management Company? · Innovia Co-op"
+  title="Find an HOA Management Company Near You · 80+ Vetted Members Nationwide | Innovia Co-op"
+  description="Search 80+ vetted, independent community management firms across the U.S. — each backed by Innovia's cooperative model, CMCA-credentialed staff, and proven track record."
   ogImage="/assets/og/option-1-type-led.png"
   ctaLabel="Request a Proposal"
   ctaHref="#request"
@@ -957,20 +913,34 @@ const html = `<style>
         }).addTo(map);
 
         var members = [
-          { lat: 36.12, lng: -119.68, name: 'California',      abbr: 'CA', count: 12 },
-          { lat: 27.99, lng: -81.76,  name: 'Florida',         abbr: 'FL', count: 14 },
-          { lat: 31.50, lng: -99.44,  name: 'Texas',           abbr: 'TX', count: 10 },
-          { lat: 35.63, lng: -79.80,  name: 'North Carolina',  abbr: 'NC', count: 7  },
-          { lat: 42.82, lng: -75.54,  name: 'New York',        abbr: 'NY', count: 9  },
-          { lat: 40.35, lng: -88.99,  name: 'Illinois',        abbr: 'IL', count: 6  },
-          { lat: 39.11, lng: -105.35, name: 'Colorado',        abbr: 'CO', count: 5  },
-          { lat: 32.69, lng: -83.44,  name: 'Georgia',         abbr: 'GA', count: 5  },
-          { lat: 47.54, lng: -121.83, name: 'Washington',      abbr: 'WA', count: 3  },
-          { lat: 40.29, lng: -82.79,  name: 'Ohio',            abbr: 'OH', count: 4  },
-          { lat: 33.73, lng: -111.43, name: 'Arizona',         abbr: 'AZ', count: 3  },
-          { lat: 39.05, lng: -76.64,  name: 'Maryland',        abbr: 'MD', count: 2  },
-          { lat: 40.59, lng: -77.20,  name: 'Pennsylvania',    abbr: 'PA', count: 3  },
-          { lat: 38.44, lng: -92.33,  name: 'Missouri',        abbr: 'MO', count: 3  }
+          { lat: 36.78, lng: -119.42, name: 'California',      abbr: 'CA', count: 13 },
+          { lat: 27.99, lng: -81.76,  name: 'Florida',         abbr: 'FL', count: 9  },
+          { lat: 41.60, lng: -72.70,  name: 'Connecticut',     abbr: 'CT', count: 7  },
+          { lat: 39.05, lng: -76.64,  name: 'Maryland',        abbr: 'MD', count: 6  },
+          { lat: 39.06, lng: -105.31, name: 'Colorado',        abbr: 'CO', count: 5  },
+          { lat: 42.23, lng: -71.53,  name: 'Massachusetts',   abbr: 'MA', count: 5  },
+          { lat: 40.35, lng: -88.99,  name: 'Illinois',        abbr: 'IL', count: 4  },
+          { lat: 32.69, lng: -83.44,  name: 'Georgia',         abbr: 'GA', count: 3  },
+          { lat: 43.45, lng: -71.56,  name: 'New Hampshire',   abbr: 'NH', count: 3  },
+          { lat: 31.05, lng: -97.56,  name: 'Texas',           abbr: 'TX', count: 3  },
+          { lat: 34.05, lng: -111.09, name: 'Arizona',         abbr: 'AZ', count: 2  },
+          { lat: 43.33, lng: -84.54,  name: 'Michigan',        abbr: 'MI', count: 2  },
+          { lat: 46.28, lng: -94.30,  name: 'Minnesota',       abbr: 'MN', count: 2  },
+          { lat: 38.44, lng: -92.33,  name: 'Missouri',        abbr: 'MO', count: 2  },
+          { lat: 35.63, lng: -79.80,  name: 'North Carolina',  abbr: 'NC', count: 2  },
+          { lat: 40.59, lng: -77.20,  name: 'Pennsylvania',    abbr: 'PA', count: 2  },
+          { lat: 39.32, lng: -111.09, name: 'Utah',            abbr: 'UT', count: 2  },
+          { lat: 37.43, lng: -78.66,  name: 'Virginia',        abbr: 'VA', count: 2  },
+          { lat: 44.24, lng: -114.48, name: 'Idaho',           abbr: 'ID', count: 1  },
+          { lat: 44.69, lng: -69.38,  name: 'Maine',           abbr: 'ME', count: 1  },
+          { lat: 41.49, lng: -99.90,  name: 'Nebraska',        abbr: 'NE', count: 1  },
+          { lat: 40.06, lng: -74.41,  name: 'New Jersey',      abbr: 'NJ', count: 1  },
+          { lat: 42.75, lng: -75.50,  name: 'New York',        abbr: 'NY', count: 1  },
+          { lat: 40.29, lng: -82.79,  name: 'Ohio',            abbr: 'OH', count: 1  },
+          { lat: 43.94, lng: -120.55, name: 'Oregon',          abbr: 'OR', count: 1  },
+          { lat: 33.86, lng: -80.95,  name: 'South Carolina',  abbr: 'SC', count: 1  },
+          { lat: 35.75, lng: -86.69,  name: 'Tennessee',       abbr: 'TN', count: 1  },
+          { lat: 44.50, lng: -89.50,  name: 'Wisconsin',       abbr: 'WI', count: 1  }
         ];
 
         members.forEach(function (m) {

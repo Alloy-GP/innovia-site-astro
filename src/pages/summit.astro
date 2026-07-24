@@ -580,13 +580,7 @@ const html = `<style>
       border: 1px solid var(--border-subtle);
       padding: 28px;
       display: flex; flex-direction: column; gap: 14px;
-      text-decoration: none;
       color: inherit;
-      transition: border-color .2s, transform .2s;
-    }
-    .past .edition:hover {
-      border-color: var(--innovia-navy);
-      transform: translateY(-2px);
     }
     .past .edition .yr {
       font-family: var(--font-summit); font-weight: 700;
@@ -880,7 +874,7 @@ const html = `<style>
             <span class="label">2027 Theme</span>
             <h2><em>Benchmarks</em> &amp; Beyond.</h2>
           </div>
-          <p class="strap">Knowing your numbers. Owning your future. Three days of working sessions, founder-only conversations, and the unhurried hospitality the cooperative is known for &mdash; in a city designed for it.</p>
+          <p class="strap">Knowing your numbers. Owning your future. Three days of working sessions, member-only conversations, and the unhurried hospitality the cooperative is known for &mdash; in a city designed for it.</p>
         </div>
       </div>
 
@@ -895,7 +889,7 @@ const html = `<style>
         </div>
         <div class="cell">
           <span class="k">Format</span>
-          <span class="v">3 days &middot; closed-door<small>Founder &amp; senior-operator only</small></span>
+          <span class="v">3 days &middot; closed-door<small>Senior leadership &middot; member-only</small></span>
         </div>
         <div class="cell cta-cell">
           <a href="#notify" class="btn btn-amber">
@@ -958,7 +952,7 @@ const html = `<style>
       <div class="head">
         <span class="label">2027 &middot; Program direction</span>
         <h2>Knowing your numbers.<br><em>Owning your future.</em></h2>
-        <p class="sub">The 2027 program is built around the operating intelligence members have been asking for: real benchmarks, real margin math, and the working sessions to do something with both. The cooperative isn&rsquo;t just for the CEO &mdash; it&rsquo;s for the manager, the controller, the facility lead. Every seat in the room is doing the work.</p>
+        <p class="sub">The 2027 program is built around the operating intelligence members have been asking for: real benchmarks, real margin math, and the working sessions to do something with both. The cooperative isn&rsquo;t just for the CEO &mdash; it&rsquo;s for the manager, the controller, the business development lead. Every seat in the room is doing the work.</p>
       </div>
 
       <div class="pillars">
@@ -966,13 +960,13 @@ const html = `<style>
           <span class="ix">Track 01</span>
           <h3>Benchmarks &amp; Margin Math</h3>
           <p>Member-only operating benchmarks across portfolios, regions, and revenue lines. Pricing, retention, and the spreadsheet you couldn&rsquo;t build alone.</p>
-          <span class="quiet">Closed-door &middot; founders &amp; senior ops</span>
+          <span class="quiet">Closed-door &middot; senior leadership</span>
         </div>
         <div class="pillar">
           <span class="ix">Track 02</span>
-          <h3>The Cinderella Cohorts</h3>
-          <p>Manager, accounting, and facility-lead development &mdash; the roles every CAM company is losing. Dedicated breakouts. Peer cohorts that continue past Sunday.</p>
-          <span class="quiet">Cross-functional &middot; all levels</span>
+          <h3>The Team Development Cohorts</h3>
+          <p>Manager, accounting, and business development &mdash; the roles every CAM company is losing. The Summit stays focused on senior leadership, so these cohorts are served through dedicated programming across the rest of the year.</p>
+          <span class="quiet">Year-round &middot; beyond the Summit</span>
         </div>
         <div class="pillar">
           <span class="ix">Track 03</span>
@@ -1004,7 +998,7 @@ const html = `<style>
         <div class="body">
           <span class="ix">Annual Summit &middot; Feb 4&ndash;6, 2026</span>
           <h3>Lido House, Newport Beach</h3>
-          <p>The 2026 Summit gathered 45 founders and senior operators on the California coast for three days of working sessions across Technology &amp; AI, Financial innovation, HR &amp; Talent Management, and Business Intelligence &mdash; plus the founder-only conversations the cooperative is built around.</p>
+          <p>The 2026 Summit gathered 45 senior leaders on the California coast for three days of working sessions across Technology &amp; AI, Financial innovation, HR &amp; Talent Management, and Business Intelligence &mdash; plus the member-only conversations the cooperative is built around.</p>
           <div class="stats">
             <div><span class="k">Attendees</span><span class="v">45</span></div>
             <div><span class="k">Member cos.</span><span class="v">31</span></div>
@@ -1022,24 +1016,21 @@ const html = `<style>
 
       <!-- Older editions -->
       <div class="archive-row">
-        <a class="edition" href="/summit/2026/">
+        <div class="edition">
           <span class="yr">25</span>
-          <span class="v placeholder placeholder-inline">Park Hyatt &middot; Aviara</span>
-          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">Mar 2025</span></span>
-          <span class="hl placeholder placeholder-inline">The Cinderella program launched here &mdash; manager, accounting, and facility cohorts that members continue today.</span>
-        </a>
-        <a class="edition" href="/summit/2026/">
+          <span class="v">JW Marriott &middot; Downtown Miami</span>
+          <span class="m">Annual Summit &middot; February 2025</span>
+        </div>
+        <div class="edition">
           <span class="yr">24</span>
-          <span class="v placeholder placeholder-inline">Montage &middot; Laguna Beach</span>
-          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">Apr 2024</span></span>
-          <span class="hl placeholder placeholder-inline">The vendor program restructure &mdash; banking, software, and insurance terms rebuilt around member rates.</span>
-        </a>
-        <a class="edition" href="/summit/2026/">
+          <span class="v">JW Marriott Hill Country Resort &middot; San Antonio</span>
+          <span class="m">Annual Summit &middot; February 2024</span>
+        </div>
+        <div class="edition">
           <span class="yr">23</span>
-          <span class="v placeholder placeholder-inline">Rosewood &middot; Miramar</span>
-          <span class="m"><span class="placeholder placeholder-inline">Annual Summit</span> &middot; <span class="placeholder placeholder-inline">May 2023</span></span>
-          <span class="hl placeholder placeholder-inline">First closed-door founder fireside on staying independent in the age of the PE roll-up.</span>
-        </a>
+          <span class="v">Kimpton Hotel Palomar &middot; Phoenix</span>
+          <span class="m">Annual Summit &middot; February 2023</span>
+        </div>
       </div>
 
     </div>
@@ -1054,30 +1045,31 @@ const html = `<style>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 6 12 13 2 6"/><path d="M2 6h20v12H2z"/></svg>
             Stay tuned
           </span>
-          <h2>The invitation list <em>opens first</em> to the people on this list.</h2>
-          <p class="strap">Drop your details and we&rsquo;ll send the venue reveal, dates, and member-referral path the moment they&rsquo;re live. Member companies are notified first; prospective members are looped in after.</p>
+          <h2>Get notified when we <em>reveal Summit 2027</em>.</h2>
+          <p class="strap">Attendance is member-only and by invitation &mdash; but anyone can sign up for the reveal. Drop your details and we&rsquo;ll send the venue reveal and dates the moment they&rsquo;re live. Not yet a member? Seeing what the cooperative is building is the best reason to join.</p>
         </div>
 
-        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Thanks — we\\u2019ll be in touch';">
+        <form id="wc-summit-reveal" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll send the Summit 2027 reveal the moment it&rsquo;s live.">
+          <input type="hidden" name="source" value="Summit 2027 — reveal signup">
           <div class="row">
             <label>First name
-              <input type="text" placeholder="Jordan" autocomplete="given-name" required>
+              <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
             </label>
             <label>Last name
-              <input type="text" placeholder="Reyes" autocomplete="family-name" required>
+              <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
             </label>
           </div>
           <div class="row single">
             <label>Work email
-              <input type="email" placeholder="you@yourcompany.com" autocomplete="email" required>
+              <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
             </label>
           </div>
           <div class="row">
             <label>Company
-              <input type="text" placeholder="Your CAM company" autocomplete="organization" required>
+              <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
             </label>
             <label>Relationship
-              <select required>
+              <select name="relationship" required>
                 <option value="">Choose one</option>
                 <option>Innovia member company</option>
                 <option>Prospective member</option>
@@ -1107,8 +1099,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Innovia Summit 2027 · Coming February · Innovia Co-op"
-  description="Innovia Summit 2027 — the annual closed-door convening of the cooperative. First week of February. A venue designed by the visionary behind Studio 54."
+  title="Innovia Summit 2027 · The Annual CAM Cooperative Conference | Innovia Co-op"
+  description="The Innovia Summit is the annual gathering of CAM owners and senior leaders across the cooperative. Sessions on operations, growth, and the future of community management."
   ogImage="/assets/og/option-1-type-led.png"
   headerVariant="inverse"
   activeNav="summit"

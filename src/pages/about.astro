@@ -360,8 +360,38 @@ const html = `<style>
     .partners h2 { color: #fff; font-size: clamp(34px, 3.8vw, 48px); letter-spacing: -0.024em; }
     .partners .head p { color: rgba(255,255,255,0.74); font-size: 17px; line-height: 1.6; }
     .partners .row {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 14px;
+    }
+    .partners .designation-callout {
+      margin-top: 14px;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 22px; align-items: center;
+      padding: 26px 28px;
+      background: rgba(149,208,49,0.08);
+      border: 1px solid var(--innovia-green);
+    }
+    .partners .designation-callout .dc-seal {
+      width: 54px; height: 54px; flex-shrink: 0;
+      border-radius: 50%;
+      border: 1.5px solid var(--innovia-green);
+      color: var(--innovia-green);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .partners .designation-callout .dc-seal svg { width: 26px; height: 26px; }
+    .partners .designation-callout .dc-kind {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--innovia-green); letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .partners .designation-callout h4 {
+      font-size: 20px; color: #fff; margin: 6px 0 8px;
+      letter-spacing: -0.01em;
+    }
+    .partners .designation-callout p {
+      font-size: 14px; line-height: 1.6;
+      color: rgba(255,255,255,0.75); margin: 0;
+      max-width: 74ch;
     }
     .partners .partner {
       background: rgba(255,255,255,0.04);
@@ -385,37 +415,6 @@ const html = `<style>
       font-size: 13px; line-height: 1.5;
       color: rgba(255,255,255,0.6);
       margin: 0;
-    }
-
-    /* ---------- Recognition (placeholder) ---------- */
-    .recognition {
-      padding: 80px 0;
-      background: var(--innovia-navy-deep);
-      color: rgba(255,255,255,0.6);
-    }
-    .recognition .frame {
-      display: grid; grid-template-columns: 1fr 2fr;
-      gap: 64px; align-items: center;
-    }
-    .recognition .label {
-      font-family: var(--font-display); font-size: 12px;
-      font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .recognition .marks {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-    .recognition .marks .mark-slot {
-      aspect-ratio: 3 / 1;
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.18);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-mono); font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.08em; text-transform: uppercase;
     }
 
     /* ---------- CTA ---------- */
@@ -452,7 +451,7 @@ const html = `<style>
     .cta-finale .actions .btn-outline:hover { background: var(--innovia-navy); color: #fff; }
 
     @media (max-width: 1080px) {
-      .page-hero .below, .origin .layout, .model .head, .governance .head, .partners .head, .recognition .frame, .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
+      .page-hero .below, .origin .layout, .model .head, .governance .head, .partners .head, .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
       .model .principles { grid-template-columns: repeat(2, 1fr); }
       .model .principle:nth-child(2) { border-right: 0; }
       .model .principle:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.12); }
@@ -461,7 +460,6 @@ const html = `<style>
       .governance .gov-card:last-child { border-bottom: 0; }
       .governance .gov-creed { grid-template-columns: 1fr; gap: 14px; }
       .partners .row { grid-template-columns: repeat(2, 1fr); }
-      .recognition .marks { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 
@@ -552,7 +550,7 @@ const html = `<style>
         <div class="principle">
           <div class="num">01</div>
           <h4>Member-owned</h4>
-          <p>Every member company has a stake in the cooperative. No outside investors. No PE backing. <span class="placeholder placeholder-inline">[Specific governance &amp; equity details to confirm with client.]</span></p>
+          <p>Every member company has a stake in the cooperative. No outside investors. No PE backing.</p>
           <span class="meta">P · 01 · Structure</span>
         </div>
         <div class="principle">
@@ -563,9 +561,9 @@ const html = `<style>
         </div>
         <div class="principle">
           <div class="num">03</div>
-          <h4>Member-governed</h4>
-          <p>An elected member council sets the annual program, votes on vendor lineup changes, and steers the cooperative&rsquo;s direction. <span class="placeholder placeholder-inline">[Council composition and term details TBD.]</span></p>
-          <span class="meta">P · 03 · Governance</span>
+          <h4>Member-driven</h4>
+          <p>The cooperative&rsquo;s initiatives come from the members themselves. Priorities, the annual program, and the vendor lineup take shape from what member companies ask for &mdash; not from a leadership team acting on its own.</p>
+          <span class="meta">P · 03 · Direction</span>
         </div>
         <div class="principle">
           <div class="num">04</div>
@@ -585,27 +583,27 @@ const html = `<style>
           <div class="eyebrow"><span class="num">No. 03</span><span class="rule-mini"></span>Governance</div>
           <h2 style="margin-top: 14px;">How the cooperative <em>is run.</em></h2>
         </div>
-        <p>Decisions are made <strong>by</strong> the member companies, not for them. The cooperative has no outside investors, no PE backing, and no leadership team that exists separately from the membership. Every direction the co-op takes runs through the member council and a one-company-one-vote.</p>
+        <p>Decisions are made <strong>by</strong> the member companies, not for them. The cooperative has no outside investors, no PE backing, and no leadership team that exists separately from the membership. Every direction the co-op takes is shaped by the members it serves.</p>
       </div>
 
       <div class="gov-grid">
         <article class="gov-card">
           <div class="gov-num">01</div>
-          <h4>The Member Council</h4>
-          <p>An elected council of member-company founders and senior operators that sets the annual program, votes on vendor lineup, and steers the cooperative&rsquo;s long-term direction. <span class="placeholder placeholder-inline">[Composition: # of seats, term length, election cycle &mdash; to confirm with client.]</span></p>
+          <h4>Member-Led Direction</h4>
+          <p>Member-company founders and senior operators set the annual program, shape the vendor lineup, and steer the cooperative&rsquo;s long-term direction together &mdash; guided by what the membership needs, not handed down from above.</p>
           <span class="gov-tag">Strategy &middot; Program &middot; Vendor lineup</span>
         </article>
         <article class="gov-card">
           <div class="gov-num">02</div>
-          <h4>One company, one vote</h4>
-          <p>Cooperative-wide matters &mdash; new admissions, governance changes, the annual plan, and the vendor program &mdash; carry equal voting weight for every member company. Portfolio size doesn&rsquo;t buy more votes; it never has.</p>
-          <span class="gov-tag">Admissions &middot; Plan &middot; Governance</span>
+          <h4>One company, one voice</h4>
+          <p>Cooperative-wide matters &mdash; new admissions, the annual plan, and the vendor program &mdash; carry equal weight for every member company. Portfolio size doesn&rsquo;t buy more influence; it never has.</p>
+          <span class="gov-tag">Admissions &middot; Plan &middot; Program</span>
         </article>
         <article class="gov-card">
           <div class="gov-num">03</div>
-          <h4>The Annual Cooperative Report</h4>
-          <p>Published each <span class="placeholder placeholder-inline">[month]</span> and distributed to every member company. Includes member-rated vendor performance, financial summary, the year&rsquo;s wins, and the open questions going into the next Summit. The full member council and operating roster is listed inside.</p>
-          <span class="gov-tag">Transparency &middot; Financials &middot; Council roster</span>
+          <h4>One Member Portal</h4>
+          <p>A single place where every initiative, working group, and cooperative resource lives &mdash; so members can see what&rsquo;s in motion, jump into collaboration, and keep the whole cooperative in view year-round.</p>
+          <span class="gov-tag">Initiatives &middot; Collaboration &middot; Resources</span>
         </article>
       </div>
 
@@ -642,25 +640,15 @@ const html = `<style>
           <h4>Alloy Growth Partners</h4>
           <p>Brand strategy, content, and the rebuild of this site. Alloy GP helps the cooperative speak to two audiences at once without losing the peer-to-peer register.</p>
         </article>
-        <article class="partner">
-          <span class="kind">Industry Affiliation</span>
-          <h4 class="placeholder placeholder-inline">[CAI affiliation, etc.]</h4>
-          <p class="placeholder placeholder-inline">[Confirm CAI member status, AAMC participation, and any other industry affiliations to feature here.]</p>
-        </article>
       </div>
-    </div>
-  </section>
-
-  <!-- RECOGNITION (placeholder) -->
-  <section class="recognition">
-    <div class="container">
-      <div class="frame">
-        <span class="label">As featured in &nbsp;·&nbsp; <span class="placeholder placeholder-inline">[Press &amp; industry coverage TBD]</span></span>
-        <div class="marks">
-          <div class="mark-slot">Press logo 01</div>
-          <div class="mark-slot">Press logo 02</div>
-          <div class="mark-slot">Press logo 03</div>
-          <div class="mark-slot">Press logo 04</div>
+      <div class="designation-callout">
+        <span class="dc-seal" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5"/></svg>
+        </span>
+        <div class="dc-body">
+          <span class="dc-kind">The designation</span>
+          <h4>Innovia Business Partner</h4>
+          <p>Not every vendor makes the cut. The Innovia Business Partner designation marks the companies &mdash; like those above &mdash; that have been vetted for the community management industry and meet the cooperative&rsquo;s standards. It signals preferred terms and proven fit: a place partners earn through performance, not one they buy.</p>
         </div>
       </div>
     </div>
@@ -694,8 +682,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="About · Innovia Co-op"
-  description="About · Innovia Co-op"
+  title="About Innovia Co-op · A Division of CCA Global Partners | Cooperative Pioneers Since 1984"
+  description="Founded by Cooperative Hall of Fame inductees and operating under CCA Global Partners since 1984. Learn how Innovia's cooperative model serves 80+ independent community management firms."
   ogImage="/assets/og/option-1-type-led.png"
   activeNav="about"
   ctaLabel="Schedule a Conversation"

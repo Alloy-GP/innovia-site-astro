@@ -60,7 +60,7 @@ const html = `<style>
         <span style="color:#fff;">Schedule a Conversation</span>
       </div>
       <h1>Schedule a <em>conversation.</em><span class="light">No slide deck. No sequence. An honest read.</span></h1>
-      <p class="lede">A 30-minute call with a member-owner of the cooperative. Confidential. We route your inquiry to the founder closest to your region and your situation. Five business-day response.</p>
+      <p class="lede">A 30-minute call with the Innovia team. Confidential. We read your inquiry and get back to you directly. Response within 24&ndash;48 hours.</p>
     </div>
   </section>
 
@@ -72,23 +72,23 @@ const html = `<style>
           <p>Innovia is invitation-only. Conversations are confidential, low-pressure, and always lead with the cooperative&rsquo;s working questions: what your company is up against, what you already have figured out, and whether the cooperative would actually move the needle.</p>
           <div class="how">
             <div class="step"><span class="ix">01</span><div><h5>You tell us about your company.</h5><p>Headquarters, portfolio size, the line items where you wish you had more leverage.</p></div></div>
-            <div class="step"><span class="ix">02</span><div><h5>We route you to a member-owner.</h5><p>Not a salesperson. A founder in or near your region whose company looks like yours.</p></div></div>
-            <div class="step"><span class="ix">03</span><div><h5>You take the call if it fits.</h5><p>Within five business days. If now isn&rsquo;t the moment, we keep you on the Summit list.</p></div></div>
+            <div class="step"><span class="ix">02</span><div><h5>You talk with the Innovia team.</h5><p>Not a salesperson. A conversation with the Innovia team about your company and whether the cooperative fits.</p></div></div>
+            <div class="step"><span class="ix">03</span><div><h5>You take the call if it fits.</h5><p>We&rsquo;ll be in touch within 24&ndash;48 hours. If now isn&rsquo;t the moment, we keep you on the Summit list.</p></div></div>
           </div>
         </div>
-        <form onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Thanks \\u2014 we\\u2019ll be in touch';">
+        <form id="wc-schedule-lead" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 24&ndash;48 hours.">
           <div class="head"><span>Member-company inquiry</span><span style="color:rgba(255,255,255,0.5);">10 fields &middot; ~3 min</span></div>
           <fieldset><legend>About you</legend>
-            <div class="row"><label>First name<input type="text" placeholder="Jordan" required></label><label>Last name<input type="text" placeholder="Reyes" required></label></div>
-            <div class="row"><label>Work email<input type="email" placeholder="you@yourcompany.com" required></label><label>Phone<input type="tel" placeholder="(555) 555-0123"></label></div>
+            <div class="row"><label>First name<input type="text" name="firstName" placeholder="Jordan" required></label><label>Last name<input type="text" name="lastName" placeholder="Reyes" required></label></div>
+            <div class="row"><label>Work email<input type="email" name="email" placeholder="you@yourcompany.com" required></label><label>Phone<input type="tel" name="phone" placeholder="(555) 555-0123"></label></div>
           </fieldset>
           <fieldset><legend>About your company</legend>
-            <div class="row"><label>Company name<input type="text" required></label><label>Headquartered<input type="text" placeholder="City, State" required></label></div>
-            <div class="row"><label>Portfolio size<select required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label><label>States we operate in<input type="text" placeholder="e.g. CA, NV, AZ" required></label></div>
+            <div class="row"><label>Company name<input type="text" name="company" required></label><label>Headquartered<input type="text" name="hq" placeholder="City, State" required></label></div>
+            <div class="row"><label>Portfolio size<select name="portfolio" required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label><label>States we operate in<input type="text" name="states" placeholder="e.g. CA, NV, AZ" required></label></div>
           </fieldset>
           <fieldset><legend>The conversation</legend>
-            <label>Were you referred by a member?<input type="text" placeholder="Member company or founder name"></label>
-            <label>What&rsquo;s prompting the conversation?<textarea rows="3" placeholder="Margin, talent, vendor terms, the long view — what's on your mind"></textarea></label>
+            <label>Were you referred by a member?<input type="text" name="referred_by" placeholder="Member company or founder name"></label>
+            <label>What&rsquo;s prompting the conversation?<textarea name="goal" rows="3" placeholder="Margin, talent, vendor terms, the long view — what's on your mind"></textarea></label>
           </fieldset>
           <button type="submit">Schedule a Conversation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
@@ -105,8 +105,8 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Schedule a Conversation · Innovia Co-op"
-  description="Schedule a Conversation · Innovia Co-op"
+  title="Schedule a Conversation · Innovia Co-op Membership for Independent CAM Firms"
+  description="Independent CAM owners: book an introductory conversation with Innovia. Membership is by introduction — we'll cover fit, the Three Pillars, and what membership unlocks."
   ogImage="/assets/og/option-1-type-led.png"
   headerVariant="inverse"
   activeNav="cams"
