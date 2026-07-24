@@ -34,7 +34,11 @@ export default defineConfig({
   // TEMP: dev toolbar hidden for presentation — remove to re-enable.
   devToolbar: { enabled: false },
 
-  // Prevents CSRF errors when testing on vercel.app before custom domain is live
+  // MUST stay false: Astro's checkOrigin is incompatible with the Vercel
+  // serverless adapter — it 403s EVERY form POST, even legitimate same-origin
+  // ones (the adapter's internal request URL never matches the public Origin).
+  // Verified 2026-07-24: enabling it breaks all forms. For abuse protection use
+  // honeypots / rate limiting in the API routes instead, not Origin checking.
   security: { checkOrigin: false },
 
   build: {

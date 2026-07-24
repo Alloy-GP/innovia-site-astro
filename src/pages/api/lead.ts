@@ -80,12 +80,16 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Confirmation to sender
     try {
+      // Board inquiries (Find a Management Company) get service-oriented copy;
+      // CAM-owner leads get the peer/independence voice.
+      const isBoard = /board|management company/i.test(source);
+      const leadCopy = isBoard ? EMAIL_CONFIG.copy.board : EMAIL_CONFIG.copy.lead;
       await resend.emails.send({
         from: EMAIL_CONFIG.from.hello,
         to: email,
         replyTo: EMAIL_CONFIG.replyTo,
-        subject: EMAIL_CONFIG.copy.lead.confirmSubject,
-        html: EMAIL_CONFIG.copy.lead.confirmBody(name, company, EMAIL_CONFIG.brand.url),
+        subject: leadCopy.confirmSubject,
+        html: leadCopy.confirmBody(name, company, EMAIL_CONFIG.brand.url),
       });
     } catch (err) {
       console.error('Resend confirm error:', err);

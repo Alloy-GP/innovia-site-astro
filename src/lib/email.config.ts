@@ -37,26 +37,40 @@ export const EMAIL_CONFIG = {
   },
 
   copy: {
+    // Voice per the Innovia master brief: trusted peer, not a vendor. Independence
+    // is core — the cooperative empowers, it doesn't absorb. Clear over clever.
     contact: {
-      confirmSubject: 'We received your message',
+      confirmSubject: 'Thanks for reaching out',
       confirmBody: (name: string, _siteUrl: string) =>
         `<p>Hi ${name},</p>
-        <p>Thanks for reaching out. We typically respond within 1 business day.</p>
-        <p>— Skyler</p>`,
+        <p>Thanks for reaching out &mdash; your message is with the cooperative office, and someone from our team will get back to you within one business day.</p>
+        <p>&mdash; Innovia Co-op</p>`,
     },
+    // CAM-owner leads (Request an Introduction, Schedule a Conversation, Summit).
     lead: {
-      confirmSubject: "Thanks — we'll be in touch",
-      confirmBody: (name: string, company: string, siteUrl: string) =>
+      confirmSubject: 'Thanks for reaching out',
+      confirmBody: (name: string, company: string, _siteUrl: string) =>
         `<p>Hi ${name},</p>
-        <p>We received your info and someone will reach out shortly to discuss what ${company || 'your business'} needs.</p>
-        <p>— Skyler</p>`,
+        <p>Thanks for reaching out. Your note is with the cooperative office, and someone from our team &mdash; an operator who runs a firm like yours &mdash; will follow up personally to talk through what the cooperative could mean for ${company || 'your company'}.</p>
+        <p>Independence backed by the power of a nationwide network.</p>
+        <p>&mdash; Innovia Co-op</p>`,
+    },
+    // HOA / condo board inquiries (Find a Management Company). Service-oriented —
+    // the board engages with the matched member firm, not with Innovia.
+    board: {
+      confirmSubject: 'We have your inquiry',
+      confirmBody: (name: string, company: string, _siteUrl: string) =>
+        `<p>Hi ${name},</p>
+        <p>Thanks &mdash; we have your inquiry${company ? ` for ${company}` : ''}. We&rsquo;ll match your community with the Innovia member firm best positioned to serve it, and they&rsquo;ll reach out within two business days.</p>
+        <p>One introduction. No call lists.</p>
+        <p>&mdash; Innovia Co-op</p>`,
     },
     subscribe: {
       confirmSubject: "You're on the list",
       confirmBody: (name: string) =>
         `<p>Hi${name ? ` ${name}` : ''},</p>
-        <p>Thanks for subscribing. We'll be in touch soon.</p>
-        <p>— Skyler</p>`,
+        <p>You&rsquo;re in. When we&rsquo;ve got something genuinely useful for independent operators &mdash; practical guidance, what&rsquo;s working across the network, member insights worth borrowing &mdash; it&rsquo;ll come from us. No filler.</p>
+        <p>&mdash; Innovia Co-op</p>`,
     },
   },
 };
