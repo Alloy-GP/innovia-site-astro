@@ -543,23 +543,31 @@ const html = `<style>
       border-bottom: 1px solid rgba(255,255,255,0.10);
       width: 100%;
     }
-    .request-form label {
-      display: flex; flex-direction: column;
-      gap: 6px;
-      font-family: var(--font-mono); font-size: 11px;
-      color: rgba(255,255,255,0.65);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .request-form .fld { position: relative; }
+    .request-form .fld > label {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      display: block; margin: 0; padding: 0 5px; white-space: nowrap;
+      font-family: var(--font-body); font-size: 15px;
+      color: rgba(255,255,255,0.42); letter-spacing: 0; text-transform: none;
+      background: transparent; pointer-events: none;
+      transition: top .14s ease, font-size .14s ease, color .14s ease, background .14s ease;
     }
-    .request-form label .opt {
-      font-family: var(--font-body);
-      font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.04em;
-      text-transform: none;
-      font-style: italic;
-      margin-left: 8px;
+    .request-form .fld-textarea > label { top: 20px; transform: none; }
+    .request-form .fld > input:focus ~ label,
+    .request-form .fld > input:not(:placeholder-shown) ~ label,
+    .request-form .fld > textarea:focus ~ label,
+    .request-form .fld > textarea:not(:placeholder-shown) ~ label,
+    .request-form .fld-select > select:focus ~ label,
+    .request-form .fld-select > select:valid ~ label {
+      top: 0; transform: translateY(-50%);
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.62); background: #213b64;
     }
+    .request-form .fld > input:focus ~ label,
+    .request-form .fld > textarea:focus ~ label,
+    .request-form .fld-select > select:focus ~ label { color: var(--innovia-green); }
+    .request-form .rq { color: var(--innovia-green); font-style: normal; margin-left: 3px; }
     .request-form .grid-2 {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 14px;
@@ -591,6 +599,13 @@ const html = `<style>
       border-color: var(--innovia-green);
       box-shadow: 0 0 0 3px rgba(149,208,49,0.22);
     }
+    .request-form select {
+      -webkit-appearance: none; -moz-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aab3c5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 40px; cursor: pointer;
+    }
+    .request-form select option { color: #13203D; }
     .request-form input::placeholder,
     .request-form textarea::placeholder { color: rgba(255,255,255,0.4); }
     .request-form .submit-row {
@@ -740,92 +755,33 @@ const html = `<style>
           <fieldset>
             <legend>About your community</legend>
             <div class="grid-2">
-              <label>Community name
-                <input type="text" name="company" placeholder="e.g. Mariner Cove HOA" autocomplete="organization" required>
-              </label>
-              <label>City, State
-                <input type="text" name="community_location" placeholder="e.g. San Diego, CA" autocomplete="address-level2" required>
-              </label>
+              <div class="fld"><input type="text" id="fm-community" name="company" placeholder=" " autocomplete="organization" required><label for="fm-community">Community name<i class="rq">*</i></label></div>
+              <div class="fld"><input type="text" id="fm-loc" name="community_location" placeholder=" " autocomplete="address-level2" required><label for="fm-loc">City, State<i class="rq">*</i></label></div>
             </div>
             <div class="grid-2">
-              <label>Property type
-                <select name="property_type" required>
-                  <option value="">Choose one</option>
-                  <option>Single-family HOA</option>
-                  <option>Condominium</option>
-                  <option>Townhome / planned development</option>
-                  <option>Master-planned community</option>
-                  <option>Mixed-use</option>
-                  <option>Other</option>
-                </select>
-              </label>
-              <label>Number of units
-                <select name="units" required>
-                  <option value="">Choose a range</option>
-                  <option>Under 50</option>
-                  <option>50&ndash;150</option>
-                  <option>150&ndash;400</option>
-                  <option>400&ndash;1,000</option>
-                  <option>Over 1,000</option>
-                </select>
-              </label>
+              <div class="fld fld-select"><select id="fm-ptype" name="property_type" required><option value="" selected hidden></option><option>Single-family HOA</option><option>Condominium</option><option>Townhome / planned development</option><option>Master-planned community</option><option>Mixed-use</option><option>Other</option></select><label for="fm-ptype">Property type<i class="rq">*</i></label></div>
+              <div class="fld fld-select"><select id="fm-units" name="units" required><option value="" selected hidden></option><option>Under 50</option><option>50&ndash;150</option><option>150&ndash;400</option><option>400&ndash;1,000</option><option>Over 1,000</option></select><label for="fm-units">Number of units<i class="rq">*</i></label></div>
             </div>
           </fieldset>
 
           <fieldset>
             <legend>Your situation</legend>
             <div class="grid-2">
-              <label>Current management
-                <select name="current_management" required>
-                  <option value="">Choose one</option>
-                  <option>Self-managed today</option>
-                  <option>Working with a company we&rsquo;re evaluating changing</option>
-                  <option>Between management companies</option>
-                  <option>Newly forming / pre-management</option>
-                  <option>Just exploring</option>
-                </select>
-              </label>
-              <label>Timeline
-                <select name="timeline" required>
-                  <option value="">Choose one</option>
-                  <option>Immediate &middot; within 30 days</option>
-                  <option>Soon &middot; 1&ndash;3 months</option>
-                  <option>This year &middot; 3&ndash;12 months</option>
-                  <option>Just exploring</option>
-                </select>
-              </label>
+              <div class="fld fld-select"><select id="fm-curmgmt" name="current_management" required><option value="" selected hidden></option><option>Self-managed today</option><option>Working with a company we&rsquo;re evaluating changing</option><option>Between management companies</option><option>Newly forming / pre-management</option><option>Just exploring</option></select><label for="fm-curmgmt">Current management<i class="rq">*</i></label></div>
+              <div class="fld fld-select"><select id="fm-timeline" name="timeline" required><option value="" selected hidden></option><option>Immediate &middot; within 30 days</option><option>Soon &middot; 1&ndash;3 months</option><option>This year &middot; 3&ndash;12 months</option><option>Just exploring</option></select><label for="fm-timeline">Timeline<i class="rq">*</i></label></div>
             </div>
-            <label>Anything specific we should know? <span class="opt">Optional</span>
-              <textarea name="goal" rows="3" placeholder="Concerns about your current arrangement, what matters most to your community, anything we should pass along"></textarea>
-            </label>
+            <div class="fld fld-textarea"><textarea id="fm-goal" name="goal" rows="3" placeholder=" "></textarea><label for="fm-goal">Anything specific we should know?</label></div>
           </fieldset>
 
           <fieldset>
             <legend>How to reach you</legend>
             <div class="grid-2">
-              <label>Your name
-                <input type="text" name="name" placeholder="Jordan Reyes" autocomplete="name" required>
-              </label>
-              <label>Role on the board
-                <select name="board_role" required>
-                  <option value="">Choose one</option>
-                  <option>President</option>
-                  <option>Vice President</option>
-                  <option>Treasurer</option>
-                  <option>Secretary</option>
-                  <option>Board member</option>
-                  <option>Property manager / staff</option>
-                  <option>Other</option>
-                </select>
-              </label>
+              <div class="fld"><input type="text" id="fm-name" name="name" placeholder=" " autocomplete="name" required><label for="fm-name">Your name<i class="rq">*</i></label></div>
+              <div class="fld fld-select"><select id="fm-role" name="board_role" required><option value="" selected hidden></option><option>President</option><option>Vice President</option><option>Treasurer</option><option>Secretary</option><option>Board member</option><option>Property manager / staff</option><option>Other</option></select><label for="fm-role">Role on the board<i class="rq">*</i></label></div>
             </div>
             <div class="grid-2">
-              <label>Email
-                <input type="email" name="email" placeholder="you@yourcommunity.org" autocomplete="email" required>
-              </label>
-              <label>Phone <span class="opt">Optional</span>
-                <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
-              </label>
+              <div class="fld"><input type="email" id="fm-email" name="email" placeholder=" " autocomplete="email" required><label for="fm-email">Email<i class="rq">*</i></label></div>
+              <div class="fld"><input type="tel" id="fm-phone" name="phone" placeholder=" " autocomplete="tel"><label for="fm-phone">Phone</label></div>
             </div>
           </fieldset>
 

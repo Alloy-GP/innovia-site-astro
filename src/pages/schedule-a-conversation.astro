@@ -34,10 +34,18 @@ const html = `<style>
     .lead-section form .head { display: flex; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.14); margin-bottom: 24px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--innovia-green); }
     .lead-section form fieldset { border: 0; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 14px; }
     .lead-section form legend { font-family: var(--font-display); font-weight: 700; font-size: 13px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 0 8px; border-bottom: 1px solid rgba(255,255,255,0.10); width: 100%; margin-bottom: 4px; }
-    .lead-section form label { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; text-transform: uppercase; }
+    .lead-section form .fld { position: relative; }
+    .lead-section form .fld > input, .lead-section form .fld > select, .lead-section form .fld > textarea { width: 100%; box-sizing: border-box; }
+    .lead-section form .fld > label { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); display: block; margin: 0; padding: 0 5px; white-space: nowrap; font-family: var(--font-body); font-size: 15px; color: rgba(255,255,255,0.42); letter-spacing: 0; text-transform: none; background: transparent; pointer-events: none; transition: top .14s ease, font-size .14s ease, color .14s ease, background .14s ease; }
+    .lead-section form .fld-textarea > label { top: 20px; transform: none; }
+    .lead-section form .fld > input:focus ~ label, .lead-section form .fld > input:not(:placeholder-shown) ~ label, .lead-section form .fld > textarea:focus ~ label, .lead-section form .fld > textarea:not(:placeholder-shown) ~ label, .lead-section form .fld-select > select:focus ~ label, .lead-section form .fld-select > select:valid ~ label { top: 0; transform: translateY(-50%); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.62); background: #213b64; }
+    .lead-section form .fld > input:focus ~ label, .lead-section form .fld > textarea:focus ~ label, .lead-section form .fld-select > select:focus ~ label { color: var(--innovia-green); }
+    .lead-section form .rq { color: var(--innovia-green); font-style: normal; margin-left: 3px; }
     .lead-section form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .lead-section form input, .lead-section form select, .lead-section form textarea { background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.18); padding: 13px 14px; color: #fff; font-family: var(--font-body); font-size: 15px; text-transform: none; }
     .lead-section form input:focus, .lead-section form select:focus, .lead-section form textarea:focus { outline: none; border-color: var(--innovia-green); box-shadow: 0 0 0 3px rgba(149,208,49,0.22); }
+    .lead-section form select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aab3c5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
+    .lead-section form select option { color: #13203D; }
     .lead-section form button[type="submit"] { background: var(--innovia-green); color: var(--innovia-navy); border: 0; padding: 16px 26px; font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; }
     .lead-section form button[type="submit"]:hover { background: var(--innovia-green-deep); color: #fff; }
 
@@ -79,16 +87,28 @@ const html = `<style>
         <form id="wc-schedule-lead" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 24&ndash;48 hours.">
           <div class="head"><span>Member-company inquiry</span><span style="color:rgba(255,255,255,0.5);">10 fields &middot; ~3 min</span></div>
           <fieldset><legend>About you</legend>
-            <div class="row"><label>First name<input type="text" name="firstName" placeholder="Jordan" required></label><label>Last name<input type="text" name="lastName" placeholder="Reyes" required></label></div>
-            <div class="row"><label>Work email<input type="email" name="email" placeholder="you@yourcompany.com" required></label><label>Phone<input type="tel" name="phone" placeholder="(555) 555-0123"></label></div>
+            <div class="row">
+              <div class="fld"><input type="text" id="sc-first" name="firstName" placeholder=" " autocomplete="given-name" required><label for="sc-first">First name<i class="rq">*</i></label></div>
+              <div class="fld"><input type="text" id="sc-last" name="lastName" placeholder=" " autocomplete="family-name" required><label for="sc-last">Last name<i class="rq">*</i></label></div>
+            </div>
+            <div class="row">
+              <div class="fld"><input type="email" id="sc-email" name="email" placeholder=" " autocomplete="email" required><label for="sc-email">Work email<i class="rq">*</i></label></div>
+              <div class="fld"><input type="tel" id="sc-phone" name="phone" placeholder=" " autocomplete="tel"><label for="sc-phone">Phone</label></div>
+            </div>
           </fieldset>
           <fieldset><legend>About your company</legend>
-            <div class="row"><label>Company name<input type="text" name="company" required></label><label>Headquartered<input type="text" name="hq" placeholder="City, State" required></label></div>
-            <div class="row"><label>Portfolio size<select name="portfolio" required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label><label>States we operate in<input type="text" name="states" placeholder="e.g. CA, NV, AZ" required></label></div>
+            <div class="row">
+              <div class="fld"><input type="text" id="sc-company" name="company" placeholder=" " autocomplete="organization" required><label for="sc-company">Company name<i class="rq">*</i></label></div>
+              <div class="fld"><input type="text" id="sc-hq" name="hq" placeholder=" " autocomplete="address-level2" required><label for="sc-hq">Headquartered<i class="rq">*</i></label></div>
+            </div>
+            <div class="row">
+              <div class="fld fld-select"><select id="sc-portfolio" name="portfolio" required><option value="" selected hidden></option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select><label for="sc-portfolio">Portfolio size<i class="rq">*</i></label></div>
+              <div class="fld"><input type="text" id="sc-states" name="states" placeholder=" " required><label for="sc-states">States we operate in<i class="rq">*</i></label></div>
+            </div>
           </fieldset>
           <fieldset><legend>The conversation</legend>
-            <label>Were you referred by a member?<input type="text" name="referred_by" placeholder="Member company or founder name"></label>
-            <label>What&rsquo;s prompting the conversation?<textarea name="goal" rows="3" placeholder="Margin, talent, vendor terms, the long view — what's on your mind"></textarea></label>
+            <div class="fld"><input type="text" id="sc-ref" name="referred_by" placeholder=" "><label for="sc-ref">Were you referred by a member?</label></div>
+            <div class="fld fld-textarea"><textarea id="sc-goal" name="goal" rows="3" placeholder=" "></textarea><label for="sc-goal">What&rsquo;s prompting the conversation?</label></div>
           </fieldset>
           <button type="submit">Schedule a Conversation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>

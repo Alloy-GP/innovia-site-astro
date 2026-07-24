@@ -706,12 +706,28 @@ const html = `<style>
       gap: 14px;
       margin-bottom: 14px;
     }
-    .notify form label {
-      display: flex; flex-direction: column; gap: 6px;
-      font-family: var(--font-mono); font-size: 11px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
+    .notify form .fld { position: relative; }
+    .notify form .fld > input, .notify form .fld > select { width: 100%; box-sizing: border-box; }
+    .notify form .fld > label {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      display: block; margin: 0; padding: 0 5px; white-space: nowrap;
+      font-family: var(--font-body); font-size: 15px;
+      color: rgba(255,255,255,0.45); letter-spacing: 0; text-transform: none;
+      background: transparent; pointer-events: none;
+      transition: top .14s ease, font-size .14s ease, color .14s ease, background .14s ease;
     }
+    .notify form .fld > input:focus ~ label,
+    .notify form .fld > input:not(:placeholder-shown) ~ label,
+    .notify form .fld-select > select:focus ~ label,
+    .notify form .fld-select > select:valid ~ label {
+      top: 0; transform: translateY(-50%);
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.62); background: #172440;
+    }
+    .notify form .fld > input:focus ~ label,
+    .notify form .fld-select > select:focus ~ label { color: var(--sun-amber); }
+    .notify form .rq { color: var(--sun-amber); font-style: normal; margin-left: 3px; }
     .notify form .single { grid-template-columns: 1fr; }
     .notify form input, .notify form select {
       background: rgba(0,0,0,0.22);
@@ -728,6 +744,13 @@ const html = `<style>
       border-color: var(--sun-amber);
       box-shadow: 0 0 0 3px rgba(244,178,90,0.25);
     }
+    .notify form select {
+      -webkit-appearance: none; -moz-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aab3c5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
+      padding-right: 42px; cursor: pointer;
+    }
+    .notify form select option { color: #13203D; }
     .notify form input::placeholder { color: rgba(255,255,255,0.4); }
     .notify form .submit-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -1052,31 +1075,15 @@ const html = `<style>
         <form id="wc-summit-reveal" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll send the Summit 2027 reveal the moment it&rsquo;s live.">
           <input type="hidden" name="source" value="Summit 2027 — reveal signup">
           <div class="row">
-            <label>First name
-              <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
-            </label>
-            <label>Last name
-              <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
-            </label>
+            <div class="fld"><input type="text" id="su-first" name="firstName" placeholder=" " autocomplete="given-name" required><label for="su-first">First name<i class="rq">*</i></label></div>
+            <div class="fld"><input type="text" id="su-last" name="lastName" placeholder=" " autocomplete="family-name" required><label for="su-last">Last name<i class="rq">*</i></label></div>
           </div>
           <div class="row single">
-            <label>Work email
-              <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
-            </label>
+            <div class="fld"><input type="email" id="su-email" name="email" placeholder=" " autocomplete="email" required><label for="su-email">Work email<i class="rq">*</i></label></div>
           </div>
           <div class="row">
-            <label>Company
-              <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
-            </label>
-            <label>Relationship
-              <select name="relationship" required>
-                <option value="">Choose one</option>
-                <option>Innovia member company</option>
-                <option>Prospective member</option>
-                <option>Vendor partner</option>
-                <option>Other</option>
-              </select>
-            </label>
+            <div class="fld"><input type="text" id="su-company" name="company" placeholder=" " autocomplete="organization" required><label for="su-company">Company<i class="rq">*</i></label></div>
+            <div class="fld fld-select"><select id="su-rel" name="relationship" required><option value="" selected hidden></option><option>Innovia member company</option><option>Prospective member</option><option>Vendor partner</option><option>Other</option></select><label for="su-rel">Relationship<i class="rq">*</i></label></div>
           </div>
           <div class="submit-row">
             <small>By invitation only. We won&rsquo;t share your details.</small>
