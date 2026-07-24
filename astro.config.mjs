@@ -34,8 +34,8 @@ export default defineConfig({
   // TEMP: dev toolbar hidden for presentation — remove to re-enable.
   devToolbar: { enabled: false },
 
-  // Prevents CSRF errors when testing on vercel.app before custom domain is live
-  security: { checkOrigin: false },
+  // CSRF protection: validate the Origin header on form POSTs to the API routes.
+  security: { checkOrigin: true },
 
   build: {
     // Embeds all CSS as inline <style> tags — eliminates render-blocking stylesheet request
