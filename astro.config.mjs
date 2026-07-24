@@ -22,6 +22,8 @@ export default defineConfig({
         !page.includes('/members/landmarc') &&
         !page.includes('/member-spotlights/mariner-and-vail') &&
         !page.includes('/find-a-management-company/texas') &&
+        !page.includes('/find-a-management-company/phoenix') &&
+        !page.includes('/charter-offer') &&
         !page.includes('/resident-savings/') &&
         !page.includes('/case-studies'),
     }),

@@ -27,6 +27,8 @@ const { member } = Astro.props;
     <title>{member.metaTitle}</title>
     <meta name="description" content={member.metaDescription} />
     <link rel="canonical" href={member.canonical} />
+    <!-- Member landing pages not active yet — keep out of the index until launch -->
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" href="/assets/innovia-icon.png" />
     <link rel="apple-touch-icon" href="/assets/innovia-icon.png" />
     <meta property="og:type" content="website" />
