@@ -19,6 +19,7 @@ export const EMAIL_CONFIG = {
   // Everyone here gets a copy of every form submission
   notify: [
     'notifications@innoviaco-op.com',
+    'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
 
   mailchimp: {
