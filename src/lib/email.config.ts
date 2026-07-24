@@ -10,10 +10,12 @@ export const EMAIL_CONFIG = {
     team: 'Skyler',
   },
 
-  // Both addresses must be from a domain verified in Resend
+  // Both addresses must be from a domain verified in Resend.
+  // Sending happens on the mail.innoviaco-op.com subdomain (isolates sending
+  // reputation from the root domain, whose real mail runs on Microsoft 365).
   from: {
-    notifications: 'Innovia Co-op <notifications@innoviaco-op.com>',
-    hello:         'Innovia Co-op <hello@innoviaco-op.com>',
+    notifications: 'Innovia Co-op <notifications@mail.innoviaco-op.com>',
+    hello:         'Innovia Co-op <hello@mail.innoviaco-op.com>',
   },
 
   // Everyone here gets a copy of every form submission
