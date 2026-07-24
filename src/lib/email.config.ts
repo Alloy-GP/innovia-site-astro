@@ -11,11 +11,13 @@ export const EMAIL_CONFIG = {
   },
 
   // Both addresses must be from a domain verified in Resend.
-  // Sending happens on the mail.innoviaco-op.com subdomain (isolates sending
-  // reputation from the root domain, whose real mail runs on Microsoft 365).
+  // NOTE: the root innoviaco-op.com is the verified/authorized sender for the
+  // current Resend send-key. mail.innoviaco-op.com has DNS published but is NOT
+  // yet authorized in Resend — do not switch until it's added+verified there and
+  // the send-key is scoped to it (verified 2026-07-24: root sends, subdomain 403s).
   from: {
-    notifications: 'Innovia Co-op <notifications@mail.innoviaco-op.com>',
-    hello:         'Innovia Co-op <hello@mail.innoviaco-op.com>',
+    notifications: 'Innovia Co-op <notifications@innoviaco-op.com>',
+    hello:         'Innovia Co-op <hello@innoviaco-op.com>',
   },
 
   // Everyone here gets a copy of every form submission
