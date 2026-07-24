@@ -612,15 +612,36 @@ const html = `<style>
       border-bottom: 1px solid rgba(255,255,255,0.10);
       width: 100%; margin-bottom: 18px;
     }
-    .connect-form label {
-      display: flex; flex-direction: column; gap: 7px;
-      font-family: var(--font-mono); font-size: 11px;
-      color: rgba(255,255,255,0.65);
+    /* Floating labels: the label is the placeholder inside an empty field and
+       floats onto the top border on focus or once the field has a value. */
+    .connect-form .fld { position: relative; }
+    .connect-form .fld > label {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      display: block; margin: 0; padding: 0 5px; white-space: nowrap;
+      font-family: var(--font-body); font-size: 15px;
+      color: rgba(255,255,255,0.42);
+      letter-spacing: 0; text-transform: none;
+      background: transparent; pointer-events: none;
+      transition: top .14s ease, font-size .14s ease, color .14s ease, background .14s ease;
+    }
+    .connect-form .fld-textarea > label { top: 20px; transform: none; }
+    .connect-form .fld > input:focus ~ label,
+    .connect-form .fld > input:not(:placeholder-shown) ~ label,
+    .connect-form .fld > textarea:focus ~ label,
+    .connect-form .fld > textarea:not(:placeholder-shown) ~ label,
+    .connect-form .fld-select > select:focus ~ label,
+    .connect-form .fld-select > select:valid ~ label {
+      top: 0; transform: translateY(-50%);
+      font-family: var(--font-mono); font-size: 10px;
       letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.62); background: #213b64;
     }
-    .connect-form .rq {
-      color: var(--innovia-green); font-style: normal; margin-left: 4px;
+    .connect-form .fld > input:focus ~ label,
+    .connect-form .fld > textarea:focus ~ label,
+    .connect-form .fld-select > select:focus ~ label {
+      color: var(--innovia-green);
     }
+    .connect-form .rq { color: var(--innovia-green); font-style: normal; margin-left: 3px; }
     .connect-form .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .connect-form input,
     .connect-form select,
@@ -1063,58 +1084,68 @@ const html = `<style>
           <fieldset>
             <legend>About you</legend>
             <div class="grid-2">
-              <label><span class="cap">First name<i class="rq">*</i></span>
-                <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
-              </label>
-              <label><span class="cap">Last name<i class="rq">*</i></span>
-                <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
-              </label>
+              <div class="fld">
+                <input type="text" id="cf-first" name="firstName" placeholder=" " autocomplete="given-name" required>
+                <label for="cf-first">First name<i class="rq">*</i></label>
+              </div>
+              <div class="fld">
+                <input type="text" id="cf-last" name="lastName" placeholder=" " autocomplete="family-name" required>
+                <label for="cf-last">Last name<i class="rq">*</i></label>
+              </div>
             </div>
             <div class="grid-2">
-              <label><span class="cap">Work email<i class="rq">*</i></span>
-                <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
-              </label>
-              <label><span class="cap">Phone</span>
-                <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
-              </label>
+              <div class="fld">
+                <input type="email" id="cf-email" name="email" placeholder=" " autocomplete="email" required>
+                <label for="cf-email">Work email<i class="rq">*</i></label>
+              </div>
+              <div class="fld">
+                <input type="tel" id="cf-phone" name="phone" placeholder=" " autocomplete="tel">
+                <label for="cf-phone">Phone</label>
+              </div>
             </div>
           </fieldset>
 
           <fieldset>
             <legend>About your company</legend>
             <div class="grid-2">
-              <label><span class="cap">Company name<i class="rq">*</i></span>
-                <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
-              </label>
-              <label><span class="cap">Headquartered<i class="rq">*</i></span>
-                <input type="text" name="hq" placeholder="City, State" autocomplete="address-level2" required>
-              </label>
+              <div class="fld">
+                <input type="text" id="cf-company" name="company" placeholder=" " autocomplete="organization" required>
+                <label for="cf-company">Company name<i class="rq">*</i></label>
+              </div>
+              <div class="fld">
+                <input type="text" id="cf-hq" name="hq" placeholder=" " autocomplete="address-level2" required>
+                <label for="cf-hq">Headquartered<i class="rq">*</i></label>
+              </div>
             </div>
             <div class="grid-2">
-              <label><span class="cap">Portfolio size<i class="rq">*</i></span>
-                <select name="portfolio" required>
-                  <option value="">Households managed</option>
+              <div class="fld fld-select">
+                <select id="cf-portfolio" name="portfolio" required>
+                  <option value="" selected hidden></option>
                   <option>Under 1,000</option>
                   <option>1,000&ndash;5,000</option>
                   <option>5,000&ndash;15,000</option>
                   <option>15,000&ndash;40,000</option>
                   <option>Over 40,000</option>
                 </select>
-              </label>
-              <label><span class="cap">States we operate in<i class="rq">*</i></span>
-                <input type="text" name="states" placeholder="e.g. CA, NV, AZ" required>
-              </label>
+                <label for="cf-portfolio">Portfolio size<i class="rq">*</i></label>
+              </div>
+              <div class="fld">
+                <input type="text" id="cf-states" name="states" placeholder=" " required>
+                <label for="cf-states">States we operate in<i class="rq">*</i></label>
+              </div>
             </div>
           </fieldset>
 
           <fieldset>
             <legend>The conversation</legend>
-            <label><span class="cap">Were you referred by a member?</span>
-              <input type="text" name="referred_by" placeholder="Member company or founder name">
-            </label>
-            <label><span class="cap">What&rsquo;s prompting the conversation?</span>
-              <textarea name="goal" rows="3" placeholder="Margin pressure, talent, vendor terms, the long view &mdash; what&rsquo;s on your mind"></textarea>
-            </label>
+            <div class="fld">
+              <input type="text" id="cf-ref" name="referred_by" placeholder=" ">
+              <label for="cf-ref">Were you referred by a member?</label>
+            </div>
+            <div class="fld fld-textarea">
+              <textarea id="cf-goal" name="goal" rows="3" placeholder=" "></textarea>
+              <label for="cf-goal">What&rsquo;s prompting the conversation?</label>
+            </div>
           </fieldset>
 
           <div class="submit-row">
