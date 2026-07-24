@@ -10,6 +10,7 @@ import { SITE } from '../config/site.ts';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ReviewWidget from '../components/ReviewWidget.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   /** <title> tag. Required. */
@@ -467,5 +468,6 @@ const isProduction = import.meta.env.PUBLIC_ENV === 'production';
     <ReviewWidget />
 
     <slot name="scripts" />
+    <SpeedInsights />
   </body>
 </html>
