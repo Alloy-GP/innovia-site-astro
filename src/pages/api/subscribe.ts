@@ -49,6 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
       await resend.emails.send({
         from: EMAIL_CONFIG.from.hello,
         to: email,
+        replyTo: EMAIL_CONFIG.replyTo,
         subject: EMAIL_CONFIG.copy.subscribe.confirmSubject,
         html: EMAIL_CONFIG.copy.subscribe.confirmBody(firstName),
       });

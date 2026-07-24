@@ -25,6 +25,12 @@ export const EMAIL_CONFIG = {
     'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
 
+  // CC'd on every internal notification (the office copy) — not customer confirmations
+  notifyCc: ['admin@alloygp.co'],
+
+  // Reply-To on all outbound mail (interim — until the client confirms final routing)
+  replyTo: 'nzuccala@ccaglobal.com',
+
   mailchimp: {
     enabled:     true,      // set false if client has no Mailchimp
     defaultTags: ['website-lead'],

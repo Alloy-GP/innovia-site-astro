@@ -56,6 +56,8 @@ export const POST: APIRoute = async ({ request }) => {
       await resend.emails.send({
         from: EMAIL_CONFIG.from.notifications,
         to: EMAIL_CONFIG.notify,
+        cc: EMAIL_CONFIG.notifyCc,
+        replyTo: EMAIL_CONFIG.replyTo,
         subject: `New lead: ${company || name}`,
         html: `
           <h2>New Lead Form Submission</h2>
@@ -81,6 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
       await resend.emails.send({
         from: EMAIL_CONFIG.from.hello,
         to: email,
+        replyTo: EMAIL_CONFIG.replyTo,
         subject: EMAIL_CONFIG.copy.lead.confirmSubject,
         html: EMAIL_CONFIG.copy.lead.confirmBody(name, company, EMAIL_CONFIG.brand.url),
       });
