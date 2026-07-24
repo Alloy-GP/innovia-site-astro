@@ -167,6 +167,31 @@ export function courseSchema(opts: {
 // ── LocalBusiness ─────────────────────────────────────────────────────────────
 // Use on the Contact or About page when you want the full local business card.
 
+/**
+ * Person — for founder / leadership bios.
+ */
+export function personSchema(opts: {
+  name: string;
+  jobTitle?: string;
+  description?: string;
+  image?: string;
+  worksFor?: string;
+  award?: string[];
+  sameAs?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: opts.name,
+    ...(opts.jobTitle ? { jobTitle: opts.jobTitle } : {}),
+    ...(opts.description ? { description: opts.description } : {}),
+    ...(opts.image ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` } : {}),
+    ...(opts.worksFor ? { worksFor: { '@type': 'Organization', name: opts.worksFor } } : {}),
+    ...(opts.award?.length ? { award: opts.award } : {}),
+    ...(opts.sameAs?.length ? { sameAs: opts.sameAs } : {}),
+  };
+}
+
 export function localBusinessSchema(opts?: { description?: string }) {
   return {
     '@context': 'https://schema.org',

@@ -1,5 +1,29 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { personSchema, breadcrumbSchema } from '../../lib/schema.ts';
+
+const pageSchema = [
+  personSchema({
+    name: 'Howard Brodsky',
+    jobTitle: 'Co-Founder & Co-Chairman, CCA Global Partners',
+    description: 'Co-founder and Co-Chairman of CCA Global Partners, and a lifelong champion of the cooperative model. Inducted into the Cooperative Hall of Fame in 2009 and awarded the Rochdale Pioneers Award in 2019.',
+    image: '/assets/people/howard-brodsky.jpg',
+    worksFor: 'CCA Global Partners',
+    award: ['Cooperative Hall of Fame, 2009', 'Rochdale Pioneers Award, 2019'],
+  }),
+  personSchema({
+    name: 'Alan Greenberg',
+    jobTitle: 'Co-Founder & Co-Chairman, CCA Global Partners',
+    description: 'Co-founder of CCA Global Partners, whose people-first philosophy shaped a cooperative culture where members are co-owners with a real voice. Inducted into the Cooperative Hall of Fame in 2009.',
+    worksFor: 'CCA Global Partners',
+    award: ['Cooperative Hall of Fame, 2009'],
+  }),
+  breadcrumbSchema([
+    { name: 'Innovia', url: 'https://innoviaco-op.com/' },
+    { name: 'About', url: 'https://innoviaco-op.com/about/' },
+    { name: 'Our Founders', url: 'https://innoviaco-op.com/about/founders/' },
+  ]),
+];
 const html = `<style>
     body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
 
@@ -100,18 +124,31 @@ const html = `<style>
       background: var(--innovia-navy-deep);
       padding: 36px 36px 28px;
       display: grid;
-      grid-template-columns: 140px 1fr;
+      grid-template-columns: 168px minmax(0, 1fr);
       gap: 28px;
       align-items: stretch;
     }
     .portrait .frame {
       background: var(--innovia-navy);
+      /* align-self: start + explicit width keep the frame from deriving its
+         width from a stretched row height (aspect-ratio would then overflow
+         the 168px track and sit on top of the text column). */
+      align-self: start;
+      width: 100%;
       aspect-ratio: 3 / 4;
       border: 1px solid rgba(255,255,255,0.15);
       position: relative;
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
+    .portrait .frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    /* Real photo present: drop the initials + dashed placeholder inset. */
+    .portrait .frame.has-photo .mark { display: none; }
+    .portrait .frame.has-photo::after { content: none; }
     .portrait .frame .mark {
       font-family: var(--font-display);
       font-weight: 900;
@@ -649,6 +686,10 @@ const html = `<style>
       .cta-finale .frame { grid-template-columns: 1fr; gap: 32px; }
       .narrative .left { position: static; }
       .portrait-band { grid-template-columns: 1fr; }
+      /* Narrow screens: stack photo over bio so the text isn't crushed
+         into a ~78px column next to the portrait. */
+      .portrait-band .portrait { grid-template-columns: 1fr; gap: 20px; padding: 28px 24px 24px; }
+      .portrait .frame { width: 148px; }
       .principles .grid { grid-template-columns: repeat(2, 1fr); }
       .principles .card:nth-child(2) { border-right: 0; }
       .principles .card:nth-child(-n+2) { border-bottom: 1px solid var(--border-subtle); }
@@ -690,8 +731,10 @@ const html = `<style>
       <!-- PORTRAIT BAND -->
       <div class="portrait-band">
         <div class="portrait">
-          <div class="frame">
-            <div class="mark">HB<span class="lo">Co-founder</span></div>
+          <div class="frame has-photo">
+            <img src="/assets/people/howard-brodsky.jpg" width="600" height="800"
+                 alt="Howard Brodsky, co-founder and co-chairman of CCA Global Partners"
+                 loading="lazy" decoding="async">
           </div>
           <div class="body">
             <span class="role">Co-Founder &amp; Co-Chairman</span>
@@ -1043,6 +1086,7 @@ const html = `<style>
   title="Our Founders · Howard Brodsky &amp; Alan Greenberg, Cooperative Hall of Fame | Innovia"
   description="Meet Innovia's founders — Howard Brodsky and Alan Greenberg, both inducted into the Cooperative Hall of Fame for building member-owned cooperatives since 1984."
   ogImage="/assets/og/option-1-type-led.png"
+  pageSchema={pageSchema}
   activeNav="about"
   ctaLabel="Schedule a Conversation"
   ctaHref="/schedule-a-conversation/"
