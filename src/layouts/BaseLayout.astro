@@ -144,8 +144,8 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
       <script is:inline src="https://simplecommenter.com/js/comments.min.js?id=sc_a5b95f74760e080b" defer></script>
     )}
 
-    <!-- Google Analytics: deferred until after page paint -->
-    {gaMeasurementId && (
+    <!-- Google Analytics: production only, deferred until after page paint -->
+    {isProduction && gaMeasurementId && (
       <script is:inline define:vars={{ gaMeasurementId }}>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

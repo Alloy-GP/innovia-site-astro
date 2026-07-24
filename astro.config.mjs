@@ -55,6 +55,9 @@ export default defineConfig({
     '/property-management-germantown-maryland/': '/find-a-management-company/',
     '/blog/': '/board-education/',
     '/category/new-members/': '/board-education/',
+    '/category/industry-insights/': '/board-education/',
+    '/smartproperty-ultimate-guide-to-asset-management38/': '/board-education/',
+    '/lead-generation-form/': '/schedule-a-conversation/',
     '/pages/home-b/': '/',
 
     // ── Member / company posts → Member Spotlights ─────────────
