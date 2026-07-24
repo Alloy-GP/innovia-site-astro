@@ -512,6 +512,24 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
       })();
     </script>
 
+    <!-- Styled <select>s look like text inputs; open the native dropdown when one
+         gets keyboard focus (Tab) so it's obvious it's a picker. Mouse clicks are
+         left alone (they open it natively). -->
+    <script is:inline>
+      (function () {
+        var kb = false;
+        addEventListener('keydown', function (e) { if (e.key === 'Tab') kb = true; }, true);
+        addEventListener('mousedown', function () { kb = false; }, true);
+        addEventListener('touchstart', function () { kb = false; }, true);
+        document.addEventListener('focusin', function (e) {
+          var el = e.target;
+          if (kb && el && el.tagName === 'SELECT' && typeof el.showPicker === 'function') {
+            try { el.showPicker(); } catch (_) {}
+          }
+        });
+      })();
+    </script>
+
     <slot name="scripts" />
     <SpeedInsights />
   </body>
