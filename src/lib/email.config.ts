@@ -21,6 +21,7 @@ export const EMAIL_CONFIG = {
     // TEMP: route member-intake notifications to Alloy inboxes for now
     'admin@alloygp.co',
     'cameron@alloygp.co',
+    'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
   ],
 
   mailchimp: {
