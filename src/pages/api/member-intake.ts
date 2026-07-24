@@ -140,8 +140,8 @@ export const POST: APIRoute = async ({ request }) => {
       subject: 'We received your Innovia member profile',
       html: `<div style="font-family:Arial,Helvetica,sans-serif;color:#18335E">
         <p>Hi ${esc(first) || 'there'},</p>
-        <p>Thanks for completing your Innovia member profile. The cooperative office has it, and we'll be in touch to schedule your 30-minute call.</p>
-        <p>— Innovia Co-op</p></div>`,
+        <p>Thanks for completing your Innovia member profile. We received it and will be in touch to schedule your 30-minute call.</p>
+        <p>Innovia Co-op</p></div>`,
     });
 
     return json({ ok: true });
