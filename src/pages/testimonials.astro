@@ -35,21 +35,22 @@ const html = `
   <div class="filter-sticky">
     <div class="container">
       <div class="filter-band">
-        <div class="row" data-filter-group="voice">
-          <span class="label">Voice</span>
+        <div class="row" data-filter-group="format">
+          <span class="label">Format</span>
           <div class="pills">
             <button class="pill active" data-filter="all">All (16)</button>
-            <button class="pill" data-filter="cam-owner">CAM owners (12)</button>
-            <button class="pill" data-filter="senior-operator">Senior operators (4)</button>
+            <button class="pill" data-filter="video">Video (11)</button>
+            <button class="pill" data-filter="written">Written (5)</button>
           </div>
         </div>
         <div class="row" data-filter-group="topic">
           <span class="label">Topic</span>
           <div class="pills">
             <button class="pill active" data-filter="all">All</button>
-            <button class="pill" data-filter="Joining Innovia">Joining Innovia</button>
-            <button class="pill" data-filter="The peer council">The peer council</button>
+            <button class="pill" data-filter="The peer network">The peer network</button>
+            <button class="pill" data-filter="The Summit">The Summit</button>
             <button class="pill" data-filter="Business growth">Business growth</button>
+            <button class="pill" data-filter="Why they joined">Why they joined</button>
           </div>
         </div>
       </div>
@@ -61,8 +62,8 @@ const html = `
     <div class="container">
       <div class="tcards">
 
-        <article class="tcard" data-voice="cam-owner" data-topic="Joining Innovia">
-          <span class="kind">Joining Innovia</span>
+        <article class="tcard" data-format="written" data-topic="Why they joined">
+          <span class="kind">Why they joined</span>
           <blockquote>CFM&rsquo;s goal is to remain independent and completely focused on the personal needs of each of our clients. To help us achieve this goal, we have invested in a Co-op membership with Innovia &mdash; which allows us to remain independent, while having buying power and thought leadership from other independent companies across the United States.</blockquote>
           <div class="attrib">
             <span class="initials">SD</span>
@@ -73,12 +74,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video featured long" data-voice="cam-owner" data-topic="The peer council">
+        <article class="tcard video featured long" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073106" aria-label="Play video testimonial — Doug Newman, President" style="background: url('/assets/testimonials/1212073106.jpg') center / cover;">
             <span class="vbadge">Watch first</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">Featured &middot; The peer council</span>
+          <span class="kind">Featured &middot; The peer network</span>
           <blockquote>Knowing that you can reach out to a fellow member any day of the week, including weekends, and that they&rsquo;ll be there for you &mdash; in a true brotherly fashion &mdash; it&rsquo;s been astonishing.</blockquote>
           <div class="attrib">
             <span class="initials">DN</span>
@@ -89,7 +90,7 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video long" data-voice="cam-owner" data-topic="Business growth">
+        <article class="tcard video long" data-format="video" data-topic="Business growth">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073757" aria-label="Play video testimonial — Mark Jones, Owner" style="background: url('/assets/testimonials/1212073757.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
@@ -105,12 +106,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="The peer council">
+        <article class="tcard video" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073104" aria-label="Play video testimonial — Ninder Chima-Jordan" style="background: url('/assets/testimonials/1212073104.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The peer network</span>
           <blockquote>Of all the different groups we&rsquo;ve joined, this is the one where we&rsquo;ve gained the most significant learning. It accelerates our learning as a small business owner to be part of this group.</blockquote>
           <div class="attrib">
             <span class="initials">NC</span>
@@ -121,8 +122,8 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard" data-voice="senior-operator" data-topic="The peer council">
-          <span class="kind">The peer council</span>
+        <article class="tcard" data-format="written" data-topic="The peer network">
+          <span class="kind">The peer network</span>
           <blockquote>Through Innovia, we&rsquo;ve been able to explore new opportunities, unlock cost efficiencies, and elevate our position in the marketplace with peer-driven collaboration while feeling part of a forward-thinking community; participation has been truly transformative.</blockquote>
           <div class="attrib">
             <span class="initials">JA</span>
@@ -133,12 +134,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video long" data-voice="senior-operator" data-topic="The peer council">
+        <article class="tcard video long" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073105" aria-label="Play video testimonial — Paul Mengert, CEO" style="background: url('/assets/testimonials/1212073105.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The peer network</span>
           <blockquote>Innovia brings together some of the finest minds in the association management industry across the United States. They work collaboratively to deliver the best results to their communities.</blockquote>
           <div class="attrib">
             <span class="initials">PM</span>
@@ -149,12 +150,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="The peer council">
+        <article class="tcard video" data-format="video" data-topic="The Summit">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073107" aria-label="Play video testimonial — Ben Klaus, Owner" style="background: url('/assets/testimonials/1212073107.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The Summit</span>
           <blockquote>Typically I go to conferences and skip the sessions &mdash; I just want to talk to folks. At Innovia, the whole thing is talking to your peers. It&rsquo;s the best conference, and I&rsquo;ll be back next year.</blockquote>
           <div class="attrib">
             <span class="initials">BK</span>
@@ -165,7 +166,7 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard" data-voice="cam-owner" data-topic="Business growth">
+        <article class="tcard" data-format="written" data-topic="Business growth">
           <span class="kind">Business growth</span>
           <blockquote>I knew the &ldquo;big-box&rdquo; management companies were eventually going to be in my market, but as a member of Innovia we were prepared and remain competitive. We&rsquo;ve really benefited from the peer-to-peer networking opportunities to exchange experiences and ideas and collaborate with like-minded colleagues. Surrounding ourselves with a powerful network has better positioned us for future success.</blockquote>
           <div class="attrib">
@@ -177,12 +178,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="Joining Innovia">
+        <article class="tcard video" data-format="video" data-topic="The Summit">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212074758" aria-label="Play video testimonial — Tyler Lendzion, CEO" style="background: url('/assets/testimonials/1212074758.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">Joining Innovia</span>
+          <span class="kind">The Summit</span>
           <blockquote>My first year at the summit, and I&rsquo;m leaving with a list of about a hundred things I want to accomplish. The openness of the members here is tremendous.</blockquote>
           <div class="attrib">
             <span class="initials">TL</span>
@@ -193,12 +194,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="senior-operator" data-topic="The peer council">
+        <article class="tcard video" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212073773" aria-label="Play video testimonial — Brian TerHark" style="background: url('/assets/testimonials/1212073773.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The peer network</span>
           <blockquote>I&rsquo;ve always been passionate about the public perception of our industry. Being an Innovia member means collaborating with people who want to move the industry forward.</blockquote>
           <div class="attrib">
             <span class="initials">BT</span>
@@ -209,8 +210,8 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard" data-voice="senior-operator" data-topic="Joining Innovia">
-          <span class="kind">Joining Innovia</span>
+        <article class="tcard" data-format="written" data-topic="Why they joined">
+          <span class="kind">Why they joined</span>
           <blockquote>If you are looking to keep your independent identity and values, stay competitive in the marketplace and be on top of new innovations in our industry &mdash; Innovia Co-op is the group for you.</blockquote>
           <div class="attrib">
             <span class="initials">JL</span>
@@ -221,12 +222,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="The peer council">
+        <article class="tcard video" data-format="video" data-topic="The Summit">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212074243" aria-label="Play video testimonial — Dana Hizkiya, Owner" style="background: url('/assets/testimonials/1212074243.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The Summit</span>
           <blockquote>This is the best CEO gathering I&rsquo;ve been to since we started Next Generation. Hopefully we&rsquo;ll have many, many more years of it.</blockquote>
           <div class="attrib">
             <span class="initials">DH</span>
@@ -237,7 +238,7 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard" data-voice="cam-owner" data-topic="Business growth">
+        <article class="tcard" data-format="written" data-topic="Business growth">
           <span class="kind">Business growth</span>
           <blockquote>Innovia has truly inspired me to step out of my own way and build a bigger, better company. It has been an absolute pleasure to be part of this organization through which I have gained invaluable insights into how successful businesses grow. The business-to-business relationships formed through Innovia are one of the most valuable aspects for owners.</blockquote>
           <div class="attrib">
@@ -249,12 +250,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="The peer council">
+        <article class="tcard video" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212074474" aria-label="Play video testimonial — Dave Reese" style="background: url('/assets/testimonials/1212074474.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">The peer council</span>
+          <span class="kind">The peer network</span>
           <blockquote>We learn and share so we can produce better service for our clients &mdash; and bring better value to our management company and the associations we represent.</blockquote>
           <div class="attrib">
             <span class="initials">DR</span>
@@ -265,12 +266,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="Joining Innovia">
+        <article class="tcard video" data-format="video" data-topic="The peer network">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212074593" aria-label="Play video testimonial — Ricky Zilem, Managing Partner" style="background: url('/assets/testimonials/1212074593.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">Joining Innovia</span>
+          <span class="kind">The peer network</span>
           <blockquote>A proud member of Innovia. I really love the collaboration and the coming together to deliver a better product for our clients.</blockquote>
           <div class="attrib">
             <span class="initials">RZ</span>
@@ -281,12 +282,12 @@ const html = `
           </div>
         </article>
 
-        <article class="tcard video" data-voice="cam-owner" data-topic="Joining Innovia">
+        <article class="tcard video" data-format="video" data-topic="The Summit">
           <div class="vthumb" role="button" tabindex="0" data-vimeo="1212074826" aria-label="Play video testimonial — Ken Caskey" style="background: url('/assets/testimonials/1212074826.jpg') center / cover;">
             <span class="vbadge">Watch</span>
             <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           </div>
-          <span class="kind">Joining Innovia</span>
+          <span class="kind">The Summit</span>
           <blockquote>This is my first Innovia conference &mdash; and it certainly won&rsquo;t be my last. An amazing experience interacting with colleagues in our business, in a really interesting format. A+ all the way down.</blockquote>
           <div class="attrib">
             <span class="initials">KC</span>
@@ -405,42 +406,42 @@ const html = `
 
       // Filters
       var cards = Array.prototype.slice.call(document.querySelectorAll('.tcard'));
-      var activeVoice = 'all';
+      var activeFormat = 'all';
       var activeTopic = 'all';
 
-      function matches(card, voice, topic) {
-        var voiceOk = voice === 'all' || card.dataset.voice === voice;
+      function matches(card, format, topic) {
+        var formatOk = format === 'all' || card.dataset.format === format;
         var topicOk = topic === 'all' || card.dataset.topic === topic;
-        return voiceOk && topicOk;
+        return formatOk && topicOk;
       }
-      function countFor(voice, topic) {
+      function countFor(format, topic) {
         var n = 0;
-        for (var i = 0; i < cards.length; i++) { if (matches(cards[i], voice, topic)) n++; }
+        for (var i = 0; i < cards.length; i++) { if (matches(cards[i], format, topic)) n++; }
         return n;
       }
 
       function applyFilters() {
         cards.forEach(function(card) {
-          card.style.display = matches(card, activeVoice, activeTopic) ? '' : 'none';
+          card.style.display = matches(card, activeFormat, activeTopic) ? '' : 'none';
         });
         // Gray out (disable) any pill that would return zero results given the
         // other group's current selection. The active pill is never disabled.
-        document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(p) {
+        document.querySelectorAll('[data-filter-group="format"] .pill').forEach(function(p) {
           var empty = !p.classList.contains('active') && countFor(p.dataset.filter, activeTopic) === 0;
           p.classList.toggle('disabled', empty);
         });
         document.querySelectorAll('[data-filter-group="topic"] .pill').forEach(function(p) {
-          var empty = !p.classList.contains('active') && countFor(activeVoice, p.dataset.filter) === 0;
+          var empty = !p.classList.contains('active') && countFor(activeFormat, p.dataset.filter) === 0;
           p.classList.toggle('disabled', empty);
         });
       }
 
-      document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(btn) {
+      document.querySelectorAll('[data-filter-group="format"] .pill').forEach(function(btn) {
         btn.addEventListener('click', function() {
           if (btn.classList.contains('disabled')) return;
-          document.querySelectorAll('[data-filter-group="voice"] .pill').forEach(function(p) { p.classList.remove('active'); });
+          document.querySelectorAll('[data-filter-group="format"] .pill').forEach(function(p) { p.classList.remove('active'); });
           btn.classList.add('active');
-          activeVoice = btn.dataset.filter;
+          activeFormat = btn.dataset.filter;
           applyFilters();
         });
       });
