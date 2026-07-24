@@ -610,19 +610,16 @@ const html = `<style>
       letter-spacing: 0.04em; text-transform: uppercase;
       padding: 0 0 8px;
       border-bottom: 1px solid rgba(255,255,255,0.10);
-      width: 100%; margin-bottom: 4px;
+      width: 100%; margin-bottom: 18px;
     }
     .connect-form label {
-      display: flex; flex-direction: column; gap: 6px;
+      display: flex; flex-direction: column; gap: 7px;
       font-family: var(--font-mono); font-size: 11px;
       color: rgba(255,255,255,0.65);
       letter-spacing: 0.08em; text-transform: uppercase;
     }
-    .connect-form label .opt {
-      font-family: var(--font-body); font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.04em; text-transform: none;
-      font-style: italic; margin-left: 8px;
+    .connect-form .rq {
+      color: var(--innovia-green); font-style: normal; margin-left: 4px;
     }
     .connect-form .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .connect-form input,
@@ -638,6 +635,14 @@ const html = `<style>
       width: 100%; box-sizing: border-box;
     }
     .connect-form textarea { resize: vertical; min-height: 80px; font-family: var(--font-body); }
+    .connect-form select {
+      -webkit-appearance: none; -moz-appearance: none; appearance: none;
+      background-color: rgba(0,0,0,0.22);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aab3c5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 40px; cursor: pointer;
+    }
+    .connect-form select option { color: #13203D; }
     .connect-form input:focus, .connect-form select:focus, .connect-form textarea:focus {
       outline: none;
       border-color: var(--innovia-green);
@@ -1058,18 +1063,18 @@ const html = `<style>
           <fieldset>
             <legend>About you</legend>
             <div class="grid-2">
-              <label>First name
+              <label><span class="cap">First name<i class="rq">*</i></span>
                 <input type="text" name="firstName" placeholder="Jordan" autocomplete="given-name" required>
               </label>
-              <label>Last name
+              <label><span class="cap">Last name<i class="rq">*</i></span>
                 <input type="text" name="lastName" placeholder="Reyes" autocomplete="family-name" required>
               </label>
             </div>
             <div class="grid-2">
-              <label>Work email
+              <label><span class="cap">Work email<i class="rq">*</i></span>
                 <input type="email" name="email" placeholder="you@yourcompany.com" autocomplete="email" required>
               </label>
-              <label>Phone <span class="opt">Optional</span>
+              <label><span class="cap">Phone</span>
                 <input type="tel" name="phone" placeholder="(555) 555-0123" autocomplete="tel">
               </label>
             </div>
@@ -1078,15 +1083,15 @@ const html = `<style>
           <fieldset>
             <legend>About your company</legend>
             <div class="grid-2">
-              <label>Company name
+              <label><span class="cap">Company name<i class="rq">*</i></span>
                 <input type="text" name="company" placeholder="Your CAM company" autocomplete="organization" required>
               </label>
-              <label>Headquartered
+              <label><span class="cap">Headquartered<i class="rq">*</i></span>
                 <input type="text" name="hq" placeholder="City, State" autocomplete="address-level2" required>
               </label>
             </div>
             <div class="grid-2">
-              <label>Portfolio size
+              <label><span class="cap">Portfolio size<i class="rq">*</i></span>
                 <select name="portfolio" required>
                   <option value="">Households managed</option>
                   <option>Under 1,000</option>
@@ -1096,7 +1101,7 @@ const html = `<style>
                   <option>Over 40,000</option>
                 </select>
               </label>
-              <label>States we operate in
+              <label><span class="cap">States we operate in<i class="rq">*</i></span>
                 <input type="text" name="states" placeholder="e.g. CA, NV, AZ" required>
               </label>
             </div>
@@ -1104,10 +1109,10 @@ const html = `<style>
 
           <fieldset>
             <legend>The conversation</legend>
-            <label>Were you referred by a member? <span class="opt">If yes, who</span>
+            <label><span class="cap">Were you referred by a member?</span>
               <input type="text" name="referred_by" placeholder="Member company or founder name">
             </label>
-            <label>What&rsquo;s prompting the conversation? <span class="opt">Optional</span>
+            <label><span class="cap">What&rsquo;s prompting the conversation?</span>
               <textarea name="goal" rows="3" placeholder="Margin pressure, talent, vendor terms, the long view &mdash; what&rsquo;s on your mind"></textarea>
             </label>
           </fieldset>
