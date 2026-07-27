@@ -746,6 +746,8 @@ const html = `<style>
         </aside>
 
         <form id="wc-board-inquiry" class="request-form" data-endpoint="/api/lead" data-success="Thanks &mdash; we&rsquo;ll be in touch within 2 business days.">
+          <div class="hp-field" aria-hidden="true"><label>Company URL<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label></div>
+          <input type="hidden" name="form_started" value="">
           <input type="hidden" name="source" value="Find a Management Company — board inquiry">
           <div class="form-head">
             <span class="form-label">Inquiry &middot; HOA / Condo Board</span>

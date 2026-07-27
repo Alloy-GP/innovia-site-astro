@@ -6,6 +6,7 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import { EMAIL_CONFIG } from '~/lib/email.config';
+import { checkSpam } from '~/lib/spam';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
@@ -39,6 +40,7 @@ export const POST: APIRoute = async ({ request }) => {
     const KNOWN = new Set([
       'firstName', 'lastName', 'name', 'email', 'company', 'phone',
       'goal', 'source', 'hq', 'portfolio', 'states', 'referred_by',
+      'company_url', 'form_started', // anti-spam fields, never shown in the email
     ]);
     const extras = [...data.entries()]
       .filter(([k, v]) => !KNOWN.has(k) && typeof v === 'string' && v.trim())
@@ -49,6 +51,20 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!email || !name) {
       return new Response(JSON.stringify({ error: 'Name and email are required.' }), { status: 400 });
+    }
+
+    // Anti-spam. Report success so bots can't distinguish a filtered submission,
+    // but send nothing and add nothing to Mailchimp.
+    const started = Number(get('form_started'));
+    const verdict = checkSpam({
+      honeypot: get('company_url'),
+      elapsedMs: started ? Date.now() - started : undefined,
+      email,
+      text: [name, company, goal, hq, states, referredBy, ...extras.map(([, v]) => v)],
+    });
+    if (verdict.spam) {
+      console.warn('Lead blocked as spam:', verdict.reason, '|', email, '|', source);
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
     // Internal notification

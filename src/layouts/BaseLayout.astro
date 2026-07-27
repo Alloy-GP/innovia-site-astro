@@ -483,6 +483,31 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
 
     <ReviewWidget />
 
+    <!-- Anti-spam: keep the honeypot out of sight without display:none (bots skip
+         hidden inputs). Off-screen + not focusable + not announced. -->
+    <style is:inline>
+      .hp-field {
+        position: absolute !important;
+        left: -9999px !important; top: auto !important;
+        width: 1px !important; height: 1px !important;
+        overflow: hidden !important; opacity: 0 !important;
+        pointer-events: none !important;
+      }
+    </style>
+    <script is:inline>
+      /* Stamp when each form was rendered so the API can reject instant submits. */
+      (function () {
+        function stamp() {
+          document.querySelectorAll('form[data-endpoint] input[name="form_started"]').forEach(function (i) {
+            if (!i.value) i.value = String(Date.now());
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', stamp);
+        } else { stamp(); }
+      })();
+    </script>
+
     <!-- Global form handler: any <form data-endpoint="/api/..."> POSTs its fields
          and swaps to a success message. Falls back to an inline error on failure. -->
     <script is:inline>

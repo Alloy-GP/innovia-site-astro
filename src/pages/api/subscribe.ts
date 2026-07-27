@@ -6,6 +6,7 @@ import type { APIRoute } from 'astro';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
+import { checkSpam } from '~/lib/spam';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
@@ -24,6 +25,19 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!email) {
       return new Response(JSON.stringify({ error: 'Email is required.' }), { status: 400 });
+    }
+
+    // Anti-spam — report success, subscribe nothing (see src/lib/spam.ts).
+    const startedAt = Number(data.get('form_started')?.toString() ?? '');
+    const verdict = checkSpam({
+      honeypot: data.get('company_url')?.toString(),
+      elapsedMs: startedAt ? Date.now() - startedAt : undefined,
+      email,
+      text: [firstName],
+    });
+    if (verdict.spam) {
+      console.warn('Subscribe blocked as spam:', verdict.reason, '|', email);
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
     // Add to Mailchimp (silently pass if already subscribed)
