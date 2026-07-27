@@ -15,6 +15,7 @@ const pageSchema = [
     name: 'Alan Greenberg',
     jobTitle: 'Co-Founder & Co-Chairman, CCA Global Partners',
     description: 'Co-founder of CCA Global Partners, whose people-first philosophy shaped a cooperative culture where members are co-owners with a real voice. Inducted into the Cooperative Hall of Fame in 2009.',
+    image: '/assets/people/alan-greenberg.jpg',
     worksFor: 'CCA Global Partners',
     award: ['Cooperative Hall of Fame, 2009'],
   }),
@@ -81,8 +82,10 @@ const html = `<style>
     }
     .page-hero h1 {
       font-family: var(--font-display); font-weight: 900;
-      font-size: clamp(54px, 7.6vw, 124px);
-      line-height: 0.92;
+      /* Matches the smaller hero scale used on schedule-a-conversation /
+         hoa-management-services — the two-line headline was overpowering. */
+      font-size: clamp(40px, 5.4vw, 84px);
+      line-height: 0.98;
       letter-spacing: -0.04em;
       color: #fff; margin: 0;
       text-wrap: balance;
@@ -751,8 +754,10 @@ const html = `<style>
           </div>
         </div>
         <div class="portrait">
-          <div class="frame">
-            <div class="mark">AG<span class="lo">Co-founder</span></div>
+          <div class="frame has-photo">
+            <img src="/assets/people/alan-greenberg.jpg" width="600" height="800"
+                 alt="Alan Greenberg, co-founder and co-chairman of CCA Global Partners"
+                 loading="lazy" decoding="async">
           </div>
           <div class="body">
             <span class="role">Co-Founder &amp; Co-Chairman</span>
