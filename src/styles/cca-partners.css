@@ -55,8 +55,9 @@ body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
 }
 .page-hero h1 {
   font-family: var(--font-display); font-weight: 900;
-  font-size: clamp(54px, 7.6vw, 124px);
-  line-height: 0.92;
+  /* Matches the founders page hero scale. */
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 0.98;
   letter-spacing: -0.04em;
   color: #fff; margin: 0;
   text-wrap: balance;
