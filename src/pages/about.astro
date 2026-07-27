@@ -117,6 +117,20 @@ const html = `<style>
       color: var(--fg-2);
       margin: 0 0 18px;
     }
+    /* Inline prose links (cooperative lineage) */
+    .origin .body a {
+      color: var(--innovia-navy);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: var(--innovia-green);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+      transition: color .15s, text-decoration-color .15s;
+    }
+    .origin .body a:hover {
+      color: var(--innovia-green-deep);
+      text-decoration-color: var(--innovia-navy);
+    }
     .origin .body p:first-child::first-letter {
       font-family: var(--font-display);
       font-weight: 900;
@@ -512,6 +526,9 @@ const html = `<style>
           </p>
           <p>
             The cooperative grew the way the founders wanted it to grow: by introduction. A member nominates a peer. A peer takes the call. If the fit is real, the room expands. 80+ firms later, the model still answers the phone the same way.
+          </p>
+          <p>
+            Innovia didn&rsquo;t have to invent that model. It was built inside <a href="/about/cca-global-partners/">CCA Global Partners</a>, the federation of industry cooperatives <a href="/about/founders/">Howard Brodsky and Alan Greenberg</a> started in 1984 with a 13-member flooring co-op and grew into one of the largest privately held cooperatives in North America. Both are Cooperative Hall of Fame inductees.
           </p>
           <p>
             Today Innovia&rsquo;s members manage <span>1.4&nbsp;million</span>&nbsp;+ households across <span>28</span> states. The community is structured around three commitments &mdash; elite community, business growth, and a vendor program built specifically for the CAM industry &mdash; and a single working creed:
