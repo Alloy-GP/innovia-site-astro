@@ -183,9 +183,17 @@ const html = `<style>
 
     /* ---------- Audience fork — CAMs primary lane, boards secondary lane ---------- */
     .audience-fork-b { padding: 0; }
+    /* Constrained to the site container (matches .container in site.css) so the
+       two lanes line up with the nav, stat band, and everything else instead of
+       running full-bleed. */
     .audience-fork-b .grid {
       display: grid;
       grid-template-columns: 1.45fr 1fr;
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 36px;
+      box-sizing: border-box;
     }
     .audience-fork-b .lane {
       padding: 64px 56px 56px;
@@ -870,7 +878,7 @@ const html = `<style>
       .stat-band .row { grid-template-columns: repeat(2, 1fr); }
       .stat-band .cell:nth-child(2) { border-right: 0; }
       .stat-band .cell:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.08); }
-      .audience-fork-b .grid { grid-template-columns: 1fr; }
+      .audience-fork-b .grid { grid-template-columns: 1fr; padding: 0 22px; }
       .pillars-stack .head { grid-template-columns: 1fr; gap: 24px; }
       .pillars-stack .pillar { grid-template-columns: 1fr; gap: 24px; padding: 48px 0; }
       .cinderella-b .roles { grid-template-columns: repeat(2, 1fr); }
