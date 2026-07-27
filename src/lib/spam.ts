@@ -19,7 +19,12 @@ export function normalizeEmail(email: string): string {
 
 /** Known abusive senders (normalized). */
 const BLOCKED_EMAILS = new Set([
-  'eedgelow@gmail.com', // form-scraping bot, hit every form 2026-07-27
+  // Same form-scraping campaign, rotating senders. Each burst hits 3 forms in
+  // under a minute. The gibberish check catches these independently; this list
+  // is a cheap second layer in case the text pattern changes.
+  'eedgelow@gmail.com',      // 2026-07-27
+  'terrysgarage@shtc.net',   // 2026-07-26
+  'zujuvutib88@gmail.com',   // 2026-07-26
 ]);
 
 /** Long mixed-case strings with no word structure — e.g. "GZwCCNqmUlNKUtMWpdAbtZ".
