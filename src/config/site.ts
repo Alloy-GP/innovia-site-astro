@@ -31,16 +31,32 @@ export const SITE = {
   ogImageWidth:  '1200',
   ogImageHeight: '630',
 
-  /** Organization JSON-LD — emitted on every page */
+  /** Organization JSON-LD — emitted on every page.
+   *  Empty strings are omitted from the output (see orgSchema in lib/schema.ts),
+   *  so leave a field blank rather than shipping a placeholder — fake NAP data
+   *  weakens the brand entity in search. */
   org: {
-    type: 'LocalBusiness',         // or 'ProfessionalService', 'Organization', etc.
-    telephone: '+1-XXX-XXX-XXXX',
-    email: 'contact@innoviaco-op.com',
-    addressLocality: 'City',
-    addressRegion: 'TX',
+    // National member-owned cooperative, not a storefront serving a locale.
+    type: 'Organization',
+    telephone: '',                 // no public phone number on the site yet
+    email: '',                     // no monitored public inbox confirmed yet
+    addressLocality: 'Manchester',
+    addressRegion: 'NH',
     addressCountry: 'US',
     areaServed: 'United States',
-    priceRange: '$$',
+    priceRange: '',                // n/a for a cooperative
     logo: 'https://innoviaco-op.com/assets/logos/innovia-primary.png',
+    /** Brand-entity signals — helps Google disambiguate "Innovia" (there are
+     *  other companies by that name) and own the brand SERP. */
+    sameAs: [
+      'https://www.linkedin.com/company/innovia-community-management-cooperative/',
+      'https://x.com/innoviacoop',
+      'https://www.facebook.com/InnoviaCoOp/',
+    ],
+    alternateName: [
+      'Innovia',
+      'Innovia Cooperative',
+      'Innovia Community Management Cooperative',
+    ],
   },
 } as const;
