@@ -7,6 +7,7 @@
 
 import '../styles/site.css';
 import { SITE } from '../config/site.ts';
+import { orgSchema } from '../lib/schema.ts';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ReviewWidget from '../components/ReviewWidget.astro';
@@ -62,24 +63,9 @@ const defaultOg = SITE.defaultOgImage ?? '/assets/og/option-1-type-led.png';
 const canonicalUrl    = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
 const resolvedOgImage = new URL(ogImageProp ?? defaultOg, Astro.site ?? SITE.url).toString();
 
-const orgLd = {
-  '@context': 'https://schema.org',
-  '@type': SITE.org.type,
-  name: SITE.name,
-  url: SITE.url,
-  logo: SITE.org.logo,
-  description,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: SITE.org.addressLocality,
-    addressRegion:   SITE.org.addressRegion,
-    addressCountry:  SITE.org.addressCountry,
-  },
-  telephone: SITE.org.telephone,
-  email:     SITE.org.email,
-  areaServed: SITE.org.areaServed,
-  priceRange: SITE.org.priceRange,
-};
+// Single source of truth: orgSchema() omits blank fields and carries the
+// brand-entity signals (sameAs, alternateName). Page description is layered on.
+const orgLd = { ...orgSchema(), description };
 
 const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
