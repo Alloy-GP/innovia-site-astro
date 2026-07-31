@@ -28,22 +28,29 @@ import { SITE } from '~/config/site';
 // to reference the org object inside another schema (e.g. Article publisher).
 
 export function orgSchema() {
+  const o = SITE.org as typeof SITE.org & {
+    sameAs?: readonly string[];
+    alternateName?: readonly string[];
+  };
+  // Blank fields are omitted rather than shipped as placeholders.
   return {
     '@context': 'https://schema.org',
-    '@type': SITE.org.type,
+    '@type': o.type,
     name: SITE.name,
+    ...(o.alternateName?.length ? { alternateName: [...o.alternateName] } : {}),
     url: SITE.url,
-    logo: SITE.org.logo,
-    telephone: SITE.org.telephone,
-    email: SITE.org.email,
+    logo: o.logo,
+    ...(o.telephone ? { telephone: o.telephone } : {}),
+    ...(o.email ? { email: o.email } : {}),
     address: {
       '@type': 'PostalAddress',
-      addressLocality: SITE.org.addressLocality,
-      addressRegion: SITE.org.addressRegion,
-      addressCountry: SITE.org.addressCountry,
+      addressLocality: o.addressLocality,
+      addressRegion: o.addressRegion,
+      addressCountry: o.addressCountry,
     },
-    areaServed: SITE.org.areaServed,
-    priceRange: SITE.org.priceRange,
+    ...(o.areaServed ? { areaServed: o.areaServed } : {}),
+    ...(o.priceRange ? { priceRange: o.priceRange } : {}),
+    ...(o.sameAs?.length ? { sameAs: [...o.sameAs] } : {}),
   };
 }
 
