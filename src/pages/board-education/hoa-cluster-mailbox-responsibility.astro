@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const html = `<style>
+    body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
+    .site-header { background: rgba(15,36,71,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .site-header nav > a { color: rgba(255,255,255,0.7); }
+    .site-header nav > a:hover, .site-header nav > a.active { color: #fff; }
+    .site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+    .site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+
+    .page-hero { padding: 56px 0 56px; position: relative; overflow: hidden; }
+    .page-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 92% 8%, rgba(149,208,49,0.14) 0%, transparent 38%), radial-gradient(circle at 4% 96%, rgba(42,74,120,0.5) 0%, transparent 50%); pointer-events: none; }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero .crumb { display: flex; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 36px; }
+    .page-hero .crumb a:hover { color: #fff; }
+    .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 6vw, 88px); letter-spacing: -0.034em; color: #fff; line-height: 1; margin: 0; text-wrap: balance; }
+    .page-hero h1 em { color: var(--innovia-green); font-style: normal; }
+    .page-hero h1 .light { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.55); font-size: 0.48em; letter-spacing: -0.02em; }
+    .page-hero .lede { font-size: 17px; line-height: 1.62; color: rgba(255,255,255,0.78); max-width: 56ch; margin: 24px 0 0; }
+
+    .page-hero { padding: 56px 0 40px; }
+    .page-hero .meta-row { display: flex; gap: 24px; align-items: center; margin: 20px 0 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.18); font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    .page-hero .meta-row .green { color: var(--innovia-green); }
+
+
+    .article-body { padding: 32px 0 96px; }
+    .article-body .layout { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+    .article-body .toc { position: sticky; top: 96px; }
+    .article-body .toc h6 { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+    .article-body .toc ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: tocnum; }
+    .article-body .toc li { counter-increment: tocnum; }
+    .article-body .toc a { font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; padding-left: 24px; position: relative; display: block; line-height: 1.4; transition: color .15s; }
+    .article-body .toc a::before { content: counter(tocnum, decimal-leading-zero); position: absolute; left: 0; color: var(--innovia-green); font-size: 10px; }
+    .article-body .toc a:hover { color: #fff; }
+
+    .article-body .content { max-width: 68ch; }
+    .article-body .content .lede-graf { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.45; color: #fff; margin: 0 0 32px; letter-spacing: -0.01em; }
+    .article-body .content .lede-graf::first-letter { font-family: var(--font-display); font-weight: 900; font-size: 84px; float: left; line-height: 0.8; margin: 6px 14px 0 0; color: var(--innovia-green); }
+    .article-body .content h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 38px); color: #fff; letter-spacing: -0.018em; margin: 56px 0 18px; line-height: 1.1; scroll-margin-top: 96px; }
+    .article-body .content h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.008em; margin: 32px 0 10px; scroll-margin-top: 96px; }
+    .article-body .content p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); margin: 0 0 18px; }
+    .article-body .content a:not(.btn) { color: var(--innovia-green); text-decoration: underline; text-underline-offset: 2px; }
+    .article-body .content a:not(.btn):hover { color: #fff; }
+    .article-body .content strong { color: #fff; }
+    .article-body .content .pull { font-family: var(--font-display); font-weight: 500; font-style: italic; font-size: 24px; line-height: 1.4; color: #fff; padding: 24px 28px; margin: 32px 0; background: rgba(149,208,49,0.06); border-left: 3px solid var(--innovia-green); letter-spacing: -0.005em; }
+    .article-body .content .pull cite { display: block; margin-top: 14px; font-family: var(--font-mono); font-style: normal; font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+    .article-body .content ul, .article-body .content ol { padding-left: 24px; margin: 0 0 18px; }
+    .article-body .content li { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 8px; }
+    .article-body .content .figure { margin: 32px 0; padding: 24px 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); }
+    .article-body .content .figure .cap { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+    .article-body .content .figure h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff; margin: 0 0 8px; letter-spacing: -0.008em; }
+    .article-body .content .figure p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.65); margin: 0 0 6px; }
+
+    /* Comparison tables */
+    .article-body .content .table-wrap { margin: 24px 0; overflow-x: auto; }
+    .article-body .content table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+    .article-body .content th { background: rgba(149,208,49,0.10); color: #fff; text-align: left; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.16); font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+    .article-body .content td { padding: 12px 14px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); line-height: 1.5; vertical-align: top; }
+    .article-body .content td strong { color: #fff; }
+
+    /* State / definition callouts */
+    .article-body .content .callout { margin: 16px 0; padding: 14px 22px; background: rgba(149,208,49,0.05); border-left: 3px solid var(--innovia-green); }
+    .article-body .content .callout p { font-size: 16px; line-height: 1.6; margin: 0; }
+    .article-body .content .callout .state { font-weight: 700; color: #fff; }
+
+    /* Educational disclaimer */
+    .article-body .content .disclaimer { margin: 28px 0; padding: 14px 22px; border-left: 3px solid rgba(255,255,255,0.28); }
+    .article-body .content .disclaimer p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.55); margin: 0; }
+
+    .inline-cta { margin: 48px 0; padding: 28px 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; gap: 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .inline-cta strong { display: block; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 17px; }
+    .inline-cta span { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; display: block; }
+
+    .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+    .article-foot .share { display: flex; gap: 14px; }
+    .article-foot .share a { color: rgba(255,255,255,0.6); }
+    .article-foot .share a:hover { color: var(--innovia-green); }
+
+    .related-spokes { padding: 80px 0 96px; background: var(--innovia-navy-deep); border-top: 1px solid rgba(255,255,255,0.08); }
+    .related-spokes h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: #fff; margin: 0 0 24px; letter-spacing: -0.014em; }
+    .related-spokes .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .related-spokes a { padding: 24px 26px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color .15s; }
+    .related-spokes a:hover { border-color: var(--innovia-green); }
+    .related-spokes a .cat { font-family: var(--font-mono); font-size: 10px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
+    .related-spokes a h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; letter-spacing: -0.005em; margin: 0; line-height: 1.3; }
+
+    @media (max-width: 1080px) { .article-body .layout { grid-template-columns: 1fr; gap: 32px; } .article-body .toc { position: static; } .related-spokes .grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <section class="page-hero">
+    <div class="container">
+
+      <div class="crumb">
+        <a href="/">Innovia</a>
+        <span>/</span>
+        <a href="/board-education/">Board Resources</a>
+        <span>/</span>
+        <span style="color:#fff;">Cluster Mailboxes</span>
+      </div>
+      <h1>Who is responsible for <em>cluster mailboxes?</em><span class="light">ownership, repairs, keys, and the USPS line.</span></h1>
+      <p class="lede">Cluster box units sit in a gap that catches boards off guard: the Postal Service sets the rules and controls one lock, but the association usually owns the hardware and pays for it. Here is how responsibility actually splits, and what to do when a unit is damaged, worn out, or broken into.</p>
+      <div class="meta-row">
+        <span><span class="green">Topic</span> &middot; Common Areas &amp; Maintenance</span>
+        <span><span class="green">Read</span> &middot; 8 min</span>
+        <span><span class="green">Updated</span> &middot; July 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="article-body">
+    <div class="container">
+      <div class="layout">
+        <aside class="toc">
+          <h6>In this guide</h6>
+          <ol>
+            <li><a href="#who-owns">Who owns the unit</a></li>
+            <li><a href="#split">The responsibility split</a></li>
+            <li><a href="#keys">Keys, locks &amp; lockouts</a></li>
+            <li><a href="#repairs">Repairs and replacement</a></li>
+            <li><a href="#theft">Vandalism and mail theft</a></li>
+            <li><a href="#turnover">Developer turnover</a></li>
+            <li><a href="#checklist">Board checklist</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ol>
+        </aside>
+
+        <div class="content">
+          <p class="lede-graf">Almost every cluster-mailbox dispute starts the same way: a resident reports a broken lock or a rusted-out unit, someone says &ldquo;that&rsquo;s the post office&rsquo;s problem,&rdquo; and three weeks later nothing has happened. In most communities that assumption is wrong, and the delay is the association&rsquo;s to own.</p>
+
+          <h2 id="who-owns">Who owns the cluster box unit</h2>
+          <p>A cluster box unit (CBU) is the free-standing, multi-compartment mailbox used across most modern subdivisions and condominium developments. The Postal Service approves where it goes and how mail is delivered to it &mdash; but in the large majority of private communities, USPS does not own the physical unit and does not maintain it.</p>
+          <p>The typical chain of ownership looks like this: the developer purchases and installs USPS-approved units as part of site work, then conveys them to the association along with the rest of the common area at turnover. From that point the CBU is association property, sitting on association land, maintained out of the association budget.</p>
+          <div class="callout">
+            <p><strong>The practical test:</strong> if the unit is on association-owned land and was installed by the developer rather than the Postal Service, it is almost certainly the association&rsquo;s asset to insure, maintain, and eventually replace.</p>
+          </div>
+          <p>There is a meaningful exception. In some older neighborhoods &mdash; and in areas where the Postal Service installed boxes directly &mdash; USPS retains ownership and handles maintenance. The only reliable way to confirm which situation applies is to ask the local postmaster in writing and to check the community&rsquo;s recorded plat and turnover documents.</p>
+
+          <h2 id="split">How responsibility actually splits</h2>
+          <p>Once ownership is settled, the day-to-day division of labor is fairly consistent from community to community.</p>
+          <h3>The association typically handles</h3>
+          <ul>
+            <li>The unit itself &mdash; pedestal, cabinet, doors, hinges, and the parcel lockers</li>
+            <li>The pad or foundation, and the approach to it</li>
+            <li>Painting, corrosion treatment, and general upkeep</li>
+            <li>Replacement when the unit reaches end of life or is destroyed</li>
+            <li>Lighting and sightlines around the mailbox area</li>
+            <li>Snow and ice clearance to and around the unit, where applicable</li>
+          </ul>
+          <h3>The Postal Service typically handles</h3>
+          <ul>
+            <li>The <strong>arrow lock</strong> &mdash; the single master lock the carrier uses to open the unit for delivery</li>
+            <li>Approving the location, unit type, and any relocation</li>
+            <li>Delivery itself, and the decision to suspend delivery if a unit becomes unsafe or non-compliant</li>
+          </ul>
+          <h3>The individual resident typically handles</h3>
+          <ul>
+            <li>Their own compartment key and any duplicates</li>
+            <li>Lock replacement for their compartment, in many communities</li>
+            <li>Reporting damage promptly</li>
+          </ul>
+          <p>That middle item is where most of the confusion lives. The arrow lock belongs to the Postal Service and no one else may touch it &mdash; but every other lock on the unit is a private matter between the resident and the association.</p>
+
+          <h2 id="keys">Keys, locks, and lockouts</h2>
+          <p>When a resident loses a key or a compartment lock fails, USPS will not normally rekey a privately owned unit. The association &mdash; or its management company &mdash; arranges a locksmith or orders a replacement lock and cam, and most communities pass that cost to the resident through a published fee.</p>
+          <p>Two points worth writing into policy before you need them:</p>
+          <ul>
+            <li><strong>Who orders the work.</strong> Leaving it to residents invites non-approved hardware and mismatched locks. Centralizing it through management keeps the unit uniform and keeps a record.</li>
+            <li><strong>What it costs.</strong> Publish the lock-and-key fee in the association&rsquo;s fee schedule so it is not negotiated case by case at the front desk.</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Never cut or drill the arrow lock.</strong> It is Postal Service property, and tampering with it is a federal matter. If the carrier&rsquo;s lock fails, the fix is a call to the local post office, not a locksmith.</p>
+          </div>
+
+          <h2 id="repairs">Repairs and replacement</h2>
+          <p>Cluster units are outdoor steel or aluminum assemblies with moving parts, so they wear on a predictable curve: hinges and lock cams first, then door alignment, then the cabinet and pedestal as corrosion sets in. Coastal and heavy-salt climates run through them faster.</p>
+          <p>Two things make replacement more expensive than boards expect. First, a replacement unit must be a current USPS-approved model, which may not match the footprint of a unit installed fifteen years earlier. Second, relocating or resizing a unit requires postmaster approval before installation, not after.</p>
+          <p>Because of that, cluster mailboxes belong in the reserve study as a discrete component with their own useful life and replacement cost &mdash; not lumped into a general &ldquo;site amenities&rdquo; line. Boards that skip this end up funding replacement out of operating or a special assessment.</p>
+          <div class="inline-cta">
+            <span>Not sure whether your reserve study captures site components like mailboxes?</span>
+            <a href="/board-education/hoa-reserve-study/" class="btn btn-primary">Read the reserve study guide
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <h2 id="theft">Vandalism and mail theft</h2>
+          <p>Pried-open parcel lockers and forced compartment doors are the most common security incident at cluster units. The response has two tracks that should run at the same time.</p>
+          <p><strong>The criminal track</strong> belongs to law enforcement. Theft of mail is a federal offense, and reports go to the U.S. Postal Inspection Service in addition to local police. Residents whose mail was taken should file their own reports; the association should not file on their behalf.</p>
+          <p><strong>The property track</strong> belongs to the association. Document the damage, secure the unit, notify the insurer if the loss exceeds the deductible, and repair or replace promptly &mdash; a visibly damaged unit invites repeat attempts. If the same location is hit more than once, treat it as a site-design problem rather than a run of bad luck: lighting, sightlines, and camera placement usually matter more than the hardware itself.</p>
+
+          <h2 id="turnover">Cluster mailboxes at developer turnover</h2>
+          <p>Newly transitioned boards frequently inherit mailbox problems that were built in. The unit may already be near end of life, installed to a superseded standard, or placed somewhere the Postal Service tolerated but never formally approved.</p>
+          <p>A turnover review should confirm four things: that the units were conveyed to the association in writing, that their condition was documented, that the placement has postmaster approval on record, and that the reserve study carries them as a funded component. Catching this during the transition window is far cheaper than discovering it in year three.</p>
+
+          <h2 id="checklist">Board checklist</h2>
+          <ol>
+            <li>Confirm in writing whether the association or USPS owns the units.</li>
+            <li>Locate the turnover documents and any postmaster approval for placement.</li>
+            <li>Add cluster mailboxes to the reserve study as their own component.</li>
+            <li>Publish a lock-and-key policy with a fee, and route all work through management.</li>
+            <li>Inspect units annually for corrosion, door alignment, and lock wear.</li>
+            <li>Review lighting and sightlines at each mailbox location.</li>
+            <li>Keep a written incident log for damage and theft reports.</li>
+          </ol>
+
+          <div class="disclaimer">
+            <p>This guide is general information for board members, not legal advice. Postal regulations, state statutes, and your governing documents all bear on who is responsible in a specific community &mdash; confirm with your association&rsquo;s counsel and your local postmaster before acting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-spokes">
+    <div class="container">
+      <h2>Read next.</h2>
+      <div class="grid">
+        <a href="/board-education/hoa-reserve-study/">
+          <span class="cat">Financials</span>
+          <h3>HOA Reserve Study Guide</h3>
+        </a>
+        <a href="/board-education/hoa-transition-from-developer/">
+          <span class="cat">Turnover</span>
+          <h3>HOA Developer Transition</h3>
+        </a>
+        <a href="/board-education/hoa-crime-prevention-safety/">
+          <span class="cat">Safety</span>
+          <h3>Preventing Crime in Your Community</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who is responsible for cluster mailboxes in an HOA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In most private communities the association owns and maintains the cluster box unit, because the developer purchased and installed it and conveyed it to the association at turnover. The Postal Service approves the location and controls the carrier's arrow lock, but does not maintain privately installed units. Older neighborhoods where USPS installed the boxes directly are the main exception, so confirm ownership with your local postmaster and your turnover documents."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does USPS repair a broken cluster mailbox?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Generally no. If the association owns the unit, the association pays for repairs and replacement. The Postal Service maintains only the arrow lock the carrier uses for delivery. USPS can also suspend delivery to a unit it considers unsafe or non-compliant, which makes prompt repair the association's problem to solve."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who pays to replace a lost cluster mailbox key?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The resident normally pays. Because USPS will not rekey a privately owned unit, the association or its management company arranges the lock and key replacement and charges a published fee. Routing the work through management keeps the hardware uniform and creates a record."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should a board do after cluster mailbox theft?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Run two tracks at once. Affected residents report the mail theft to the U.S. Postal Inspection Service and local police, since mail theft is a federal offense. Separately, the association documents the damage, secures and repairs the unit, notifies its insurer if the loss exceeds the deductible, and reviews lighting, sightlines, and camera coverage if the same location is targeted repeatedly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should cluster mailboxes be in the reserve study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Cluster box units are an association-owned site component with a finite useful life, and replacement must use a current USPS-approved model, which can change the footprint and the cost. Carrying them as a discrete reserve component rather than inside a general site-amenities line avoids funding replacement through a special assessment."
+        }
+      }
+    ]
+  }
+  </script>
+`;
+---
+<BaseLayout
+  title="Who Is Responsible for Cluster Mailboxes? · HOA Board Guide | Innovia"
+  description="Who owns and maintains cluster mailboxes in an HOA, what USPS is responsible for, who pays for keys and repairs, and what to do after mail theft."
+  ogImage="/assets/og/option-1-type-led.png"
+  ctaLabel="Send Inquiry"
+  ctaHref="/find-a-management-company/#request"
+>
+  <Fragment set:html={html} />
+</BaseLayout>

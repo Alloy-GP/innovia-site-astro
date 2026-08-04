@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const html = `<style>
+    body { background: var(--innovia-navy); color: rgba(255,255,255,0.78); }
+    .site-header { background: rgba(15,36,71,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .site-header nav > a { color: rgba(255,255,255,0.7); }
+    .site-header nav > a:hover, .site-header nav > a.active { color: #fff; }
+    .site-header .btn-navy { background: #fff; color: var(--innovia-navy); }
+    .site-header .btn-navy:hover { background: var(--innovia-green); color: var(--innovia-navy); }
+
+    .page-hero { padding: 56px 0 56px; position: relative; overflow: hidden; }
+    .page-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 92% 8%, rgba(149,208,49,0.14) 0%, transparent 38%), radial-gradient(circle at 4% 96%, rgba(42,74,120,0.5) 0%, transparent 50%); pointer-events: none; }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero .crumb { display: flex; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 36px; }
+    .page-hero .crumb a:hover { color: #fff; }
+    .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 6vw, 88px); letter-spacing: -0.034em; color: #fff; line-height: 1; margin: 0; text-wrap: balance; }
+    .page-hero h1 em { color: var(--innovia-green); font-style: normal; }
+    .page-hero h1 .light { display: block; margin-top: 8px; font-family: var(--font-body); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.55); font-size: 0.48em; letter-spacing: -0.02em; }
+    .page-hero .lede { font-size: 17px; line-height: 1.62; color: rgba(255,255,255,0.78); max-width: 56ch; margin: 24px 0 0; }
+
+    .page-hero { padding: 56px 0 40px; }
+    .page-hero .meta-row { display: flex; gap: 24px; align-items: center; margin: 20px 0 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.18); font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+    .page-hero .meta-row .green { color: var(--innovia-green); }
+
+
+    .article-body { padding: 32px 0 96px; }
+    .article-body .layout { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+    .article-body .toc { position: sticky; top: 96px; }
+    .article-body .toc h6 { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+    .article-body .toc ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; counter-reset: tocnum; }
+    .article-body .toc li { counter-increment: tocnum; }
+    .article-body .toc a { font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.65); text-decoration: none; padding-left: 24px; position: relative; display: block; line-height: 1.4; transition: color .15s; }
+    .article-body .toc a::before { content: counter(tocnum, decimal-leading-zero); position: absolute; left: 0; color: var(--innovia-green); font-size: 10px; }
+    .article-body .toc a:hover { color: #fff; }
+
+    .article-body .content { max-width: 68ch; }
+    .article-body .content .lede-graf { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.45; color: #fff; margin: 0 0 32px; letter-spacing: -0.01em; }
+    .article-body .content .lede-graf::first-letter { font-family: var(--font-display); font-weight: 900; font-size: 84px; float: left; line-height: 0.8; margin: 6px 14px 0 0; color: var(--innovia-green); }
+    .article-body .content h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3vw, 38px); color: #fff; letter-spacing: -0.018em; margin: 56px 0 18px; line-height: 1.1; scroll-margin-top: 96px; }
+    .article-body .content h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.008em; margin: 32px 0 10px; scroll-margin-top: 96px; }
+    .article-body .content p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); margin: 0 0 18px; }
+    .article-body .content a:not(.btn) { color: var(--innovia-green); text-decoration: underline; text-underline-offset: 2px; }
+    .article-body .content a:not(.btn):hover { color: #fff; }
+    .article-body .content strong { color: #fff; }
+    .article-body .content .pull { font-family: var(--font-display); font-weight: 500; font-style: italic; font-size: 24px; line-height: 1.4; color: #fff; padding: 24px 28px; margin: 32px 0; background: rgba(149,208,49,0.06); border-left: 3px solid var(--innovia-green); letter-spacing: -0.005em; }
+    .article-body .content .pull cite { display: block; margin-top: 14px; font-family: var(--font-mono); font-style: normal; font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+    .article-body .content ul, .article-body .content ol { padding-left: 24px; margin: 0 0 18px; }
+    .article-body .content li { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.78); margin-bottom: 8px; }
+    .article-body .content .figure { margin: 32px 0; padding: 24px 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); }
+    .article-body .content .figure .cap { font-family: var(--font-mono); font-size: 11px; color: var(--innovia-green); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+    .article-body .content .figure h4 { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff; margin: 0 0 8px; letter-spacing: -0.008em; }
+    .article-body .content .figure p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.65); margin: 0 0 6px; }
+
+    /* Comparison tables */
+    .article-body .content .table-wrap { margin: 24px 0; overflow-x: auto; }
+    .article-body .content table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+    .article-body .content th { background: rgba(149,208,49,0.10); color: #fff; text-align: left; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.16); font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+    .article-body .content td { padding: 12px 14px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.76); line-height: 1.5; vertical-align: top; }
+    .article-body .content td strong { color: #fff; }
+
+    /* State / definition callouts */
+    .article-body .content .callout { margin: 16px 0; padding: 14px 22px; background: rgba(149,208,49,0.05); border-left: 3px solid var(--innovia-green); }
+    .article-body .content .callout p { font-size: 16px; line-height: 1.6; margin: 0; }
+    .article-body .content .callout .state { font-weight: 700; color: #fff; }
+
+    /* Educational disclaimer */
+    .article-body .content .disclaimer { margin: 28px 0; padding: 14px 22px; border-left: 3px solid rgba(255,255,255,0.28); }
+    .article-body .content .disclaimer p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.55); margin: 0; }
+
+    .inline-cta { margin: 48px 0; padding: 28px 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); display: flex; gap: 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .inline-cta strong { display: block; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 17px; }
+    .inline-cta span { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; display: block; }
+
+    .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+    .article-foot .share { display: flex; gap: 14px; }
+    .article-foot .share a { color: rgba(255,255,255,0.6); }
+    .article-foot .share a:hover { color: var(--innovia-green); }
+
+    .related-spokes { padding: 80px 0 96px; background: var(--innovia-navy-deep); border-top: 1px solid rgba(255,255,255,0.08); }
+    .related-spokes h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: #fff; margin: 0 0 24px; letter-spacing: -0.014em; }
+    .related-spokes .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .related-spokes a { padding: 24px 26px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; transition: border-color .15s; }
+    .related-spokes a:hover { border-color: var(--innovia-green); }
+    .related-spokes a .cat { font-family: var(--font-mono); font-size: 10px; color: var(--innovia-green); letter-spacing: 0.12em; text-transform: uppercase; }
+    .related-spokes a h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; letter-spacing: -0.005em; margin: 0; line-height: 1.3; }
+
+    @media (max-width: 1080px) { .article-body .layout { grid-template-columns: 1fr; gap: 32px; } .article-body .toc { position: static; } .related-spokes .grid { grid-template-columns: 1fr; } }
+  </style>
+
+  <section class="page-hero">
+    <div class="container">
+
+      <div class="crumb">
+        <a href="/">Innovia</a>
+        <span>/</span>
+        <a href="/board-education/">Board Resources</a>
+        <span>/</span>
+        <span style="color:#fff;">Crime Prevention</span>
+      </div>
+      <h1>Eight strategies to <em>prevent crime</em><span class="light">and bolster safety in your community.</span></h1>
+      <p class="lede">Most community crime is opportunistic, and opportunity is a design problem before it is a policing problem. These are the eight levers a board actually controls &mdash; ordered by what tends to return the most safety per dollar.</p>
+      <div class="meta-row">
+        <span><span class="green">Topic</span> &middot; Safety &amp; Risk</span>
+        <span><span class="green">Read</span> &middot; 9 min</span>
+        <span><span class="green">Updated</span> &middot; July 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="article-body">
+    <div class="container">
+      <div class="layout">
+        <aside class="toc">
+          <h6>In this guide</h6>
+          <ol>
+            <li><a href="#lighting">1. Fix the lighting</a></li>
+            <li><a href="#sightlines">2. Cut the sightlines back</a></li>
+            <li><a href="#maintenance">3. Repair things quickly</a></li>
+            <li><a href="#access">4. Control access points</a></li>
+            <li><a href="#packages">5. Solve package theft</a></li>
+            <li><a href="#cameras">6. Use cameras deliberately</a></li>
+            <li><a href="#vendors">7. Vet everyone with keys</a></li>
+            <li><a href="#reporting">8. Build a reporting habit</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ol>
+        </aside>
+
+        <div class="content">
+          <p class="lede-graf">Boards tend to reach for cameras and patrols first, because both feel decisive. They are usually the third and fourth best things to spend money on. The measures that move the needle earliest are unglamorous: light, sightlines, and how fast the community repairs itself.</p>
+
+          <p>The framework underneath most of this is CPTED &mdash; crime prevention through environmental design. Its premise is that people make risk calculations, and a place that looks watched, cared for, and hard to leave unseen gets skipped. Every item below is a way of raising that perceived risk.</p>
+
+          <h2 id="lighting">1. Fix the lighting before anything else</h2>
+          <p>Lighting is the highest-leverage safety spend in most communities, and it is usually the most neglected because failures happen one fixture at a time. A parking court can lose a third of its illumination over two years without anyone filing a complaint.</p>
+          <p>What to look at:</p>
+          <ul>
+            <li><strong>Uniformity, not brightness.</strong> A few bright fixtures separated by dark gaps are worse than even, moderate coverage. Pools of glare destroy night vision and create the shadows they are meant to remove.</li>
+            <li><strong>The entries people actually use.</strong> Mailbox areas, stair towers, trash enclosures, and the path from parking to front doors.</li>
+            <li><strong>Fixture inventory and a replacement cycle.</strong> Walk the property after dark once a quarter and log outages. This one habit finds more problems than any policy.</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Do the walk at night.</strong> A daytime inspection cannot tell you what the property looks like at 10 p.m. Boards that add one after-dark walk per quarter usually find issues they had been paying to ignore.</p>
+          </div>
+
+          <h2 id="sightlines">2. Cut the sightlines back</h2>
+          <p>Landscaping matures into cover. Shrubs that were knee-high at installation screen a ground-floor window a decade later, and tree canopies drop low enough to block the lighting the association just paid to repair.</p>
+          <p>The working rule most risk managers use is simple: keep shrubs low and canopies high. Shrubbery below roughly three feet near windows and walkways, and tree limbs cleared to roughly six to eight feet, preserves natural surveillance &mdash; the ordinary ability of neighbors to see what is happening.</p>
+          <p>Write it into the landscape scope of work rather than handling it by complaint. Vendors prune to the contract they are given.</p>
+
+          <h2 id="maintenance">3. Repair damage quickly</h2>
+          <p>Visible disorder signals that nobody is paying attention. Broken gate arms, graffiti left up for weeks, abandoned vehicles, and burned-out entry lights all communicate the same thing to someone assessing risk.</p>
+          <p>The countermeasure is a response standard, not a bigger budget: graffiti removed within a set number of days, damaged access hardware repaired on a defined clock, abandoned vehicles tagged and towed on schedule. Speed is the deterrent.</p>
+
+          <h2 id="access">4. Control access points honestly</h2>
+          <p>Gates and access control help when they are maintained and enforced, and do very little when they are not. A gate propped open every weekday morning, or a code that has not changed since turnover, produces the feeling of security without the substance &mdash; and can raise expectations the association then has to meet.</p>
+          <p>If the community has controlled access, the questions worth asking annually are: who currently holds credentials, how are they revoked, how often are codes rotated, and how quickly is broken hardware repaired. If the honest answers are unsatisfying, that is a more productive project than adding cameras.</p>
+          <div class="callout">
+            <p><strong>A caution worth raising with counsel:</strong> marketing a community as &ldquo;secure&rdquo; or &ldquo;gated&rdquo; can create expectations the association is later held to. Describe amenities factually and let counsel review the language.</p>
+          </div>
+
+          <h2 id="packages">5. Solve package theft as a design problem</h2>
+          <p>Package theft is now the most common property crime in many managed communities, and it is highly solvable. Doorstep deliveries left in view from a street or shared corridor are the entire problem.</p>
+          <p>Options, roughly in order of cost: encourage carrier lockers and pickup points; add parcel lockers to existing cluster mailbox areas at the next replacement cycle; designate a staffed or access-controlled receiving point where the community has one; and improve visibility and lighting at the drop locations that already exist.</p>
+          <div class="inline-cta">
+            <span>Parcel lockers usually get added when mailbox units are replaced.</span>
+            <a href="/board-education/hoa-cluster-mailbox-responsibility/" class="btn btn-primary">Cluster mailbox responsibilities
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <h2 id="cameras">6. Use cameras deliberately, or not at all</h2>
+          <p>Cameras are evidence tools far more than deterrents, and boards routinely buy them expecting the opposite. They earn their keep at chokepoints &mdash; entries, mailbox areas, parking approaches &mdash; where a usable image can actually be captured.</p>
+          <p>Before installing, settle the operational questions, because they are what create liability later:</p>
+          <ul>
+            <li>How long is footage retained, and who may request it?</li>
+            <li>Is anyone monitoring live, and does the community imply that someone is?</li>
+            <li>Where are cameras aimed, and do any of them capture private interiors?</li>
+            <li>What is the process when law enforcement requests footage?</li>
+          </ul>
+          <p>Recording laws vary by state, particularly around audio, and expectations of privacy differ between common areas and anywhere adjoining a residence. This is a question for counsel before procurement, not after an incident.</p>
+
+          <h2 id="vendors">7. Vet everyone who holds keys or access</h2>
+          <p>Access is the quiet risk. Landscapers, pool techs, cleaners, contractors, and staff often hold credentials to gates, amenity rooms, and mechanical spaces, and that access frequently outlives the contract.</p>
+          <p>A workable standard: require background screening and proof of insurance in vendor contracts, issue credentials individually rather than handing over a master, keep a current list of who holds what, and revoke on the day a contract or employment ends. An annual access audit takes an hour and routinely turns up credentials nobody could account for.</p>
+
+          <h2 id="reporting">8. Build the reporting habit</h2>
+          <p>Communities consistently underreport. Residents tell the board, the board tells the manager, and nothing reaches the police department &mdash; so the neighborhood never appears in the data that drives patrol allocation.</p>
+          <p>Two changes fix most of it. Tell residents plainly that incidents go to law enforcement first and the association second. And keep an internal incident log with date, location, and type, so the board can see patterns rather than reacting to the most recent complaint.</p>
+          <p>That log is also what turns a conversation with the local crime-prevention officer from anecdote into evidence. Most departments will walk a property and give recommendations at no cost, and they give better recommendations when handed six months of specifics.</p>
+
+          <div class="disclaimer">
+            <p>This guide is general information for board members, not legal or security advice. Surveillance, access control, and the way a community describes its amenities all carry legal exposure that varies by state &mdash; review your program with association counsel and your insurer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-spokes">
+    <div class="container">
+      <h2>Read next.</h2>
+      <div class="grid">
+        <a href="/board-education/hoa-cluster-mailbox-responsibility/">
+          <span class="cat">Common Areas</span>
+          <h3>Who Is Responsible for Cluster Mailboxes?</h3>
+        </a>
+        <a href="/board-education/hoa-reserve-study/">
+          <span class="cat">Financials</span>
+          <h3>HOA Reserve Study Guide</h3>
+        </a>
+        <a href="/board-education/how-hoa-management-works/">
+          <span class="cat">HOA Basics</span>
+          <h3>How HOA Management Works</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the most effective way for an HOA to prevent crime?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lighting, sightlines, and fast repair generally return more safety per dollar than cameras or patrols. Most community crime is opportunistic, so the goal is raising perceived risk: even lighting without dark gaps, shrubs kept low and tree canopies kept high to preserve natural surveillance, and visible damage repaired on a defined clock."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do security cameras reduce crime in an HOA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cameras function mainly as evidence tools rather than deterrents. They are most useful at chokepoints such as entries, mailbox areas, and parking approaches where a usable image can be captured. Before installing, a board should settle retention periods, who may request footage, whether anyone monitors live, and camera aim, and should have counsel review state recording laws, especially regarding audio."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can an HOA stop package theft?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Treat it as a design problem rather than a policing one. Deliveries left visible from a street or shared corridor are the core issue. Options in rough order of cost are encouraging carrier lockers and pickup points, adding parcel lockers when cluster mailbox units are next replaced, designating an access-controlled receiving point, and improving lighting and visibility at existing drop locations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is an HOA liable for crime in the community?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Exposure varies by state and by what the association has represented and undertaken. Advertising a community as secure or gated, or installing safety measures and then failing to maintain them, can create expectations the association is later held to. Describe amenities factually, maintain what you install, and review the program with association counsel and your insurer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should residents report incidents to the HOA or the police?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Law enforcement first, the association second. Communities routinely underreport, which keeps the neighborhood out of the data that drives patrol allocation. The board should separately keep an internal incident log with date, location, and type so it can act on patterns and give the local crime-prevention officer specifics rather than anecdotes."
+        }
+      }
+    ]
+  }
+  </script>
+`;
+---
+<BaseLayout
+  title="8 Strategies to Prevent Crime in Your Community · HOA Guide | Innovia"
+  description="Eight practical crime-prevention strategies for HOA and condo boards — lighting, sightlines, access control, package theft, cameras, vendor vetting, and reporting."
+  ogImage="/assets/og/option-1-type-led.png"
+  ctaLabel="Send Inquiry"
+  ctaHref="/find-a-management-company/#request"
+>
+  <Fragment set:html={html} />
+</BaseLayout>
