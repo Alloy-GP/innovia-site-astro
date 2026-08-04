@@ -2,7 +2,10 @@
 // - Honeypot ("company_url") silently drops bots.
 // - Sends an office notification + applicant confirmation via Resend.
 // - On ANY failure, posts an alert to the Slack incoming webhook (FORM_ALERT_SLACK_URL).
-// Env (set in Vercel, Production + Preview): RESEND_API_KEY, FORM_ALERT_SLACK_URL.
+// - Appends every submission to a Google Sheet (SHEETS_WEBHOOK_URL) so the email
+//   is not the only copy of the data. Best-effort: never blocks the response.
+// Env (set in Vercel, Production + Preview): RESEND_API_KEY, FORM_ALERT_SLACK_URL,
+// SHEETS_WEBHOOK_URL.
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { EMAIL_CONFIG } from '~/lib/email.config';
@@ -12,6 +15,7 @@ export const prerender = false;
 const env = import.meta.env as Record<string, string | undefined>;
 const RESEND_KEY = env.RESEND_API_KEY || (globalThis as any).process?.env?.RESEND_API_KEY;
 const SLACK_URL  = env.FORM_ALERT_SLACK_URL || (globalThis as any).process?.env?.FORM_ALERT_SLACK_URL;
+const SHEETS_URL = env.SHEETS_WEBHOOK_URL || (globalThis as any).process?.env?.SHEETS_WEBHOOK_URL;
 
 const esc = (s: string) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -38,6 +42,21 @@ async function alertSlack(firm: string, err: unknown) {
     });
   } catch {
     /* swallow — never mask the original failure */
+  }
+}
+
+/** Append one row to the Google Sheet. Keys must match the sheet's header row.
+ *  Best-effort by design: a sheet outage must never cost us the submission. */
+async function appendToSheet(row: Record<string, string>) {
+  if (!SHEETS_URL) return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(row),
+    });
+  } catch (err) {
+    console.error('Sheet append failed:', err);
   }
 }
 
@@ -129,6 +148,48 @@ export const POST: APIRoute = async ({ request }) => {
       replyTo: get('contact_email'),
       subject: `New member profile intake — ${get('firm_name')}`,
       html,
+    });
+
+    // Persist to the Google Sheet so the notification email is not the only copy.
+    await appendToSheet({
+      'Submitted': new Date().toISOString().slice(0, 10),
+      'Firm': get('firm_name'),
+      'HQ': get('hq'),
+      'Established': get('established'),
+      'Member since': get('member_since'),
+      'Team size': get('team_size'),
+      'Website': get('website'),
+      'Contact name': get('contact_name'),
+      'Contact role': get('contact_role'),
+      'Contact email': get('contact_email'),
+      'Contact phone': get('contact_phone'),
+      'Brand color': get('brand_color'),
+      'Tagline': get('tagline'),
+      'Communities (count)': get('communities'),
+      'Doors': get('doors'),
+      'Google rating': get('google_rating'),
+      'Google URL': get('google_url'),
+      'Co-op programs': getAll('coop_prog').join(', '),
+      'Vendor savings': get('vendor_savings'),
+      'Dollars saved': get('dollars_saved'),
+      'Co-op impact': get('coop_impact'),
+      'States': get('states'),
+      'Region': get('region'),
+      'Cities': get('cities'),
+      'Founder name': get('founder_name'),
+      'Founder role': get('founder_role'),
+      'Credentials': getAll('cred').join(', '),
+      'Founder board': get('founder_board'),
+      'Co-op role': get('founder_coop_role'),
+      'Accreditations': getAll('accred').join(', '),
+      'Accreditation detail': get('accred_detail'),
+      'Why joined': get('why_joined'),
+      'Why love': get('why_love'),
+      'Video status': get('video_status'),
+      'Spokesperson': get('spokesperson'),
+      'Communities detail': communities
+        .map((c) => [c.name, c.city, c.doors, c.type].filter(Boolean).join(' · '))
+        .join(' | '),
     });
 
     // Confirm to the applicant
