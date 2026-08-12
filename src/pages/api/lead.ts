@@ -6,9 +6,15 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import { EMAIL_CONFIG } from '~/lib/email.config';
+import { sendWithAlert , notifySubmission, fieldsFromFormData } from '~/lib/form-alert';
 import { checkSpam } from '~/lib/spam';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
+// Slack destination. FORM_SLACK_WEBHOOK is this client's own channel and takes
+// precedence for BOTH submissions and failures; FORM_ALERT_SLACK_URL is the
+// shared fallback for clients without a channel of their own.
+const SLACK_WEBHOOK =
+  import.meta.env.FORM_SLACK_WEBHOOK || import.meta.env.FORM_ALERT_SLACK_URL;
 
 if (EMAIL_CONFIG.mailchimp.enabled) {
   mailchimp.setConfig({
@@ -69,27 +75,54 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Internal notification
     try {
-      await resend.emails.send({
-        from: EMAIL_CONFIG.from.notifications,
-        to: EMAIL_CONFIG.notify,
-        cc: EMAIL_CONFIG.notifyCc,
-        replyTo: EMAIL_CONFIG.replyTo,
-        subject: `New lead: ${company || name}`,
-        html: `
-          <h2>New Lead Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-          ${hq         ? `<p><strong>Headquartered:</strong> ${hq}</p>` : ''}
-          ${portfolio  ? `<p><strong>Portfolio size:</strong> ${portfolio}</p>` : ''}
-          ${states     ? `<p><strong>States:</strong> ${states}</p>` : ''}
-          ${phone   ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-          ${referredBy ? `<p><strong>Referred by:</strong> ${referredBy}</p>` : ''}
-          ${goal    ? `<p><strong>What's prompting the conversation:</strong> ${goal}</p>` : ''}
-          ${extras.map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`).join('')}
-          ${source  ? `<hr><p style="color:#888;font-size:13px"><strong>Source</strong><br>${source.replace(/\n/g, '<br>')}</p>` : ''}
-        `,
+      // The error is held rather than thrown so the Slack log below still runs;
+      // it is re-thrown straight after, so the caller behaves exactly as before.
+      let notifyError: unknown = null;
+      try {
+        await sendWithAlert(
+          {
+            client: EMAIL_CONFIG.brand.name,
+            formName: 'Lead form',
+            slackWebhookUrl: SLACK_WEBHOOK,
+          },
+          () => resend.emails.send({
+            from: EMAIL_CONFIG.from.notifications,
+            to: EMAIL_CONFIG.notify,
+            ...(EMAIL_CONFIG.notifyCc.length ? { cc: EMAIL_CONFIG.notifyCc } : {}),
+            replyTo: EMAIL_CONFIG.replyTo,
+            subject: `New lead: ${company || name}`,
+            html: `
+              <h2>New Lead Form Submission</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+              ${hq         ? `<p><strong>Headquartered:</strong> ${hq}</p>` : ''}
+              ${portfolio  ? `<p><strong>Portfolio size:</strong> ${portfolio}</p>` : ''}
+              ${states     ? `<p><strong>States:</strong> ${states}</p>` : ''}
+              ${phone   ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+              ${referredBy ? `<p><strong>Referred by:</strong> ${referredBy}</p>` : ''}
+              ${goal    ? `<p><strong>What's prompting the conversation:</strong> ${goal}</p>` : ''}
+              ${extras.map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`).join('')}
+              ${source  ? `<hr><p style="color:#888;font-size:13px"><strong>Source</strong><br>${source.replace(/\n/g, '<br>')}</p>` : ''}
+            `,
+          }),
+        );
+      } catch (err) {
+        notifyError = err;
+      }
+
+      // Log the submission to the client's Slack channel, whether or not the
+      // email went out. When the send failed this is the *only* surviving copy
+      // of what someone typed, so it posts either way and says which it is.
+      await notifySubmission({
+        client: EMAIL_CONFIG.brand.name,
+        slackWebhookUrl: SLACK_WEBHOOK,
+        route: 'Lead form',
+        delivered: !notifyError,
+        fields: fieldsFromFormData(data),
       });
+
+      if (notifyError) throw notifyError;
     } catch (err) {
       console.error('Resend notify error:', err);
     }
