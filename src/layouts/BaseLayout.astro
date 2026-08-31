@@ -69,7 +69,7 @@ const orgLd = { ...orgSchema(), description };
 
 const gaMeasurementId = import.meta.env.GA_MEASUREMENT_ID;
 
-// Review widgets (Pastel + Simple Commenter) — staging/preview only, never on production.
+// Review widget (Pastel) — staging/preview only, never on production.
 const isProduction = import.meta.env.PUBLIC_ENV === 'production';
 
 // Robots: honor an explicit per-page `robots` prop; otherwise auto-noindex every
@@ -124,11 +124,6 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
 
     <!-- Per-page styles / preloads -->
     <slot name="head" />
-
-    <!-- Simple Commenter review widget: staging/preview only, never on production. -->
-    {!isProduction && (
-      <script is:inline src="https://simplecommenter.com/js/comments.min.js?id=sc_a5b95f74760e080b" defer></script>
-    )}
 
     <!-- Google Analytics: production only, deferred until after page paint -->
     {isProduction && gaMeasurementId && (
