@@ -219,3 +219,60 @@ export function localBusinessSchema(opts?: { description?: string }) {
     ...(opts?.description ? { description: opts.description } : {}),
   };
 }
+
+// ── Event ─────────────────────────────────────────────────────────────────────
+// Use for the annual Summit and any other dated, physical gathering.
+// startDate/endDate are ISO 8601 dates ('2027-02-09'). Google wants a real
+// venue with a postal address — don't emit this until the venue is public.
+// Members-only events should pass `audience` and leave `offers` off: claiming
+// a free public offer for an invite-only event is a rich-result mismatch.
+
+export function eventSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  startDate: string;
+  endDate?: string;
+  image?: string;
+  /** Venue name, e.g. 'The Tampa EDITION'. */
+  locationName: string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode?: string;
+  addressCountry?: string;
+  /** Who may attend, e.g. 'Innovia Co-op member companies'. */
+  audience?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    startDate: opts.startDate,
+    ...(opts.endDate ? { endDate: opts.endDate } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: opts.locationName,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: opts.streetAddress,
+        addressLocality: opts.addressLocality,
+        addressRegion: opts.addressRegion,
+        ...(opts.postalCode ? { postalCode: opts.postalCode } : {}),
+        addressCountry: opts.addressCountry ?? 'US',
+      },
+    },
+    organizer: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    ...(opts.image
+      ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
+      : {}),
+    ...(opts.audience
+      ? { audience: { '@type': 'Audience', audienceType: opts.audience } }
+      : {}),
+    inLanguage: 'en-US',
+  };
+}
