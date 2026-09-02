@@ -216,7 +216,7 @@ const avalon: MemberProfile = {
     // Blank: the upload is titled "innovia-member-page_avalon-management" and
     // dated 2026-09-02, which doesn't establish it was shot at Summit 2026.
     filmedAt: '',
-    vimeoId: '1223449346',
+    vimeoId: '1223484992',
     durationIso: 'PT31S',
     uploadDate: '2026-09-02',
     posterHasLowerThird: true,
