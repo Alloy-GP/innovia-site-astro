@@ -73,9 +73,12 @@
       font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
       color: rgba(255,255,255,0.4); text-align: center; max-width: 32ch; line-height: 1.6;
     }
-    /* play button — Innovia green is the one action colour */
+    /* play button — Innovia green is the one action colour.
+       Offset left rather than centred: the poster is a head-and-shoulders frame
+       at the same 16:9 as the stage, so nothing crops and a centred button
+       lands squarely on the subject's face. The left third is wall. */
     .v-stage .play {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
+      position: absolute; top: 50%; left: 24%; transform: translate(-50%, -50%); z-index: 3;
       width: 112px; height: 112px; border-radius: 999px;
       background: var(--innovia-green); color: var(--innovia-navy);
       display: flex; align-items: center; justify-content: center;
@@ -320,7 +323,57 @@
     .v-area .coverage .foot { margin-top: auto; padding-top: 22px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
     @media (max-width: 860px){ .v-area .frame { grid-template-columns: 1fr; } .v-area .map { min-height: 340px; } }
 
-    /* ---- Leadership headshot ----
+    /* ---- Lightbox player ----
+   The embedded stage is only ~600px wide, so playback happens in a modal.
+   Native <dialog> carries the focus trap, inertness and Escape handling, so
+   this is styling plus mount/unmount rather than a hand-rolled overlay. */
+.v-modal {
+  border: 0; padding: 0; margin: auto;
+  width: min(94vw, 1180px);
+  max-width: none; max-height: 92vh;
+  background: transparent;
+  overflow: visible;
+}
+.v-modal::backdrop {
+  background: rgba(6,14,29,0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.v-modal-inner {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+}
+.v-modal-frame, .v-modal-frame iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0; display: block;
+}
+.v-modal-close {
+  position: absolute; top: -48px; right: 0;
+  width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  color: #fff; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.v-modal-close:hover { background: var(--innovia-green); border-color: var(--innovia-green); color: var(--innovia-navy); }
+.v-modal-close:focus-visible { outline: 3px solid var(--innovia-green); outline-offset: 2px; }
+/* Under ~560px tall the close button has nowhere to sit above the frame. */
+@media (max-height: 560px), (max-width: 520px) {
+  .v-modal-close {
+    top: 8px; right: 8px;
+    background: rgba(6,14,29,0.72);
+  }
+}
+body.modal-open { overflow: hidden; }
+
+/* ---- Leadership headshot ----
    The avatar circle is an initials chip by default; with a photo it becomes a
    cropped portrait. Ring uses the accent so it still reads as the same element. */
 .v-founder .card .av.has-photo,
@@ -573,22 +626,10 @@
   outline: 3px solid var(--innovia-green);
   outline-offset: 3px;
 }
-/* Armed = the viewer clicked; the player is mounted and every bit of facade
-   furniture gets out of its way (including ::before, which would otherwise
-   sit a tinted gradient over the video). */
-.v-stage.is-armed { cursor: default; }
-.v-stage.is-armed .poster-slot,
-.v-stage.is-armed .chip-tl,
-.v-stage.is-armed .corner-tag,
-.v-stage.is-armed .play,
-.v-stage.is-armed .caption { display: none; }
-.v-stage.is-armed::before { display: none; }
-.v-stage.is-armed .vimeo-frame { position: absolute; inset: 0; z-index: 4; }
-.v-stage.is-armed .vimeo-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 .v-stage .poster-slot img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: 50% 46%;
+  object-position: 50% 50%;
   display: block;
 }
 /* Both corner labels sit over photography now, so neither can rely on the

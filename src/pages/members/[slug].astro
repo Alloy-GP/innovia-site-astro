@@ -90,16 +90,28 @@ const video =
   <MemberHighlight member={member} />
 
   <script is:inline>
-    // Click-to-play: mount the Vimeo player only when the viewer asks for it,
-    // so the hero costs one WebP instead of a third-party player on load.
+    // Click-to-play in a lightbox. The embedded stage is ~600px wide, which is
+    // too small to watch anything in, so the player mounts into a <dialog>.
+    // The iframe is created on open and destroyed on close: that keeps Vimeo
+    // off the critical path AND stops playback dead, which pausing does not.
     (function () {
       var stage = document.getElementById('videoStage');
-      if (!stage || !stage.dataset.vimeo) return;
+      var modal = document.getElementById('videoModal');
+      var frame = document.getElementById('videoModalFrame');
+      var closeBtn = document.getElementById('videoModalClose');
+      if (!stage || !modal || !frame || !stage.dataset.vimeo) return;
 
-      function arm() {
-        if (stage.classList.contains('is-armed')) return;
-        var wrap = document.createElement('div');
-        wrap.className = 'vimeo-frame';
+      // No <dialog> support: fall back to opening the video on Vimeo rather
+      // than leaving a play button that does nothing.
+      if (typeof modal.showModal !== 'function') {
+        stage.addEventListener('click', function () {
+          window.open('https://vimeo.com/' + stage.dataset.vimeo, '_blank', 'noopener');
+        });
+        return;
+      }
+
+      function open() {
+        if (modal.open) return;
         var f = document.createElement('iframe');
         f.src =
           'https://player.vimeo.com/video/' + stage.dataset.vimeo +
@@ -108,21 +120,36 @@ const video =
         f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
         f.setAttribute('allowfullscreen', '');
         f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        wrap.appendChild(f);
-        stage.appendChild(wrap);
-        stage.classList.add('is-armed');
-        // It stops being a button once the player owns the surface.
-        stage.removeAttribute('role');
-        stage.removeAttribute('tabindex');
-        stage.removeAttribute('aria-label');
-        f.focus({ preventScroll: true });
+        frame.appendChild(f);
+        document.body.classList.add('modal-open');
+        modal.showModal();
+        closeBtn.focus();
       }
 
-      stage.addEventListener('click', arm);
+      function close() {
+        if (modal.open) modal.close();
+      }
+
+      // Fires for the close button, Escape, and modal.close() alike.
+      modal.addEventListener('close', function () {
+        frame.replaceChildren();          // tearing down the iframe stops audio
+        document.body.classList.remove('modal-open');
+        stage.focus({ preventScroll: true });
+      });
+
+      closeBtn.addEventListener('click', close);
+
+      // Backdrop click: the dialog box fills the element, so anything landing
+      // on the dialog itself rather than its contents is outside the frame.
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) close();
+      });
+
+      stage.addEventListener('click', open);
       stage.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
           e.preventDefault();
-          arm();
+          open();
         }
       });
     })();
