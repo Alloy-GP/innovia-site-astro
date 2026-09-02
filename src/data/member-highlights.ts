@@ -51,11 +51,15 @@ export interface MemberProfile {
     title: string;
     subtitle: string;
     /** Only rendered once `vimeoId` is set — a duration with no video to
-     *  play is a claim we can't back. */
+     *  play is a claim we can't back. Keep in sync with `durationIso`. */
     runtime: string | null;
+    /** Where it was shot. Leave blank unless confirmed. */
     filmedAt: string;
     /** Vimeo id — when set, the poster becomes a real play surface. */
     vimeoId: string | null;
+    /** ISO 8601 duration + upload date, for VideoObject schema. */
+    durationIso?: string;
+    uploadDate?: string;
   };
 
   /** Four-up stat strip under the hero. */
@@ -193,15 +197,20 @@ const avalon: MemberProfile = {
     'Independent community management for San Diego &amp; Riverside Counties since 1983 — local, hands-on service backed by the resources of a national cooperative.',
 
   video: {
-    // Standing in for the interview until it's shot.
+    // Office entrance doubles as the play facade — the player only loads on click.
     posterSrc: '/assets/photos/members/avalon-entrance.webp',
     posterAlt:
       'The Avalon Management Group office entrance at 43529 Ridge Park Drive, Temecula',
     title: 'Meet Avalon Management Group',
     subtitle: 'In Mark&rsquo;s own words',
-    runtime: '1:20',
-    filmedAt: 'Filmed at Innovia Summit 2026',
-    vimeoId: null,
+    // Real length from Vimeo's oEmbed (31s), not the handoff's placeholder 1:20.
+    runtime: '0:31',
+    // Blank: the upload is titled "innovia-member-page_avalon-management" and
+    // dated 2026-09-02, which doesn't establish it was shot at Summit 2026.
+    filmedAt: '',
+    vimeoId: '1223449346',
+    durationIso: 'PT31S',
+    uploadDate: '2026-09-02',
   },
 
   stats: [
