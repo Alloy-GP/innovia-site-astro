@@ -100,17 +100,24 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
             />
           </div>
         ) : (
-          <div class="v-stage is-pending" role="img" aria-label={`Member interview with ${m.leader.name} — coming soon`}>
+          <div class="v-stage is-pending" role="img" aria-label={`${m.video.posterAlt}. Member interview coming soon.`}>
             <div class="poster-slot">
+              {/* Hero image and the likely LCP element — never lazy-load it.
+                  alt is empty because the wrapper carries role="img" + label. */}
               {m.video.posterSrc && (
-                <img src={m.video.posterSrc} alt={m.video.posterAlt} loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+                <img
+                  src={m.video.posterSrc}
+                  alt=""
+                  width="1200"
+                  height="814"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                >
               )}
             </div>
-            <span class="chip-tl">Member interview</span>
-            <span class="corner-tag">{m.video.filmedAt}</span>
-            <div class="play" aria-hidden="true">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+            <span class="chip-tl">Member interview &middot; coming soon</span>
+            {m.video.vimeoId && <span class="corner-tag">{m.video.filmedAt}</span>}
             <div class="caption">
               <div class={m.leader.photo ? 'av has-photo' : 'av'}>
                 {m.leader.photo
@@ -121,7 +128,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
                 <div class="ttl" set:html={m.video.title} />
                 <div class="sub" set:html={m.video.subtitle} />
               </div>
-              <span class="runtime">{m.video.runtime}</span>
+              {m.video.vimeoId && m.video.runtime && <span class="runtime">{m.video.runtime}</span>}
             </div>
           </div>
         )}
