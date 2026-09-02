@@ -100,11 +100,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
             fetched on activation, so the hero never pays for a 3rd-party embed
             on load. */}
         <div
-          class:list={[
-            'v-stage',
-            m.video.vimeoId ? 'is-playable' : 'is-pending',
-            m.video.posterHasLowerThird && 'has-lower-third',
-          ]}
+          class:list={['v-stage', m.video.vimeoId ? 'is-playable' : 'is-pending']}
           id={m.video.vimeoId ? 'videoStage' : undefined}
           data-vimeo={m.video.vimeoId ?? undefined}
           data-title={m.video.title}
@@ -143,20 +139,16 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
             </div>
           )}
 
-          <div class:list={['caption', m.video.posterHasLowerThird && 'is-bare']}>
-            {!m.video.posterHasLowerThird && (
-              <Fragment>
-                <div class={m.leader.photo ? 'av has-photo' : 'av'}>
-                  {m.leader.photo
-                    ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
-                    : m.leader.initials}
-                </div>
-                <div>
-                  <div class="ttl" set:html={m.video.title} />
-                  <div class="sub" set:html={m.video.subtitle} />
-                </div>
-              </Fragment>
-            )}
+          <div class="caption">
+            <div class={m.leader.photo ? 'av has-photo' : 'av'}>
+              {m.leader.photo
+                ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
+                : m.leader.initials}
+            </div>
+            <div>
+              <div class="ttl" set:html={m.video.title} />
+              <div class="sub" set:html={m.video.subtitle} />
+            </div>
             {m.video.vimeoId && m.video.runtime && <span class="runtime">{m.video.runtime}</span>}
           </div>
         </div>
