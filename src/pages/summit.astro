@@ -1,10 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { eventSchema, breadcrumbSchema } from '../lib/schema.ts';
+import { SITE } from '../config/site.ts';
+
+const summitEvent = eventSchema({
+  name: 'Innovia Summit 2027 — Benchmarks & Beyond',
+  description:
+    'The Innovia Co-op Annual Summit. Member-only working sessions on operating benchmarks, margin math, and the future of independent community association management. Two-hour peer breakouts, cohorts of 10-12, and the Day 2 Benchmark Reveal.',
+  url: SITE.url + '/summit/',
+  startDate: '2027-02-09',
+  endDate: '2027-02-13',
+  image: '/assets/og/option-1-type-led.png',
+  locationName: 'The Tampa EDITION',
+  streetAddress: '500 Channelside Dr',
+  addressLocality: 'Tampa',
+  addressRegion: 'FL',
+  postalCode: '33602',
+  audience: 'Innovia Co-op member companies',
+});
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: SITE.url + '/' },
+  { name: 'Summit 2027', url: SITE.url + '/summit/' },
+]);
+
 const html = `<style>
     /* ============================================================
-       Summit 2027 Teaser — warm, art-deco, Florida-coded.
+       Summit 2027 — warm, art-deco, Florida-coded.
        Keeps Innovia navy as the spine; introduces sun-amber and
-       coral as event-specific accents only. No venue name on page.
+       coral as event-specific accents only. Venue is public as of the
+       2027 reveal; registration runs through the member portal.
        ============================================================ */
 
     :root {
@@ -232,7 +257,7 @@ const html = `<style>
       border-color: var(--sun-cream);
     }
 
-    /* ===== INTRIGUE — Venue tease (no name) ===== */
+    /* ===== INTRIGUE — Venue reveal ===== */
     .intrigue {
       position: relative;
       background: var(--sun-cream);
@@ -639,7 +664,152 @@ const html = `<style>
     }
     .past .external-link a.btn:hover { background: #fff; }
 
-    /* ===== NOTIFY — email capture ===== */
+    /* ===== LOGISTICS — format, room block, cost, registration ===== */
+    .logistics {
+      background: var(--sun-cream);
+      color: var(--night-deep);
+      padding: 130px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .logistics::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 50% 70% at 0% 30%, rgba(244,178,90,0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 70% at 100% 90%, rgba(232,125,110,0.16) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .logistics .head {
+      position: relative;
+      max-width: 62ch;
+      margin: 0 0 64px;
+    }
+    .logistics .head .label {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--sun-amber-d); letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .logistics .head h2 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(36px, 4.2vw, 60px);
+      color: var(--night-deep);
+      letter-spacing: -0.024em;
+      line-height: 1.05;
+      margin: 18px 0 0;
+      text-wrap: balance;
+    }
+    .logistics .head h2 em {
+      color: var(--sun-coral);
+      font-style: italic;
+      font-weight: 400;
+    }
+    .logistics .head p {
+      font-family: var(--font-body);
+      font-size: 18px; line-height: 1.62;
+      color: var(--night-indigo);
+      margin: 22px 0 0;
+    }
+
+    .logistics .cards {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid rgba(10,25,54,0.20);
+      border-bottom: 1px solid rgba(10,25,54,0.20);
+    }
+    .logistics .detail {
+      padding: 40px 40px 44px;
+      border-right: 1px solid rgba(10,25,54,0.20);
+    }
+    .logistics .detail:first-child { padding-left: 0; }
+    .logistics .detail:last-child { border-right: 0; padding-right: 0; }
+    .logistics .detail .ix {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--sun-amber-d);
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .logistics .detail h3 {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 24px;
+      color: var(--night-deep);
+      letter-spacing: -0.012em;
+      margin: 14px 0 16px;
+      line-height: 1.2;
+    }
+    .logistics .detail ul {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+    .logistics .detail li {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.55;
+      color: var(--night-indigo);
+      padding: 9px 0 9px 20px;
+      position: relative;
+    }
+    .logistics .detail li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 17px;
+      width: 7px; height: 7px;
+      background: var(--sun-amber);
+      transform: rotate(45deg);
+    }
+    .logistics .detail li strong {
+      font-weight: 700;
+      color: var(--night-deep);
+    }
+    .logistics .detail .note {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(10,25,54,0.55);
+      margin: 20px 0 0;
+    }
+
+    /* Deadline strip */
+    .logistics .deadline {
+      position: relative;
+      margin-top: 40px;
+      padding: 26px 32px;
+      background: var(--night-deep);
+      color: rgba(255,255,255,0.82);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 28px; flex-wrap: wrap;
+    }
+    .logistics .deadline .d-copy {
+      display: flex; align-items: center; gap: 18px;
+    }
+    .logistics .deadline svg {
+      width: 22px; height: 22px;
+      color: var(--sun-amber);
+      flex-shrink: 0;
+    }
+    .logistics .deadline h5 {
+      font-family: var(--font-display); font-weight: 700;
+      color: #fff; font-size: 19px;
+      letter-spacing: -0.005em;
+      margin: 0 0 3px;
+    }
+    .logistics .deadline p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.68);
+      margin: 0;
+    }
+    .logistics .deadline .btn {
+      background: var(--sun-amber);
+      color: var(--night-deep);
+      border: 1px solid var(--sun-amber);
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+    .logistics .deadline .btn:hover {
+      background: var(--sun-cream);
+      border-color: var(--sun-cream);
+    }
+
+    /* ===== NOTIFY — registration CTA ===== */
     .notify {
       background:
         radial-gradient(ellipse 80% 60% at 80% 100%, rgba(244,178,90,0.5) 0%, transparent 60%),
@@ -695,92 +865,76 @@ const html = `<style>
       max-width: 48ch;
       margin: 22px 0 0;
     }
-    .notify form {
+
+    /* Registration panel (replaces the pre-reveal signup form) */
+    .notify .reg-card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.16);
-      padding: 32px;
+      padding: 40px;
       backdrop-filter: blur(6px);
     }
-    .notify form .row {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
+    .notify .reg-card .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
     }
-    .notify form .fld { position: relative; }
-    .notify form .fld > input, .notify form .fld > select { width: 100%; box-sizing: border-box; }
-    .notify form .fld > label {
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-      display: block; margin: 0; padding: 0 5px; white-space: nowrap;
-      font-family: var(--font-body); font-size: 15px;
-      color: rgba(255,255,255,0.45); letter-spacing: 0; text-transform: none;
-      background: transparent; pointer-events: none;
-      transition: top .14s ease, font-size .14s ease, color .14s ease, background .14s ease;
+    .notify .reg-card .step:first-of-type { padding-top: 0; }
+    .notify .reg-card .step .n {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--sun-amber);
+      letter-spacing: 0.06em;
+      padding-top: 4px;
     }
-    .notify form .fld > input:focus ~ label,
-    .notify form .fld > input:not(:placeholder-shown) ~ label,
-    .notify form .fld-select > select:focus ~ label,
-    .notify form .fld-select > select:valid ~ label {
-      top: 0; transform: translateY(-50%);
-      font-family: var(--font-mono); font-size: 10px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(255,255,255,0.62); background: #172440;
+    .notify .reg-card .step h4 {
+      font-family: var(--font-display); font-weight: 700;
+      color: #fff; font-size: 19px;
+      letter-spacing: -0.008em;
+      margin: 0 0 6px;
+      line-height: 1.25;
     }
-    .notify form .fld > input:focus ~ label,
-    .notify form .fld-select > select:focus ~ label { color: var(--sun-amber); }
-    .notify form .rq { color: var(--sun-amber); font-style: normal; margin-left: 3px; }
-    .notify form .single { grid-template-columns: 1fr; }
-    .notify form input, .notify form select {
-      background: rgba(0,0,0,0.22);
-      border: 1px solid rgba(255,255,255,0.18);
-      padding: 14px 16px;
-      color: #fff;
-      font-family: var(--font-body); font-size: 15px;
-      letter-spacing: 0;
-      text-transform: none;
-      transition: border-color .15s;
+    .notify .reg-card .step p {
+      font-size: 15px; line-height: 1.58;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
     }
-    .notify form input:focus, .notify form select:focus {
-      outline: none;
-      border-color: var(--sun-amber);
-      box-shadow: 0 0 0 3px rgba(244,178,90,0.25);
+    .notify .reg-card .actions {
+      margin-top: 28px;
+      display: flex; flex-direction: column; gap: 14px;
     }
-    .notify form select {
-      -webkit-appearance: none; -moz-appearance: none; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aab3c5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 16px center;
-      padding-right: 42px; cursor: pointer;
-    }
-    .notify form select option { color: #13203D; }
-    .notify form input::placeholder { color: rgba(255,255,255,0.4); }
-    .notify form .submit-row {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px;
-      margin-top: 22px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255,255,255,0.14);
-    }
-    .notify form .submit-row small {
-      font-family: var(--font-mono); font-size: 10px;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      max-width: 32ch;
-    }
-    .notify form button {
+    .notify .reg-card .btn-amber {
       background: var(--sun-amber);
       color: var(--night-deep);
-      border: 0;
-      padding: 16px 28px;
-      font-family: var(--font-display); font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background .15s;
-      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--sun-amber);
+      padding: 17px 28px;
+      font-size: 15px;
+      justify-content: center;
+      box-shadow: 0 12px 32px -8px rgba(244,178,90,0.5);
     }
-    .notify form button:hover { background: var(--sun-cream); }
-    .notify form button svg { width: 14px; height: 14px; }
+    .notify .reg-card .btn-amber:hover {
+      background: var(--sun-cream);
+      border-color: var(--sun-cream);
+    }
+    .notify .reg-card .btn-ghost {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.32);
+      padding: 17px 28px;
+      font-size: 15px;
+      justify-content: center;
+    }
+    .notify .reg-card .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .notify .reg-card .fine {
+      font-family: var(--font-mono); font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin: 20px 0 0;
+      line-height: 1.7;
+    }
 
     /* ===== Site footer overrides for this page ===== */
     .site-footer {
@@ -796,16 +950,23 @@ const html = `<style>
       .past .head,
       .past .featured,
       .past .archive-row,
+      .logistics .cards,
       .notify .frame {
         grid-template-columns: 1fr !important;
         gap: 32px;
       }
+      .logistics .cards { gap: 0; }
+      .logistics .detail {
+        padding: 32px 0;
+        border-right: 0;
+        border-bottom: 1px solid rgba(10,25,54,0.20);
+      }
+      .logistics .detail:last-child { border-bottom: 0; }
       .teaser-hero .summit-mark { font-size: clamp(64px, 14vw, 120px); }
       .teaser-hero .deco-sun { width: 480px; height: 480px; bottom: -160px; right: -140px; }
       .past .featured .photo { min-height: 280px; }
       .past .featured .body { padding: 32px; }
       .past .featured .stats { grid-template-columns: 1fr 1fr 1fr; }
-      .notify form .row { grid-template-columns: 1fr; }
     }
     @media (max-width: 720px) {
       .teaser-hero .stamp-row { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -813,6 +974,9 @@ const html = `<style>
       .past .featured .stats { grid-template-columns: 1fr; }
       .past .featured .stats > div { border-right: 0; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
       .past .featured .stats > div:last-child { border-bottom: 0; }
+      .logistics .deadline { flex-direction: column; align-items: flex-start; }
+      .logistics .deadline .btn { width: 100%; justify-content: center; }
+      .notify .reg-card { padding: 28px; }
     }
   </style>
 
@@ -879,14 +1043,14 @@ const html = `<style>
         <div class="right">
           <span>Annual Summit</span>
           <span style="opacity: 0.4;">/</span>
-          <span>By invitation</span>
+          <span>Members only</span>
           <span style="opacity: 0.4;">/</span>
-          <span>Save the date</span>
+          <span>Registration open</span>
         </div>
       </div>
 
       <div class="mark-wrap">
-        <p class="pre">Trade the winter cold for Florida sunshine. The cooperative gathers again&hellip;</p>
+        <p class="pre">Trade the winter cold for Florida sunshine. The cooperative gathers again &mdash; on Tampa&rsquo;s waterfront.</p>
         <h1 class="summit-mark">
           Innovia<br>
           Summit <span class="yr">2027</span>
@@ -897,26 +1061,26 @@ const html = `<style>
             <span class="label">2027 Theme</span>
             <h2><em>Benchmarks</em> &amp; Beyond.</h2>
           </div>
-          <p class="strap">Knowing your numbers. Owning your future. Three days of working sessions, member-only conversations, and the unhurried hospitality the cooperative is known for &mdash; in a city designed for it.</p>
+          <p class="strap">Knowing your numbers. Owning your future. February 9&ndash;13, 2027 at The Tampa EDITION &mdash; working sessions, member-only conversations, and the unhurried hospitality the cooperative is known for, in a hotel built for it.</p>
         </div>
       </div>
 
       <div class="below">
         <div class="cell">
           <span class="k">When</span>
-          <span class="v">February 2027<small>First week &middot; exact dates with invite</small></span>
+          <span class="v">Feb 9&ndash;13, 2027<small>Tuesday through Saturday</small></span>
         </div>
         <div class="cell">
           <span class="k">Where</span>
-          <span class="v">Tampa, Florida<small>Venue reveal coming soon</small></span>
+          <span class="v">The Tampa EDITION<small>500 Channelside Dr &middot; Tampa, FL</small></span>
         </div>
         <div class="cell">
-          <span class="k">Format</span>
-          <span class="v">3 days &middot; closed-door<small>Senior leadership &middot; member-only</small></span>
+          <span class="k">Room block</span>
+          <span class="v">Closes Jan 15, 2027<small>First come, first served</small></span>
         </div>
         <div class="cell cta-cell">
-          <a href="#notify" class="btn btn-amber">
-            Get Notified
+          <a href="#register" class="btn btn-amber">
+            Register
             <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
         </div>
@@ -924,21 +1088,21 @@ const html = `<style>
     </div>
   </section>
 
-  <!-- ============== INTRIGUE — venue tease ============== -->
+  <!-- ============== INTRIGUE — venue reveal ============== -->
   <section class="intrigue">
     <div class="container">
       <div class="layout">
         <div>
           <div class="eyebrow-w">
-            <span class="pill">Venue &middot; Coming Soon</span>
-            <span>The reveal</span>
+            <span class="pill">The Venue</span>
+            <span>500 Channelside Dr &middot; Tampa, FL 33602</span>
           </div>
-          <h2>A venue that <em>makes a statement.</em></h2>
-          <p class="lede">Picture a 5-star property designed by the visionary behind Studio 54 &mdash; the pioneer of the modern boutique hotel. Art-deco curves throughout. A jungle-like lobby. A rooftop overlooking the bay. The kind of room that signals: this is not a typical industry conference.</p>
+          <h2>The Tampa <em>EDITION.</em></h2>
+          <p class="lede">A 5-star property designed by Ian Schrager &mdash; the man behind Studio 54 and the pioneer of the modern boutique hotel. Art-deco curves throughout. A jungle-like lobby. A rooftop overlooking the bay. The kind of room that signals: this is not a typical industry conference.</p>
 
           <div class="seal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span>Full hotel reveal &middot; coming with invitations</span>
+            <span>Group rate $479 / night &middot; block closes Jan 15, 2027</span>
           </div>
         </div>
 
@@ -946,22 +1110,22 @@ const html = `<style>
           <div class="clue">
             <span class="num">01</span>
             <div>
-              <h4>A city in the sun.</h4>
-              <p>The architect&rsquo;s words for it. February in the Sunshine State, with seven on-site bars and restaurants &mdash; one of them <em>Michelin-starred</em> &mdash; and a rooftop pool terrace overlooking the bay.</p>
+              <h4>Seven bars and restaurants on site.</h4>
+              <p>One of them <em>Michelin-starred.</em> Plus a rooftop pool terrace overlooking the bay &mdash; February in the Sunshine State, with the whole cooperative in one hotel.</p>
             </div>
           </div>
           <div class="clue">
             <span class="num">02</span>
             <div>
               <h4>Simple and pure. Nothing superfluous.</h4>
-              <p>The designer&rsquo;s philosophy &mdash; and a fit for the way the cooperative runs its Summit. No vendor floors. No sponsor logos on lanyards. Just the work, the conversations, and the room they happen in.</p>
+              <p>Schrager&rsquo;s design philosophy &mdash; and a fit for the way the cooperative runs its Summit. No vendor floors. No sponsor logos on lanyards. Just the work, the conversations, and the room they happen in.</p>
             </div>
           </div>
           <div class="clue">
             <span class="num">03</span>
             <div>
               <h4>Named Best New Hotel in the World.</h4>
-              <p>By <em>Travel + Leisure.</em> Three hundred and fifty hand-hung disco balls in the lounge. Twenty-foot ceilings in the lobby. Bold curves everywhere. We&rsquo;ll show you the rest in February.</p>
+              <p>By <em>Travel + Leisure.</em> Three hundred and fifty hand-hung disco balls in the lounge. Twenty-foot ceilings in the lobby. Bold curves everywhere. See the rest in February.</p>
             </div>
           </div>
         </div>
@@ -997,6 +1161,72 @@ const html = `<style>
           <p>Independence in an age of acquisition. Vendor-program intelligence. The five things the membership puts on the 2028 calendar before the rooftop sends us home.</p>
           <span class="quiet">Whole co-op &middot; member governance</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== LOGISTICS ============== -->
+  <section class="logistics" id="details">
+    <div class="container">
+      <div class="head">
+        <span class="label">2027 &middot; The details</span>
+        <h2>What to know <em>before you book.</em></h2>
+        <p>Registration is open now through the member portal. Rooms are held under an Innovia block at The Tampa EDITION &mdash; and the block has a hard release date.</p>
+      </div>
+
+      <div class="cards">
+        <div class="detail">
+          <span class="ix">01 &middot; Format</span>
+          <h3>How the room runs</h3>
+          <ul>
+            <li>Shorter, deeper days</li>
+            <li><strong>Two-hour peer breakouts</strong> &mdash; not conference-length panels</li>
+            <li>Peer groups of <strong>10&ndash;12</strong></li>
+            <li>Rotating senior Anchors in every cohort</li>
+            <li>The <strong>Benchmark Reveal</strong> on Day 2</li>
+            <li>A prepared leadership close</li>
+          </ul>
+          <p class="note">Closed-door &middot; no vendor floor</p>
+        </div>
+
+        <div class="detail">
+          <span class="ix">02 &middot; Room block</span>
+          <h3>The Tampa EDITION</h3>
+          <ul>
+            <li>Block closes <strong>January 15, 2027</strong> &mdash; unclaimed rooms release back to the hotel</li>
+            <li><strong>First come, first served</strong></li>
+            <li><strong>February 9&ndash;13, 2027</strong> &mdash; Tuesday through Saturday</li>
+            <li>Group rate <strong>$479.00 / night</strong></li>
+            <li>500 Channelside Dr, Tampa, FL 33602</li>
+          </ul>
+          <p class="note">Booking link in the member portal</p>
+        </div>
+
+        <div class="detail">
+          <span class="ix">03 &middot; Cost to member</span>
+          <h3>No cost to attend</h3>
+          <ul>
+            <li>Members only &mdash; there is no attendance fee</li>
+            <li><strong>Stockholder members:</strong> two complimentary passes</li>
+            <li><strong>Participating members:</strong> one complimentary pass</li>
+            <li>Travel and lodging are on the member</li>
+          </ul>
+          <p class="note">By invitation through a member company</p>
+        </div>
+      </div>
+
+      <div class="deadline">
+        <div class="d-copy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div>
+            <h5>The room block closes Friday, January 15, 2027.</h5>
+            <p>Rooms are first come, first served. Register and reserve yours in the member portal &mdash; unclaimed rooms release back to the hotel after that date.</p>
+          </div>
+        </div>
+        <a href="https://community.innoviaco-op.com/" class="btn" target="_blank" rel="noopener noreferrer">
+          Register in the Portal
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -1060,41 +1290,55 @@ const html = `<style>
   </section>
 
   <!-- ============== NOTIFY ============== -->
-  <section class="notify" id="notify">
+  <section class="notify" id="register">
+    <span id="notify" aria-hidden="true"></span>
     <div class="container">
       <div class="frame">
         <div class="copy">
           <span class="label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 6 12 13 2 6"/><path d="M2 6h20v12H2z"/></svg>
-            Stay tuned
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Registration open
           </span>
-          <h2>Get notified when we <em>reveal Summit 2027</em>.</h2>
-          <p class="strap">Attendance is member-only and by invitation &mdash; but anyone can sign up for the reveal. Drop your details and we&rsquo;ll send the venue reveal and dates the moment they&rsquo;re live. Not yet a member? Seeing what the cooperative is building is the best reason to join.</p>
+          <h2>Register for <em>Summit 2027</em>.</h2>
+          <p class="strap">Attendance is member-only. Registration and room booking both run through the member portal &mdash; sign in with your member company credentials to claim your passes and reserve a room in the Innovia block before it releases on January 15.</p>
         </div>
 
-        <form id="wc-summit-reveal" data-endpoint="/api/lead" data-success="Thanks — we&rsquo;ll send the Summit 2027 reveal the moment it&rsquo;s live.">
-          <div class="hp-field" aria-hidden="true"><label>Company URL<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label></div>
-          <input type="hidden" name="form_started" value="">
-          <input type="hidden" name="source" value="Summit 2027 — reveal signup">
-          <div class="row">
-            <div class="fld"><input type="text" id="su-first" name="firstName" placeholder=" " autocomplete="given-name" required><label for="su-first">First name<i class="rq">*</i></label></div>
-            <div class="fld"><input type="text" id="su-last" name="lastName" placeholder=" " autocomplete="family-name" required><label for="su-last">Last name<i class="rq">*</i></label></div>
+        <div class="reg-card">
+          <div class="step">
+            <span class="n">01</span>
+            <div>
+              <h4>Sign in to the member portal.</h4>
+              <p>Use your member company credentials. If you don&rsquo;t have access yet, your company&rsquo;s primary contact can add you.</p>
+            </div>
           </div>
-          <div class="row single">
-            <div class="fld"><input type="email" id="su-email" name="email" placeholder=" " autocomplete="email" required><label for="su-email">Work email<i class="rq">*</i></label></div>
+          <div class="step">
+            <span class="n">02</span>
+            <div>
+              <h4>Claim your passes.</h4>
+              <p>Stockholder members have two complimentary passes; Participating members have one. There is no cost to attend.</p>
+            </div>
           </div>
-          <div class="row">
-            <div class="fld"><input type="text" id="su-company" name="company" placeholder=" " autocomplete="organization" required><label for="su-company">Company<i class="rq">*</i></label></div>
-            <div class="fld fld-select"><select id="su-rel" name="relationship" required><option value="" selected hidden></option><option>Innovia member company</option><option>Prospective member</option><option>Vendor partner</option><option>Other</option></select><label for="su-rel">Relationship<i class="rq">*</i></label></div>
+          <div class="step">
+            <span class="n">03</span>
+            <div>
+              <h4>Book your room in the block.</h4>
+              <p>The Tampa EDITION, $479 / night, February 9&ndash;13. The booking link is in the portal alongside your registration.</p>
+            </div>
           </div>
-          <div class="submit-row">
-            <small>By invitation only. We won&rsquo;t share your details.</small>
-            <button type="submit">
-              Get the reveal
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-            </button>
+
+          <div class="actions">
+            <a href="https://community.innoviaco-op.com/" class="btn btn-amber" target="_blank" rel="noopener noreferrer">
+              Sign In &amp; Register
+              <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+            <a href="/for-cams/why-innovia/#talk" class="btn btn-ghost">
+              Not a member yet? Start here
+              <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
           </div>
-        </form>
+
+          <p class="fine">Members only &middot; by invitation through a member company &middot; room block closes January 15, 2027</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1108,13 +1352,14 @@ const html = `<style>
 `;
 ---
 <BaseLayout
-  title="Innovia Summit 2027 · The Annual CAM Cooperative Conference | Innovia Co-op"
-  description="The Innovia Summit is the annual gathering of CAM owners and senior leaders across the cooperative. Sessions on operations, growth, and the future of community management."
+  title="Innovia Summit 2027 · Feb 9–13, The Tampa EDITION | Innovia Co-op"
+  description="The Innovia Summit 2027 — Benchmarks & Beyond — runs February 9–13, 2027 at The Tampa EDITION in Tampa, Florida. Member-only working sessions for CAM owners and senior leaders. Registration is open in the member portal."
   ogImage="/assets/og/option-1-type-led.png"
+  pageSchema={[summitEvent, breadcrumb]}
   headerVariant="inverse"
   activeNav="summit"
-  ctaLabel="Get Notified"
-  ctaHref="#notify"
+  ctaLabel="Register"
+  ctaHref="#register"
 >
   <Fragment set:html={html} />
 </BaseLayout>

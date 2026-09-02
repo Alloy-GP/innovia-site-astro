@@ -219,3 +219,166 @@ export function localBusinessSchema(opts?: { description?: string }) {
     ...(opts?.description ? { description: opts.description } : {}),
   };
 }
+
+// ── Event ─────────────────────────────────────────────────────────────────────
+// Use for the annual Summit and any other dated, physical gathering.
+// startDate/endDate are ISO 8601 dates ('2027-02-09'). Google wants a real
+// venue with a postal address — don't emit this until the venue is public.
+// Members-only events should pass `audience` and leave `offers` off: claiming
+// a free public offer for an invite-only event is a rich-result mismatch.
+
+export function eventSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  startDate: string;
+  endDate?: string;
+  image?: string;
+  /** Venue name, e.g. 'The Tampa EDITION'. */
+  locationName: string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode?: string;
+  addressCountry?: string;
+  /** Who may attend, e.g. 'Innovia Co-op member companies'. */
+  audience?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    startDate: opts.startDate,
+    ...(opts.endDate ? { endDate: opts.endDate } : {}),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: opts.locationName,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: opts.streetAddress,
+        addressLocality: opts.addressLocality,
+        addressRegion: opts.addressRegion,
+        ...(opts.postalCode ? { postalCode: opts.postalCode } : {}),
+        addressCountry: opts.addressCountry ?? 'US',
+      },
+    },
+    organizer: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    ...(opts.image
+      ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
+      : {}),
+    ...(opts.audience
+      ? { audience: { '@type': 'Audience', audienceType: opts.audience } }
+      : {}),
+    inLanguage: 'en-US',
+  };
+}
+
+// ── Member firm (LocalBusiness) ───────────────────────────────────────────────
+// For the /members/<slug>/ highlight pages. Each member is an independent
+// company that belongs to the co-op, so it gets its own LocalBusiness node with
+// Innovia as parentOrganization — not a branch of Innovia.
+//
+// aggregateRating is emitted ONLY when a review count is supplied: Google
+// requires both a value and a count, and a rating with no count is a structured
+// -data error rather than a rich result.
+
+/** Normalise a US phone number to E.164 for structured data. */
+function e164(raw: string) {
+  const d = raw.replace(/[^0-9]/g, '');
+  if (d.length === 10) return `+1${d}`;
+  if (d.length === 11 && d.startsWith('1')) return `+${d}`;
+  return raw;
+}
+
+export function memberFirmSchema(opts: {
+  name: string;
+  /** Registered entity name, when it differs from the trading name. */
+  legalName?: string;
+  description: string;
+  /** The firm's own website, when known — otherwise the profile page. */
+  url: string;
+  /** The page this markup lives on, when it differs from `url`. */
+  mainEntityOfPage?: string;
+  /** Must match the hours shown on the page. */
+  openingHours?: Array<{ days: string[]; opens: string; closes: string }>;
+  foundingDate?: string;
+  image?: string;
+  telephone?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
+  /** Head-office coordinates. Emitted as GeoCoordinates when both are present. */
+  latitude?: number;
+  longitude?: number;
+  /** City / county names the firm serves. */
+  areaServed?: string[];
+  rating?: { value: number; count: number } | null;
+  sameAs?: string[];
+}) {
+  const addr = {
+    ...(opts.streetAddress ? { streetAddress: opts.streetAddress } : {}),
+    ...(opts.addressLocality ? { addressLocality: opts.addressLocality } : {}),
+    ...(opts.addressRegion ? { addressRegion: opts.addressRegion } : {}),
+    ...(opts.postalCode ? { postalCode: opts.postalCode } : {}),
+  };
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: opts.name,
+    ...(opts.legalName && opts.legalName !== opts.name
+      ? { legalName: opts.legalName, alternateName: opts.legalName }
+      : {}),
+    description: opts.description,
+    url: opts.url,
+    ...(opts.mainEntityOfPage && opts.mainEntityOfPage !== opts.url
+      ? { mainEntityOfPage: opts.mainEntityOfPage }
+      : {}),
+    ...(opts.foundingDate ? { foundingDate: opts.foundingDate } : {}),
+    ...(opts.openingHours?.length
+      ? {
+          openingHoursSpecification: opts.openingHours.map((h) => ({
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: h.days,
+            opens: h.opens,
+            closes: h.closes,
+          })),
+        }
+      : {}),
+    ...(opts.image
+      ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
+      : {}),
+    ...(opts.telephone ? { telephone: e164(opts.telephone) } : {}),
+    ...(Object.keys(addr).length
+      ? { address: { '@type': 'PostalAddress', addressCountry: 'US', ...addr } }
+      : {}),
+    ...(typeof opts.latitude === 'number' && typeof opts.longitude === 'number'
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: opts.latitude,
+            longitude: opts.longitude,
+          },
+        }
+      : {}),
+    ...(opts.areaServed?.length
+      ? { areaServed: opts.areaServed.map((name) => ({ '@type': 'Place', name })) }
+      : {}),
+    ...(opts.rating && opts.rating.count > 0
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: opts.rating.value,
+            reviewCount: opts.rating.count,
+          },
+        }
+      : {}),
+    parentOrganization: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    ...(opts.sameAs?.length ? { sameAs: opts.sameAs } : {}),
+  };
+}

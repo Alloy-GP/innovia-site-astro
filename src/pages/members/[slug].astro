@@ -1,0 +1,195 @@
+---
+// Member Highlight pages — /members/<slug>/
+// One page per member firm, generated from src/data/member-highlights.ts.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MemberHighlight from '../../components/MemberHighlight.astro';
+import { memberFirmSchema, breadcrumbSchema } from '../../lib/schema.ts';
+import { SITE } from '../../config/site.ts';
+import { MEMBER_PROFILES } from '../../data/member-highlights.ts';
+
+// Site runs in output:'server' — opt these data-driven pages into prerendering.
+export const prerender = true;
+
+export function getStaticPaths() {
+  return MEMBER_PROFILES.map((member) => ({ params: { slug: member.slug }, props: { member } }));
+}
+
+const { member } = Astro.props;
+const url = `${SITE.url}/members/${member.slug}/`;
+
+// Strip entities/markup — schema and meta take plain text.
+const plain = (s: string) =>
+  s
+    .replace(/<[^>]+>/g, '')
+    .replace(/&mdash;/g, '—')
+    .replace(/&amp;/g, '&')
+    .replace(/&rsquo;/g, '’')
+    .replace(/&middot;/g, '·')
+    .trim();
+
+const firm = memberFirmSchema({
+  name: member.name,
+  legalName: member.legalName,
+  description: plain(member.seoDescription),
+  // The entity's canonical home is its own site; this page is where the
+  // markup happens to live.
+  url: member.nap.url || url,
+  mainEntityOfPage: url,
+  openingHours: member.hours?.spec,
+  foundingDate: member.stats.find((s) => s.label === 'Established')?.value,
+  telephone: member.nap.telephone,
+  streetAddress: member.nap.streetAddress,
+  addressLocality: member.nap.addressLocality,
+  addressRegion: member.nap.addressRegion,
+  postalCode: member.nap.postalCode,
+  latitude: member.nap.latitude,
+  longitude: member.nap.longitude,
+  areaServed: [plain(member.area.heading), ...member.area.cities.map((c) => c.name)],
+  // Opt-in per member — see `emitAggregateRating` in data/member-highlights.ts
+  // for why re-published Google ratings stay out of the markup by default.
+  rating:
+    member.reviews.emitAggregateRating &&
+    member.reviews.rating !== null &&
+    member.reviews.reviewCount
+      ? { value: member.reviews.rating, count: member.reviews.reviewCount }
+      : null,
+});
+
+const breadcrumb = breadcrumbSchema([
+  { name: 'Home', url: `${SITE.url}/` },
+  { name: 'Members', url: `${SITE.url}/member-spotlights/` },
+  { name: member.name, url },
+]);
+---
+<BaseLayout
+  title={plain(member.seoTitle)}
+  description={plain(member.seoDescription)}
+  ogImage="/assets/og/option-1-type-led.png"
+  pageSchema={[firm, breadcrumb]}
+  bodyClass="mh"
+  bodyStyle={`--m-accent:${member.accent};--m-accent-bright:${member.accent};--m-accent-deep:${member.accentDeep}`}
+  headerVariant="inverse"
+  ctaLabel="Request a Proposal"
+  ctaHref="#cta"
+>
+  <MemberHighlight member={member} />
+
+  <script is:inline>
+    (function () {
+      var el = document.getElementById('member-map');
+      if (!el) return;
+
+      // Only pay for Leaflet when the map is actually about to be seen.
+      var loaded = false;
+      function load() {
+        if (loaded) return;
+        loaded = true;
+
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+
+        var s = document.createElement('script');
+        s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        s.onload = function () {
+          var center = el.dataset.center.split(',').map(Number);
+          var accent = el.dataset.accent || '#2E9BA8';
+          var cities = JSON.parse(el.dataset.cities);
+
+          var map = L.map(el, {
+            center: center,
+            zoom: Number(el.dataset.zoom) || 9,
+            scrollWheelZoom: false,
+            // Top-left is occupied by the section's own "where they serve" label.
+            zoomControl: false,
+            attributionControl: true,
+          });
+          L.control.zoom({ position: 'topright' }).addTo(map);
+
+          // Esri's light canvas ships base and labels as separate layers —
+          // without the reference layer the service area has no place names.
+          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution:
+              'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+            maxZoom: 16,
+          }).addTo(map);
+
+          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16,
+            pane: 'shadowPane',
+          }).addTo(map);
+
+          var bounds = [];
+          cities.forEach(function (c) {
+            bounds.push([c.lat, c.lng]);
+            L.marker([c.lat, c.lng], {
+              icon: L.divIcon({
+                className: '',
+                html:
+                  '<span style="display:block;width:13px;height:13px;border-radius:50%;background:' +
+                  accent +
+                  ';border:2.5px solid #18335E;box-shadow:0 2px 6px rgba(0,0,0,0.22);"></span>',
+                iconSize: [13, 13],
+                iconAnchor: [6.5, 6.5],
+                popupAnchor: [0, -10],
+              }),
+              keyboard: false,
+              alt: c.name,
+            })
+              .addTo(map)
+              .bindPopup(
+                '<strong style="font-family:system-ui,sans-serif;color:#18335E;font-size:14px;">' +
+                  c.name +
+                  '</strong>'
+              );
+          });
+
+          // Head office: larger, ringed, and above the service-area pins.
+          if (el.dataset.hq) {
+            var hq = JSON.parse(el.dataset.hq);
+            bounds.push([hq.lat, hq.lng]);
+            L.marker([hq.lat, hq.lng], {
+              zIndexOffset: 1000,
+              alt: hq.name + ' head office',
+              icon: L.divIcon({
+                className: '',
+                html:
+                  '<span style="display:block;width:22px;height:22px;border-radius:50%;background:#18335E;' +
+                  'border:3px solid ' + accent + ';box-shadow:0 0 0 4px rgba(24,51,94,0.18),0 3px 8px rgba(0,0,0,0.3);"></span>',
+                iconSize: [22, 22],
+                iconAnchor: [11, 11],
+                popupAnchor: [0, -14],
+              }),
+            })
+              .addTo(map)
+              .bindPopup(
+                '<div style="font-family:system-ui,sans-serif;min-width:170px;">' +
+                  '<strong style="color:#18335E;font-size:14px;">' + hq.name + '</strong><br>' +
+                  '<span style="color:#555;font-size:13px;">' + hq.street + '<br>' + hq.city + '</span>' +
+                  '</div>'
+              );
+          }
+
+          if (bounds.length) map.fitBounds(bounds, { padding: [34, 34] });
+        };
+        document.head.appendChild(s);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(
+          function (entries) {
+            if (entries.some(function (e) { return e.isIntersecting; })) {
+              io.disconnect();
+              load();
+            }
+          },
+          { rootMargin: '300px' }
+        );
+        io.observe(el);
+      } else {
+        load();
+      }
+    })();
+  </script>
+</BaseLayout>

@@ -1,384 +1,421 @@
 ---
-// Member Highlight — video-led editorial member testimonial (Innovia recruitment page).
-// Ported from the AGP design handoff v5 (worked example: Landmarc, Fredericksburg VA).
-// Uses the global BaseLayout chrome (SiteHeader/SiteFooter) — no bespoke header/footer here.
-// Demo data; per-member accent set as the default in member-highlight.css.
+// Member Highlight — video-led editorial member page (Innovia recruitment / board-facing).
+// Data-driven: every string comes from src/data/member-highlights.ts, so a new member
+// is a data change, not a markup change. Layout from the AGP design handoff
+// (worked example: Avalon Management Group, San Diego & Riverside Counties).
+//
+// Chrome (header/footer) comes from BaseLayout — nothing bespoke here.
 import "../styles/tokens.css";
 import "../styles/site.css";
 import "../styles/member-highlight.css";
 import "../styles/member-highlight-page.css";
+import type { MemberProfile, BenefitIcon, SealIcon } from "../data/member-highlights";
+
+interface Props {
+  member: MemberProfile;
+}
+const { member: m } = Astro.props;
+
+// Inline SVG paths, keyed so the data file stays markup-free.
+const BENEFIT_ICONS: Record<BenefitIcon, string> = {
+  dollar:
+    '<line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  message: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+};
+
+const SEAL_ICONS: Record<SealIcon, string> = {
+  award: '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+  shield:
+    '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  file: '<path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="m9 15 2 2 4-4"/>',
+  badge:
+    '<path d="M16 7a4 4 0 1 1-8 0"/><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M9 19h6"/>',
+};
+
+/** Wrap a provisional figure so unverified data is visible, not silent. */
+const claim = (c: { text: string; confirm?: boolean }) =>
+  c.confirm ? `${c.text} <span class="note">confirm</span>` : c.text;
+
+const arrow =
+  '<svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
+
+/** US 10-digit numbers to E.164 so the tel: link dials from any country. */
+const telHref = (raw: string) => {
+  const d = raw.replace(/[^0-9]/g, '');
+  if (d.length === 10) return `tel:+1${d}`;
+  if (d.length === 11 && d.startsWith('1')) return `tel:+${d}`;
+  return `tel:${raw.replace(/[^0-9+]/g, '')}`;
+};
+
+// Directions link — query by address so it resolves even without coordinates.
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  [m.name, m.nap.streetAddress, `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`]
+    .filter(Boolean)
+    .join(', ')
+)}`;
 ---
 
-  <section class="v-hero" id="top">
-    <div class="container">
-      <div class="crumb-wrap">
-        <div class="mh-crumb">
-          <a href="/">Innovia</a><span>/</span>
-          <a href="/member-spotlights">Members</a><span>/</span>
-          <span class="here">Landmarc</span>
-          <span class="verified">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            Verified Innovia member
-          </span>
-        </div>
-      </div>
+{/* Per-member accent is set on <body> by the route (BaseLayout bodyStyle) —
+    styles/member-highlight.css declares the default on `:root, body`, so a
+    :root override here would lose to the body declaration. */}
 
-      <div class="v-hero-grid">
+<section class="v-hero" id="top">
+  <div class="container">
+    <div class="crumb-wrap">
+      <nav class="mh-crumb" aria-label="Breadcrumb">
+        <a href="/">Innovia</a><span aria-hidden="true">/</span>
+        <a href="/member-spotlights/">Members</a><span aria-hidden="true">/</span>
+        <span class="here" aria-current="page" set:html={m.name} />
+        <span class="verified">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          Verified Innovia Member
+        </span>
+      </nav>
+    </div>
+
+    <div class="v-hero-grid">
       <div class="v-hero-text">
-      <div class="eyebrow on-accent hero-eyebrow"><span class="rule-mini"></span>Why we joined Innovia</div>
-      <h1>&ldquo;The co-op gave us a national's muscle &mdash; <em>without making us sell our company</em> to get it.&rdquo;</h1>
-      <div class="cite">Tom Brennan &middot; Founder &amp; President, Landmarc</div>
-      </div><!-- /v-hero-text -->
+        <div class="hero-badges">
+          <span class="bdg">
+            <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op" width="72" height="17" loading="eager" decoding="async">
+            <span>Member since <b>{m.memberSince}</b></span>
+          </span>
+          <span class="bdg"><span>Independently owned</span></span>
+        </div>
+        <h1 set:html={m.name} />
+        <p class="region-tag" set:html={m.tagline} />
+      </div>
 
-      <!-- ===== VIDEO CENTERPIECE =====
-           Swap the .poster-slot + .play markup for an <iframe> (YouTube/Vimeo)
-           or a <video poster="…"> when the interview file is ready. -->
       <div class="v-stage-wrap">
-        <div class="v-stage" id="videoStage" role="button" tabindex="0" aria-label="Play member interview">
-          <div class="poster-slot">
-            <img src="/assets/photos/landmarc-interview.jpg" alt="Interview with Tom Brennan, founder of Landmarc" style="width:100%;height:100%;object-fit:cover;object-position:50% 26%;">
+        {m.video.vimeoId ? (
+          <div class="v-stage is-armed">
+            <iframe
+              src={`https://player.vimeo.com/video/${m.video.vimeoId}?dnt=1`}
+              title={m.video.title}
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            />
           </div>
-          <div class="play">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        ) : (
+          <div class="v-stage is-pending" role="img" aria-label={`Member interview with ${m.leader.name} — coming soon`}>
+            <div class="poster-slot">
+              {m.video.posterSrc && (
+                <img src={m.video.posterSrc} alt={m.video.posterAlt} loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+              )}
+            </div>
+            <span class="chip-tl">Member interview</span>
+            <span class="corner-tag">{m.video.filmedAt}</span>
+            <div class="play" aria-hidden="true">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="caption">
+              <div class={m.leader.photo ? 'av has-photo' : 'av'}>
+                {m.leader.photo
+                  ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
+                  : m.leader.initials}
+              </div>
+              <div>
+                <div class="ttl" set:html={m.video.title} />
+                <div class="sub" set:html={m.video.subtitle} />
+              </div>
+              <span class="runtime">{m.video.runtime}</span>
+            </div>
           </div>
-          <div class="caption">
-            <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);background-size:cover;background-position:50% 22%;"></div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v-substats tight" aria-label={`${m.name} at a glance`}>
+  <div class="container">
+    <div class="mh-stats">
+      {m.stats.map((s) => (
+        <div class="s">
+          <span class="v">{s.value}</span>
+          <span class="k">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="v-story" aria-labelledby="story-h">
+  <div class="container">
+    <div class="head">
+      <p class="eyebrow on-accent"><span class="rule-mini"></span>The story</p>
+      <h2 id="story-h" set:html={m.story.heading} />
+    </div>
+    <div class="body">
+      <div class="col">
+        {m.story.paragraphs.slice(0, 2).map((p, i) => (
+          <p class={i === 0 ? 'drop' : undefined} set:html={p} />
+        ))}
+      </div>
+      <div class="col">
+        {m.story.paragraphs.slice(2).map((p) => <p set:html={p} />)}
+      </div>
+      <blockquote class="pull">
+        <p set:html={m.story.pullQuote} />
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="v-coop" aria-labelledby="trust-h">
+  <div class="container">
+    <div class="head">
+      <div>
+        <p class="eyebrow on-accent"><span class="rule-mini"></span>Why boards trust {m.shortName ?? m.name}</p>
+        <h2 id="trust-h" set:html={m.benefits.heading} />
+      </div>
+    </div>
+
+    <div class="benefits">
+      {m.benefits.items.map((b) => (
+        <div class="b">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={BENEFIT_ICONS[b.icon]} />
+          <h3 class="t" set:html={b.title} />
+          <p class="d" set:html={claim(b.body)} />
+        </div>
+      ))}
+    </div>
+
+    <div class="changed">
+      <h3 class="ch-head" set:html={m.coop.heading} />
+      <p class="ch-sub" set:html={m.coop.sub} />
+      <div class="ch-grid">
+        {m.coop.points.map((p, i) => (
+          <div class="ch">
+            <span class="ix">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <div class="ttl">Why we joined Innovia</div>
-              <div class="sub">Tom Brennan, Founder &amp; President &middot; Landmarc</div>
+              <span class="src" set:html={p.label} />
+              <div class="t" set:html={claim(p.body)} />
             </div>
-            <span class="runtime">4:12</span>
           </div>
-        </div>
+        ))}
       </div>
-      </div><!-- /v-hero-grid -->
+      <p class="take" set:html={m.coop.takeaway} />
+      <a class="ch-link" href="/for-cams/why-innovia/">
+        See all membership benefits
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ STATS ============ -->
-  <section class="v-substats tight">
-    <div class="container">
-      <div class="intro">
-        <img class="intro-logo" src="/assets/logos/landmarc-white.png" alt="Landmarc">
-        <div class="intro-badge">
-          <img src="/assets/logos/innovia-white-green.png" alt="Innovia Co-op">
-          <span>Member since <b>2018</b></span>
+<section class="v-founder" aria-labelledby="leader-h">
+  <div class="container">
+    <div class="frame">
+      <div class="card">
+        <div class={m.leader.photo ? 'av has-photo' : 'av'} aria-hidden="true">
+          {m.leader.photo
+            ? <img src={m.leader.photo} alt="" width="220" height="220" loading="lazy" decoding="async">
+            : m.leader.initials}
         </div>
-        <p class="intro-text">Landmarc is an independent community-management firm in <b>Fredericksburg, Virginia</b>, caring for HOA and condominium associations across the Rappahannock region since 2009.</p>
+        <p class="nm">{m.leader.name}</p>
+        <p class="rl" set:html={m.leader.role} />
+        <p class="creds">{m.leader.credentials.map((c) => <span>{c}</span>)}</p>
       </div>
-      <div class="mh-stats">
-        <div class="s"><span class="v">16<span class="u">yrs</span></span><span class="k">Independent &amp; growing</span></div>
-        <div class="s"><span class="v">140<span class="u">+</span></span><span class="k">Communities managed</span></div>
-        <div class="s"><span class="v">48</span><span class="k">On the team</span></div>
-        <div class="s"><span class="v">9</span><span class="k">Localities served</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ STORY ============ -->
-  <section class="v-story">
-    <div class="container">
-      <div class="head">
-        <div class="eyebrow on-accent"><span class="rule-mini"></span>The story</div>
-        <h2>Built one Virginia community at a time.</h2>
-      </div>
-      <div class="body">
-        <div class="col">
-          <p class="drop">Landmarc started in 2009 with a single self-managed HOA outside Fredericksburg and a founder who was tired of watching national roll-ups treat local communities like spreadsheet rows. The pitch was simple: a manager who actually lives here, answers the phone, and shows up at the annual meeting.</p>
-          <p>That stubborn locality became the company's edge. While competitors chased volume across state lines, Landmarc grew by referral — board president to board president — across Fredericksburg, Stafford, and Spotsylvania.</p>
-        </div>
-        <div class="col">
-          <p>By 2018, the firm faced the question every successful independent eventually does: sell to a national for the resources, or stay independent and fall behind on buying power. Joining Innovia made it a false choice.</p>
-          <p>Today, 48 team members manage 140+ communities with co-op-negotiated vendor pricing behind every budget — and the same founder still personally onboards every new association.</p>
-        </div>
-        <div class="pull">
-          <p>"We didn't want to sell to a national. We wanted their leverage <em>without their leash.</em> The co-op was the answer."</p>
-        </div>
+      <div class="copy">
+        <p class="eyebrow on-accent"><span class="rule-mini"></span>Leadership</p>
+        <h2 id="leader-h" set:html={m.leader.heading} />
+        {m.leader.paragraphs.map((p) => <p set:html={p} />)}
       </div>
     </div>
-  </section>
 
-  <!-- ============ FOUNDER ============ -->
-  <section class="v-founder">
-    <div class="container">
-      <div class="frame">
-        <div class="card">
-          <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);background-size:cover;background-position:50% 20%;"></div>
-          <div class="nm">Tom Brennan</div>
-          <div class="rl">Founder &amp; President</div>
-          <div class="creds"><span>CMCA</span><span>AMS</span><span>PCAM</span></div>
-          <div class="card-facts">
-            <div class="cf"><span class="cf-k">Top credential</span><span class="cf-v">PCAM</span></div>
-            <div class="cf"><span class="cf-k">Industry board</span><span class="cf-v">CAI · Central Virginia</span></div>
-            <div class="cf"><span class="cf-k">At the co-op</span><span class="cf-v">Mid-Atlantic vendor council</span></div>
-          </div>
-        </div>
-        <div class="copy">
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Leadership</div>
-          <h3>The person behind the firm — and the interview.</h3>
-          <p>Tom founded Landmarc after a decade managing master-planned communities across the Rappahannock region. He holds the PCAM — the industry's highest management credential — and sits on the Central Virginia chapter board of CAI. Under him, the firm has never lost a community to a competitor on service.</p>
-          <p>He brought the company into Innovia in 2018, and now represents the Mid-Atlantic region on the co-op's vendor council. Hear him tell it in the interview above.</p>
-        </div>
-      </div>
-
-      <div class="accred">
-        <div class="accred-head">
-          <div>
-            <div class="eyebrow on-accent"><span class="rule-mini"></span>Accreditations &amp; standing</div>
-            <h4>Credentialed at the firm, not just the desk.</h4>
-          </div>
-          <p>Beyond Tom's personal designations, Landmarc holds company-level accreditation and is a verified member in good standing of the Innovia cooperative.</p>
-        </div>
-        <div class="accred-grid">
-          <div class="cred">
-            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-            <div class="ac">AAMC</div>
-            <div class="fn">Accredited Association Management Company — CAI's highest firm designation</div>
-          </div>
-          <div class="cred">
-            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-            <div class="ac">CAI</div>
-            <div class="fn">Community Associations Institute member — Central Virginia Chapter</div>
-          </div>
-          <div class="cred">
-            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="m9 15 2 2 4-4"/></svg>
-            <div class="ac">Licensed &amp; bonded</div>
-            <div class="fn">Registered and bonded in the Commonwealth of Virginia</div>
-          </div>
-          <div class="cred is-innovia">
-            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7a4 4 0 1 1-8 0"/><circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M9 19h6"/></svg>
-            <div class="ac">Innovia Verified</div>
-            <div class="fn">Member in good standing of the Innovia co-op since 2018</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ COMMUNITIES ============ -->
-  <section class="v-comm">
-    <div class="container">
-      <div class="head">
+    <div class="accred">
+      <div class="accred-head">
         <div>
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Growth, with the co-op behind it</div>
-          <h2>Membership that fuels growth and expansion.</h2>
+          <p class="eyebrow on-accent"><span class="rule-mini"></span>Credentials &amp; standing</p>
+          <h3>Credentialed at the firm, not just the desk.</h3>
         </div>
-        <p>Co-op pricing and benchmarking let us bid sharper and protect margin &mdash; so we win more communities and keep them. The roster below is the proof, spanning single-family, condo, and active-adult associations region-wide.</p>
       </div>
-      <div class="grid">
-        <div class="cell"><div class="nm">Estates at Lee's Hill</div><div class="meta">Fredericksburg · 312 doors · since 2012</div><div class="type">Single-family HOA</div></div>
-        <div class="cell"><div class="nm">Leeland Station</div><div class="meta">Stafford · 540 doors · since 2014</div><div class="type">Master-planned community</div></div>
-        <div class="cell"><div class="nm">Celebrate Virginia</div><div class="meta">Fredericksburg · 280 doors · since 2016</div><div class="type">Condominium association</div></div>
-        <div class="cell"><div class="nm">Falls Run</div><div class="meta">Fredericksburg · 1,150 doors · since 2017</div><div class="type">55+ active adult</div></div>
-        <div class="cell"><div class="nm">Harrison Crossing</div><div class="meta">Spotsylvania · 196 doors · since 2019</div><div class="type">Townhome / PUD</div></div>
-        <div class="cell"><div class="nm">Cosner's Corner</div><div class="meta">Spotsylvania · 168 doors · since 2021</div><div class="type">Mixed-use condominium</div></div>
+      <div class="accred-grid">
+        {m.accreditations.map((a) => (
+          <div class={a.isInnovia ? 'cred is-innovia' : 'cred'}>
+            <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={SEAL_ICONS[a.seal]} />
+            <p class="ac" set:html={a.abbr} />
+            <p class="fn" set:html={a.full} />
+          </div>
+        ))}
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ GOOGLE REVIEWS ============ -->
-  <section class="v-reviews">
-    <div class="container">
-      <div class="rev-top">
-        <div class="rev-brand">
-          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
-            <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
-            <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
-            <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
-          </svg>
-          <div class="gl">Google Reviews<small>Verified by Google</small></div>
-        </div>
+<section class="v-comm" aria-labelledby="record-h">
+  <div class="container">
+    <div class="head">
+      <div>
+        <p class="eyebrow on-accent"><span class="rule-mini"></span>Track record</p>
+        <h2 id="record-h" set:html={m.caseStudies.heading} />
+      </div>
+    </div>
+    <div class="grid grid-2up">
+      {m.caseStudies.items.map((c) => (
+        <article class="cell">
+          <p class="meta" set:html={c.meta} />
+          <h3 class="nm" set:html={c.title} />
+          <p class="cs-body" set:html={claim(c.body)} />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="v-reviews" aria-labelledby="rep-h">
+  <div class="container">
+    <h2 id="rep-h" class="sr-only">Reputation</h2>
+    <div class="rev-top">
+      <div class="rev-brand">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+          <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+          <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
+          <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+        </svg>
+        <div class="gl">Reputation<small>Google rating</small></div>
+      </div>
+      {m.reviews.rating !== null && (
         <div class="rev-score">
-          <span class="num">4.9</span>
+          <span class="num">{m.reviews.rating}</span>
           <div class="meta">
-            <div class="stars">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            {/* Proportional fill — rounding 4.7 up to five solid stars overstates it. */}
+            <div class="stars" role="img" aria-label={`${m.reviews.rating} out of 5 stars`}>
+              <div class="row base" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                ))}
+              </div>
+              <div
+                class="row fill"
+                aria-hidden="true"
+                style={`width:${(Math.max(0, Math.min(5, m.reviews.rating ?? 0)) / 5) * 100}%`}
+              >
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                ))}
+              </div>
             </div>
-            <div class="count">Based on <strong>127</strong> Google reviews</div>
+            <div class="count">
+              {m.reviews.reviewCount
+                ? `Based on ${m.reviews.reviewCount} Google reviews`
+                : 'Google rating · review feed not yet connected'}
+            </div>
           </div>
         </div>
-        <div class="rev-cta">
-          <a href="#" class="btn btn-outline" target="_blank" rel="noopener">See all reviews
-            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-          </a>
-        </div>
-      </div>
+      )}
+    </div>
+    {m.reviews.quotes.length > 0 ? (
       <div class="rev-grid">
-        <div class="rcard">
-          <div class="who">
-            <div class="av" style="background:#3B6FB5;">RT</div>
-            <div><div class="nm">Robert Tran</div><div class="ago">2 weeks ago</div></div>
-            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
-          </div>
-          <div class="rstars stars">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <p>Switched our HOA to Landmarc two years ago and never looked back. They actually answer the phone, and our manager knows every vendor in the region by name.<span class="role">Board President · Estates at Lee's Hill</span></p>
-        </div>
-        <div class="rcard">
-          <div class="who">
-            <div class="av" style="background:#5f6166;">LM</div>
-            <div><div class="nm">Linda Marsh</div><div class="ago">1 month ago</div></div>
-            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
-          </div>
-          <div class="rstars stars">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <p>The vendor pricing they bring through the co-op genuinely lowered our annual budget. Our reserve study finally pencils out without a special assessment.<span class="role">Treasurer · Leeland Station</span></p>
-        </div>
-        <div class="rcard">
-          <div class="who">
-            <div class="av" style="background:#2F7D5B;">CD</div>
-            <div><div class="nm">Carlos Delgado</div><div class="ago">3 months ago</div></div>
-            <svg class="gmark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
-          </div>
-          <div class="rstars stars">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <p>Responsive, transparent, and they know the area. When an ice storm took down half our tree canopy, they had a vetted crew on-site the next morning.<span class="role">Board Member · Falls Run</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SERVICE AREA (location flavour) ============ -->
-  <section class="v-area">
-    <div class="container">
-      <div class="frame">
-        <div class="map">
-          <div class="grid-bg"></div>
-          <span class="label">Service Area · Rappahannock Region, VA</span>
-          <svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <path class="road" d="M 60 250 H 580"/><path class="road" d="M 320 40 V 420"/>
-            <path class="road" d="M 120 120 L 520 360"/><path class="road" d="M 520 120 L 160 360"/>
-            <circle class="ring" cx="305" cy="232" r="192"/>
-            <g>
-              <circle class="pin" cx="320" cy="118" r="6"/><text class="pin-lbl" x="320" y="106" text-anchor="middle">Stafford</text>
-              <circle class="pin" cx="168" cy="176" r="6"/><text class="pin-lbl" x="168" y="164" text-anchor="middle">Culpeper</text>
-              <circle class="pin" cx="250" cy="158" r="5"/><text class="pin-lbl" x="250" y="146" text-anchor="middle">Locust Grove</text>
-              <circle class="pin" cx="210" cy="300" r="6"/><text class="pin-lbl" x="210" y="320" text-anchor="middle">Spotsylvania</text>
-              <circle class="pin" cx="148" cy="330" r="5"/><text class="pin-lbl" x="148" y="350" text-anchor="middle">Orange</text>
-              <circle class="pin" cx="316" cy="372" r="6"/><text class="pin-lbl" x="316" y="392" text-anchor="middle">Caroline</text>
-              <circle class="pin" cx="470" cy="204" r="6"/><text class="pin-lbl" x="470" y="192" text-anchor="middle">King George</text>
-              <circle class="pin" cx="462" cy="320" r="5"/><text class="pin-lbl" x="462" y="340" text-anchor="middle">Bowling Green</text>
-            </g>
-            <rect class="hq" x="293" y="220" width="24" height="24" transform="rotate(45 305 232)"/>
-            <text class="hq-lbl" x="305" y="212" text-anchor="middle">Fredericksburg · HQ</text>
-          </svg>
-        </div>
-        <div class="coverage">
-          <h3>Cities we serve</h3>
-          <p>Local managers within reach of every community on our roster.</p>
-          <div class="cities">
-            <span>Fredericksburg</span><span>Stafford</span><span>Spotsylvania</span><span>King George</span>
-            <span>Culpeper</span><span>Caroline</span><span>Orange</span><span>Locust Grove</span>
-            <span>Colonial Beach</span><span>Bowling Green</span>
-          </div>
-          <div class="foot">HQ · Central Park, Fredericksburg, VA 22401</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CO-OP BENEFIT CALLOUT ============ -->
-  <section class="v-coop">
-    <div class="container">
-      <div class="head">
-        <div>
-          <h2>What the co-op is <em>doing for us.</em></h2>
-        </div>
-        <p class="lede">Real numbers, after a few years in. <b>This is what membership is actually doing for an independent firm</b> &mdash; not a brochure, the bottom line.</p>
-      </div>
-      <div class="metrics">
-        <div class="m"><div class="big">22<span>%</span></div><div class="ml">Lower vendor costs</div><div class="md">Co-op-negotiated pricing on banking, insurance, and maintenance &mdash; on every contract.</div></div>
-        <div class="m"><div class="big">$340<span>k</span></div><div class="ml">Saved &amp; rebated last year</div><div class="md">Rebates and savings I could never land alone, straight to the bottom line.</div></div>
-        <div class="m"><div class="big">80<span>+</span></div><div class="ml">Peer firm owners</div><div class="md">Trading playbooks that actually work &mdash; pricing, hiring, software, the hard calls.</div></div>
-        <div class="m"><div class="big">100<span>%</span></div><div class="ml">Still independent</div><div class="md">National-scale leverage without selling to a roll-up. I still own my company.</div></div>
-      </div>
-      <div class="changed">
-        <div class="ch-head">What the membership puts to work</div>
-        <p class="ch-sub">The co-op opens doors an independent firm can't on its own &mdash; here's what Landmarc taps, and what it earns the communities they manage:</p>
-        <div class="ch-grid">
-          <div class="ch"><span class="ix">01</span><div><span class="src">Alloy &middot; CAM Growth</span><div class="t">A dedicated growth partner bringing new communities and a sharper brand &mdash; not just back-office tools.</div></div></div>
-          <div class="ch"><span class="ix">02</span><div><span class="src">First Citizens Bank</span><div class="t">Co-op banking terms that cut real cost for the firm and the associations it manages.</div></div></div>
-          <div class="ch"><span class="ix">03</span><div><span class="src">Peer network &middot; 80+ firms</span><div class="t">Owners trading what actually works &mdash; pricing, hiring, software, the hard calls.</div></div></div>
-        </div>
-        <a class="ch-link" href="/for-cams/why-innovia">See all membership benefits
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ WHY THEY LOVE IT ============ -->
-  <section class="v-love">
-    <div class="container">
-      <div class="eyebrow on-dark"><span class="rule-mini"></span>Why we love being a member</div>
-      <blockquote>“Our membership in Innovia lets us stay <span class="hl">independent</span> while having the buying power and thought leadership of the best management companies in the country.”</blockquote>
-      <div class="who">
-        <div class="av" style="background-image:url(/assets/photos/landmarc-interview.jpg);"></div>
-        <div><div class="nm">Tom Brennan</div><div class="rl">Founder &amp; President, Landmarc</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ MEMBERSHIP CTA + FORM ============ -->
-  <section class="v-cta" id="join">
-    <div class="container">
-      <div class="frame">
-        <div>
-          <div class="eyebrow on-accent"><span class="rule-mini"></span>Could the co-op do this for your firm?</div>
-          <h2>See what membership would mean for <em>your firm.</em></h2>
-          <p>Innovia is invitation-only and owned by its members &mdash; independent CAM companies like yours. Tell us a little about your company and we'll set up a confidential, no-pressure conversation. Owner to owner.</p>
-          <ul class="join-points">
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No vendor floor, no obligation</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Confidential &mdash; your details stay in the cooperative office</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>You'll hear from a member-owner, not a salesperson</li>
-          </ul>
-        </div>
-        <form class="lead-form" id="joinForm" data-endpoint="/api/lead" data-success="Thanks — a member-owner will reach out within five business days for a confidential conversation.">
-          <input type="hidden" name="source" value="Member spotlight — membership inquiry">
-          <div class="form-head"><span class="form-label">Talk to Innovia about membership</span><span class="form-count">~2 min</span></div>
-          <div class="form-body">
-            <fieldset>
-              <div class="grid-2"><input type="text" name="firstName" placeholder="First name" aria-label="First name" autocomplete="given-name" required><input type="text" name="lastName" placeholder="Last name" aria-label="Last name" autocomplete="family-name" required></div>
-              <div class="grid-2"><input type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required><input type="tel" name="phone" placeholder="Phone (optional)" aria-label="Phone" autocomplete="tel"></div>
-              <div class="grid-2"><input type="text" name="company" placeholder="Company name" aria-label="Company name" autocomplete="organization" required><input type="text" name="hq" placeholder="Headquarters (city, state)" aria-label="Headquarters" required></div>
-              <label class="field">Portfolio size<select name="portfolio" required><option value="">Households managed</option><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–15,000</option><option>15,000–40,000</option><option>Over 40,000</option></select></label>
-              <label class="field">What's prompting the look? <span class="opt">Optional</span><textarea name="goal" rows="2" placeholder="Margin, vendor terms, talent, the long view — what's on your mind"></textarea></label>
-            </fieldset>
-            <div class="submit-row">
-              <small>Confidential. We don't share with vendors or sell your details.</small>
-              <button type="submit">Request a conversation
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-              </button>
+        {m.reviews.quotes.map((q) => (
+          <figure class="rcard">
+            <div class="rstars" role="img" aria-label={`${q.stars} out of 5 stars`}>
+              {Array.from({ length: q.stars }).map(() => (
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              ))}
             </div>
-          </div>
-          <div class="sent-state">
-            <div class="seal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <h4>Thanks &mdash; we'll be in touch.</h4>
-            <p>A member-owner from the cooperative will reach out within five business days for a confidential conversation.</p>
-          </div>
-        </form>
+            <blockquote><p set:html={`&ldquo;${q.text}&rdquo;`} /></blockquote>
+            <figcaption>Google review</figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="rev-grid">
+        <div class="rcard rcard-pending"><p>Google reviews not yet connected.</p></div>
+      </div>
+    )}
+
+    {m.reviews.placeUrl && (
+      <a class="rev-all" href={m.reviews.placeUrl} target="_blank" rel="noopener noreferrer">
+        {m.reviews.reviewCount
+          ? `Read all ${m.reviews.reviewCount} reviews on Google`
+          : 'Read the reviews on Google'}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+    )}
+  </div>
+</section>
+
+<section class="v-area" aria-labelledby="area-h">
+  <div class="container">
+    <div class="frame">
+      <div class="map">
+        <span class="label">Where they serve &middot; <span set:html={m.area.heading} /></span>
+        <div
+          id="member-map"
+          class="map-canvas"
+          data-center={`${m.area.center.lat},${m.area.center.lng}`}
+          data-zoom={m.area.zoom}
+          data-accent={m.accent}
+          data-cities={JSON.stringify(m.area.cities)}
+          data-hq={
+            typeof m.nap.latitude === 'number' && typeof m.nap.longitude === 'number'
+              ? JSON.stringify({
+                  lat: m.nap.latitude,
+                  lng: m.nap.longitude,
+                  name: m.name,
+                  street: m.nap.streetAddress,
+                  city: `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`,
+                })
+              : undefined
+          }
+          role="img"
+          aria-label={`Map of the communities ${m.name} serves across ${m.area.heading.replace(/&amp;/g, 'and')}`}
+        ></div>
+        <noscript>
+          <div class="map-ph">Service-area map &mdash; <span set:html={m.area.heading} /></div>
+        </noscript>
+      </div>
+      <div class="coverage">
+        <h2 id="area-h" set:html={m.area.heading} />
+        <p set:html={m.area.blurb} />
+        <div class="cities">
+          {m.area.cities.map((c) => <span>{c.name}</span>)}
+        </div>
+
+        {m.nap.streetAddress && (
+          <address class="office">
+            <span class="lbl">Head office</span>
+            <a class="addr" href={mapsHref} target="_blank" rel="noopener noreferrer">
+              <span>{m.nap.streetAddress}</span>
+              <span>{m.nap.addressLocality}, {m.nap.addressRegion} {m.nap.postalCode}</span>
+              <span class="dir">
+                Directions
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+            {m.nap.telephone && <a class="tel" href={telHref(m.nap.telephone)}>{m.nap.telephone}</a>}
+            {m.hours && <p class="hrs" set:html={m.hours.display} />}
+            {m.nap.url && (
+              <a class="site" href={m.nap.url} target="_blank" rel="noopener noreferrer">
+                {m.nap.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </a>
+            )}
+          </address>
+        )}
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ FOOTER ============ -->
-
-
-<script is:inline>
-  /* Placeholder play interaction — replace stage with the real embed when video is ready. */
-  (function(){
-    var s = document.getElementById('videoStage');
-    if(!s) return;
-    function activate(){ s.classList.add('is-armed'); }
-    s.addEventListener('click', activate);
-    s.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); }});
-  })();
-</script>
+<section class="v-cta" id="cta" aria-labelledby="cta-h">
+  <div class="container">
+    <div class="frame">
+      <div>
+        <p class="eyebrow on-accent"><span class="rule-mini"></span>Talk to {m.shortName ?? m.name}</p>
+        <h2 id="cta-h" set:html={m.cta.heading} />
+        <p set:html={m.cta.body} />
+      </div>
+      <div class="actions">
+        <a href={m.cta.href} class="btn btn-primary" set:html={`Request a Proposal${arrow}`} />
+        <a href="/find-a-management-company/" class="btn btn-outline">Back to member directory</a>
+      </div>
+    </div>
+  </div>
+</section>

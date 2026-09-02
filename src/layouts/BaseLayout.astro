@@ -30,6 +30,11 @@ interface Props {
   robots?: string;
   /** Page-specific JSON-LD schema. */
   pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Extra class on <body> — style hook for page families (e.g. 'mh'). */
+  bodyClass?: string;
+  /** Inline <body> style — used to set per-page CSS custom properties
+   *  (member pages set --m-accent here; see styles/member-highlight.css). */
+  bodyStyle?: string;
 
   // ---- Header props (forwarded to SiteHeader) ----
   headerVariant?: '' | 'inverse';
@@ -50,6 +55,8 @@ const {
   ogImage: ogImageProp,
   robots,
   pageSchema,
+  bodyClass,
+  bodyStyle,
   headerVariant = '',
   activeNav = null,
   headerLogo = '/assets/logos/innovia-white-green.png',
@@ -155,7 +162,7 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
       </Fragment>
     )}
   </head>
-  <body>
+  <body class={bodyClass} style={bodyStyle}>
     <SiteHeader
       variant={headerVariant}
       active={activeNav}
@@ -227,7 +234,7 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
                 items: [
                   { icon: 'users-round', title: 'Why Innovia for your company', desc: 'A peer council, a shared vendor program, and industry intelligence — in service of every level of your operation.', href: '/for-cams/why-innovia/' },
                   { icon: 'quote', title: 'Testimonials', desc: 'What members say when the recorder is on — real voices on how the cooperative changed their firms.', href: '/testimonials/' },
-                  { icon: 'anchor', title: 'The Annual Summit', desc: 'Three days. The whole cooperative in one room — closed-door, no vendor floor. Summit 2027 in February.', href: '/summit/' },
+                  { icon: 'anchor', title: 'The Annual Summit', desc: 'The whole cooperative in one room — closed-door, no vendor floor. Summit 2027: Feb 9–13 at The Tampa EDITION.', href: '/summit/' },
                 ],
               },
               {

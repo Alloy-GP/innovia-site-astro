@@ -19,7 +19,6 @@ export default defineConfig({
       // De-listed pages: kept in the build for later use, but excluded from the
       // sitemap so they aren't surfaced to search engines (also carry noindex).
       filter: (page) =>
-        !page.includes('/members/landmarc') &&
         !page.includes('/member-spotlights/mariner-and-vail') &&
         !page.includes('/find-a-management-company/texas') &&
         !page.includes('/find-a-management-company/phoenix') &&
@@ -51,6 +50,11 @@ export default defineConfig({
   // NOTE: /privacy-policy/ is intentionally NOT redirected — a real privacy page must be
   // created before launch (see launch readiness). Homepage '/' needs no redirect (same path).
   redirects: {
+    // ── Member highlight pages ─────────────────────────────────
+    // /members/landmarc/ was the demo build of this template; the first
+    // real member page replaced it. Drop this once Landmarc has its own.
+    '/members/landmarc/': '/members/avalon-management-group/',
+
     // ── Core / structural ──────────────────────────────────────
     '/contact-us/': '/contact/',
     '/our-services/': '/hoa-management-services/',
