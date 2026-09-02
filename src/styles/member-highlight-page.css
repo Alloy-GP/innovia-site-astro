@@ -640,16 +640,6 @@ body.modal-open { overflow: hidden; }
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-/* Poster carries its own lower third: no caption text to protect, so the
-   scrim lightens to a thin foot and the runtime chip sits alone on the right,
-   clear of the burned-in name on the left. */
-.v-stage .caption.is-bare {
-  padding: 22px 18px 16px;
-  background: linear-gradient(to top, rgba(11,27,53,0.55) 0%, rgba(11,27,53,0) 100%);
-  justify-content: flex-end;
-}
-.v-stage .caption.is-bare .runtime { margin-left: 0; }
-
 /* Deepen the caption scrim so the title holds over a bright poster. */
 .v-stage .poster-slot ~ .caption { background: linear-gradient(to top, rgba(11,27,53,0.94) 0%, rgba(11,27,53,0.66) 48%, rgba(11,27,53,0) 100%); }
 .v-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -773,10 +763,6 @@ body.modal-open { overflow: hidden; }
 .v-stage-wrap { container-type: inline-size; }
 @container (max-width: 520px) {
   .v-stage { aspect-ratio: 4 / 3; }
-  /* 4:3 trims the sides off a 16:9 poster. A burned-in lower third is anchored
-     to the frame's left edge, so centre-cropping cuts the name in half —
-     anchor left instead and lose the empty right side. */
-  .v-stage.has-lower-third .poster-slot img { object-position: 0% 50%; }
   .v-stage .play { width: 56px; height: 56px; }
   .v-stage .play svg { width: 24px; height: 24px; margin-left: 2px; }
   .v-stage .chip-tl { top: 12px; left: 12px; padding: 6px 10px; font-size: 9px; }
