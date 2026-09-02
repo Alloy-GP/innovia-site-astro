@@ -299,7 +299,12 @@ export function memberFirmSchema(opts: {
   /** Registered entity name, when it differs from the trading name. */
   legalName?: string;
   description: string;
+  /** The firm's own website, when known — otherwise the profile page. */
   url: string;
+  /** The page this markup lives on, when it differs from `url`. */
+  mainEntityOfPage?: string;
+  /** Must match the hours shown on the page. */
+  openingHours?: Array<{ days: string[]; opens: string; closes: string }>;
   foundingDate?: string;
   image?: string;
   telephone?: string;
@@ -331,7 +336,20 @@ export function memberFirmSchema(opts: {
       : {}),
     description: opts.description,
     url: opts.url,
+    ...(opts.mainEntityOfPage && opts.mainEntityOfPage !== opts.url
+      ? { mainEntityOfPage: opts.mainEntityOfPage }
+      : {}),
     ...(opts.foundingDate ? { foundingDate: opts.foundingDate } : {}),
+    ...(opts.openingHours?.length
+      ? {
+          openingHoursSpecification: opts.openingHours.map((h) => ({
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: h.days,
+            opens: h.opens,
+            closes: h.closes,
+          })),
+        }
+      : {}),
     ...(opts.image
       ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
       : {}),

@@ -368,7 +368,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
         {m.nap.streetAddress && (
           <address class="office">
             <span class="lbl">Head office</span>
-            <a href={mapsHref} target="_blank" rel="noopener noreferrer">
+            <a class="addr" href={mapsHref} target="_blank" rel="noopener noreferrer">
               <span>{m.nap.streetAddress}</span>
               <span>{m.nap.addressLocality}, {m.nap.addressRegion} {m.nap.postalCode}</span>
               <span class="dir">
@@ -377,6 +377,13 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
               </span>
             </a>
             {m.nap.telephone && <a class="tel" href={telHref(m.nap.telephone)}>{m.nap.telephone}</a>}
+            {m.hours && <p class="hrs" set:html={m.hours.display} />}
+            {m.nap.url && (
+              <a class="site" href={m.nap.url} target="_blank" rel="noopener noreferrer">
+                {m.nap.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </a>
+            )}
           </address>
         )}
       </div>

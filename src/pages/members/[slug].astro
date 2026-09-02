@@ -31,7 +31,11 @@ const firm = memberFirmSchema({
   name: member.name,
   legalName: member.legalName,
   description: plain(member.seoDescription),
-  url,
+  // The entity's canonical home is its own site; this page is where the
+  // markup happens to live.
+  url: member.nap.url || url,
+  mainEntityOfPage: url,
+  openingHours: member.hours?.spec,
   foundingDate: member.stats.find((s) => s.label === 'Established')?.value,
   telephone: member.nap.telephone,
   streetAddress: member.nap.streetAddress,
@@ -63,7 +67,7 @@ const breadcrumb = breadcrumbSchema([
   ogImage="/assets/og/option-1-type-led.png"
   pageSchema={[firm, breadcrumb]}
   bodyClass="mh"
-  bodyStyle={`--m-accent:${member.accent};--m-accent-deep:${member.accentDeep}`}
+  bodyStyle={`--m-accent:${member.accent};--m-accent-bright:${member.accent};--m-accent-deep:${member.accentDeep}`}
   headerVariant="inverse"
   ctaLabel="Request a Proposal"
   ctaHref="#cta"

@@ -138,6 +138,17 @@ export interface MemberProfile {
     href: string;
   };
 
+  /**
+   * Office hours. `display` is what renders; `spec` feeds
+   * openingHoursSpecification. Keep the two in sync — a mismatch between
+   * visible hours and marked-up hours is a structured-data violation.
+   * null when the member hasn't confirmed them.
+   */
+  hours: {
+    display: string;
+    spec: Array<{ days: string[]; opens: string; closes: string }>;
+  } | null;
+
   /** Head office. Leave a field blank rather than shipping placeholder NAP —
    *  the schema builder omits blanks. lat/lng also place the HQ pin on the map. */
   nap: {
@@ -163,7 +174,9 @@ const avalon: MemberProfile = {
   shortName: 'Avalon',
   legalName: 'The Avalon Management Group, Inc.',
 
-  accent: '#2E9BA8',
+  // Paired for contrast, not just for looks: `accent` must clear AA on the
+  // navy surfaces, `accentDeep` on the cream ones. No single value does both.
+  accent: '#4FBACB',
   accentDeep: '#1F6F79',
 
   seoTitle:
@@ -369,6 +382,17 @@ const avalon: MemberProfile = {
     href: '/schedule-a-conversation/',
   },
 
+  hours: {
+    display: 'Mon&ndash;Fri &middot; 8:30am&ndash;5pm &middot; Closed weekends',
+    spec: [
+      {
+        days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '08:30',
+        closes: '17:00',
+      },
+    ],
+  },
+
   // Confirmed by the member. Coordinates geocoded from the street address
   // (OpenStreetMap/Nominatim) — they drive the HQ pin on the service-area map.
   nap: {
@@ -377,7 +401,7 @@ const avalon: MemberProfile = {
     addressRegion: 'CA',
     postalCode: '92590',
     telephone: '(951) 699-2918',
-    url: '',
+    url: 'https://www.avalonweb.com',
     latitude: 33.4945052,
     longitude: -117.1582665,
   },
