@@ -31,7 +31,6 @@
     .v-hero .hero-eyebrow { margin: 22px 0 18px; }
     .v-hero-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 52px; align-items: center; margin-top: 48px; }
     .v-hero-grid .v-stage-wrap { margin-top: 0; position: relative; }
-    .v-hero-grid .v-stage-wrap::before { content:""; position: absolute; inset: -16px; z-index: 0; pointer-events: none; background: radial-gradient(circle at 72% 32%, rgba(149,208,49,0.20) 0%, transparent 62%); filter: blur(22px); }
     .v-hero-text { display: flex; flex-direction: column; }
     .v-hero-text h1 { font-size: clamp(26px, 3.1vw, 44px); line-height: 1.16; letter-spacing: -0.022em; max-width: none; }
     .v-hero-text .member-logo { margin-top: 4px; }
@@ -624,7 +623,7 @@ body.modal-open { overflow: hidden; }
 .v-stage.is-pending { cursor: default; }
 .v-stage.is-playable { cursor: pointer; }
 .v-stage.is-playable:focus-visible {
-  outline: 3px solid var(--innovia-green);
+  outline: 3px solid #fff;
   outline-offset: 3px;
 }
 .v-stage .poster-slot img {
