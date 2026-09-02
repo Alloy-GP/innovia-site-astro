@@ -112,8 +112,8 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
           tabindex={m.video.vimeoId ? '0' : undefined}
           aria-label={
             m.video.vimeoId
-              ? `Play the member interview: ${plainTitle} (${m.video.runtime}). Opens in a player.`
-              : `${m.video.posterAlt}. Member interview coming soon.`
+              ? `Play the member intro: ${plainTitle} (${m.video.runtime}). Opens in a player.`
+              : `${m.video.posterAlt}. Member intro coming soon.`
           }
         >
           <div class="poster-slot">
@@ -133,7 +133,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
           </div>
 
           <span class="chip-tl">
-            Member interview{!m.video.vimeoId && <Fragment> &middot; coming soon</Fragment>}
+            Member intro{!m.video.vimeoId && <Fragment> &middot; coming soon</Fragment>}
           </span>
           {m.video.filmedAt && <span class="corner-tag">{m.video.filmedAt}</span>}
 
@@ -165,7 +165,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   </div>
 
   {m.video.vimeoId && (
-    <dialog class="v-modal" id="videoModal" aria-label={`${plainTitle} — member interview`}>
+    <dialog class="v-modal" id="videoModal" aria-label={`${plainTitle} — member intro`}>
       <div class="v-modal-inner">
         <button type="button" class="v-modal-close" id="videoModalClose" aria-label="Close the video">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
