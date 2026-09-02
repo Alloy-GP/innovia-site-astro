@@ -19,10 +19,6 @@ export default defineConfig({
       // De-listed pages: kept in the build for later use, but excluded from the
       // sitemap so they aren't surfaced to search engines (also carry noindex).
       filter: (page) =>
-        // Member highlight pages: real content, but Avalon still carries
-        // "confirm" figures and placeholder review cards. Drop this line to
-        // list them once a member has signed off on their page.
-        !page.includes('/members/') &&
         !page.includes('/member-spotlights/mariner-and-vail') &&
         !page.includes('/find-a-management-company/texas') &&
         !page.includes('/find-a-management-company/phoenix') &&
