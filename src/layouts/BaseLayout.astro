@@ -30,6 +30,11 @@ interface Props {
   robots?: string;
   /** Page-specific JSON-LD schema. */
   pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Extra class on <body> — style hook for page families (e.g. 'mh'). */
+  bodyClass?: string;
+  /** Inline <body> style — used to set per-page CSS custom properties
+   *  (member pages set --m-accent here; see styles/member-highlight.css). */
+  bodyStyle?: string;
 
   // ---- Header props (forwarded to SiteHeader) ----
   headerVariant?: '' | 'inverse';
@@ -50,6 +55,8 @@ const {
   ogImage: ogImageProp,
   robots,
   pageSchema,
+  bodyClass,
+  bodyStyle,
   headerVariant = '',
   activeNav = null,
   headerLogo = '/assets/logos/innovia-white-green.png',
@@ -155,7 +162,7 @@ const resolvedRobots = robots ?? (isProduction ? undefined : 'noindex, nofollow'
       </Fragment>
     )}
   </head>
-  <body>
+  <body class={bodyClass} style={bodyStyle}>
     <SiteHeader
       variant={headerVariant}
       active={activeNav}

@@ -276,3 +276,66 @@ export function eventSchema(opts: {
     inLanguage: 'en-US',
   };
 }
+
+// ── Member firm (LocalBusiness) ───────────────────────────────────────────────
+// For the /members/<slug>/ highlight pages. Each member is an independent
+// company that belongs to the co-op, so it gets its own LocalBusiness node with
+// Innovia as parentOrganization — not a branch of Innovia.
+//
+// aggregateRating is emitted ONLY when a review count is supplied: Google
+// requires both a value and a count, and a rating with no count is a structured
+// -data error rather than a rich result.
+
+export function memberFirmSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  foundingDate?: string;
+  image?: string;
+  telephone?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
+  /** City / county names the firm serves. */
+  areaServed?: string[];
+  rating?: { value: number; count: number } | null;
+  sameAs?: string[];
+}) {
+  const addr = {
+    ...(opts.streetAddress ? { streetAddress: opts.streetAddress } : {}),
+    ...(opts.addressLocality ? { addressLocality: opts.addressLocality } : {}),
+    ...(opts.addressRegion ? { addressRegion: opts.addressRegion } : {}),
+    ...(opts.postalCode ? { postalCode: opts.postalCode } : {}),
+  };
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    ...(opts.foundingDate ? { foundingDate: opts.foundingDate } : {}),
+    ...(opts.image
+      ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
+      : {}),
+    ...(opts.telephone ? { telephone: opts.telephone } : {}),
+    ...(Object.keys(addr).length
+      ? { address: { '@type': 'PostalAddress', addressCountry: 'US', ...addr } }
+      : {}),
+    ...(opts.areaServed?.length
+      ? { areaServed: opts.areaServed.map((name) => ({ '@type': 'Place', name })) }
+      : {}),
+    ...(opts.rating && opts.rating.count > 0
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: opts.rating.value,
+            reviewCount: opts.rating.count,
+          },
+        }
+      : {}),
+    parentOrganization: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    ...(opts.sameAs?.length ? { sameAs: opts.sameAs } : {}),
+  };
+}

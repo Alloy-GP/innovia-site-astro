@@ -459,6 +459,7 @@ body:not([data-screen-label="Summit 2027 Teaser"]):not([data-screen-label="Summi
 .site-footer .newsletter-form {
   display: flex;
   align-items: stretch;
+  max-width: 100%;
   border: 1px solid rgba(255,255,255,0.18);
   background: rgba(0,0,0,0.22);
   transition: border-color .15s, box-shadow .15s;
@@ -548,4 +549,8 @@ body:not([data-screen-label="Summit 2027 Teaser"]):not([data-screen-label="Summi
   .container { padding: 0 22px; }
   section { padding: 64px 0; }
   .site-footer .grid { grid-template-columns: 1fr; }
+  /* The 1080px rule spans this across 4 columns. Once the grid collapses to a
+     single column that span creates 3 implicit columns and the whole document
+     scrolls sideways — reset it with the grid. */
+  .site-footer .newsletter { grid-column: auto; }
 }
