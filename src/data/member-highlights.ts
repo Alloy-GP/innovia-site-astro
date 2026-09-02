@@ -60,6 +60,12 @@ export interface MemberProfile {
     /** ISO 8601 duration + upload date, for VideoObject schema. */
     durationIso?: string;
     uploadDate?: string;
+    /**
+     * The chosen frame already has the subject's name/role burned in as a
+     * lower third. When true the stage drops its own caption text so the two
+     * don't stack on top of each other; the runtime chip stays.
+     */
+    posterHasLowerThird?: boolean;
   };
 
   /** Four-up stat strip under the hero. */
@@ -213,6 +219,7 @@ const avalon: MemberProfile = {
     vimeoId: '1223449346',
     durationIso: 'PT31S',
     uploadDate: '2026-09-02',
+    posterHasLowerThird: true,
   },
 
   stats: [
