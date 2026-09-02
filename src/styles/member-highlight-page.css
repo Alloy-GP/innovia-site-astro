@@ -320,7 +320,41 @@
     .v-area .coverage .foot { margin-top: auto; padding-top: 22px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
     @media (max-width: 860px){ .v-area .frame { grid-template-columns: 1fr; } .v-area .map { min-height: 340px; } }
 
-    /* ---- CTA ---- */
+    /* ---- Head office (inside the service-area panel) ---- */
+.v-area .coverage .office {
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  font-style: normal;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.v-area .coverage .office .lbl {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4px;
+}
+.v-area .coverage .office > a {
+  display: flex; flex-direction: column; gap: 2px;
+  font-size: 15px; line-height: 1.45;
+  color: #fff;
+  text-decoration: none;
+}
+.v-area .coverage .office > a:hover { color: var(--innovia-green); }
+.v-area .coverage .office .dir {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 8px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--m-accent);
+}
+.v-area .coverage .office .tel {
+  margin-top: 6px;
+  font-size: 15px; color: #fff; text-decoration: none;
+}
+.v-area .coverage .office .tel:hover { color: var(--innovia-green); }
+
+/* ---- CTA ---- */
     .v-cta { background: var(--innovia-navy); position: relative; overflow: hidden; }
     .v-cta::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 88% 12%, rgba(149,208,49,0.12) 0%, transparent 42%); }
     .v-cta .container { position: relative; z-index: 1; }
@@ -603,4 +637,5 @@
   .v-substats .mh-stats { grid-template-columns: 1fr; row-gap: 18px; }
   .v-substats .mh-stats .s + .s::before { display: none; }
   .v-area .coverage .cities { grid-template-columns: 1fr; }
+  .v-area .coverage .office { margin-top: 24px; }
 }

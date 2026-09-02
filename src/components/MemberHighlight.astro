@@ -40,6 +40,13 @@ const claim = (c: { text: string; confirm?: boolean }) =>
 
 const arrow =
   '<svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
+
+// Directions link — query by address so it resolves even without coordinates.
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  [m.name, m.nap.streetAddress, `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`]
+    .filter(Boolean)
+    .join(', ')
+)}`;
 ---
 
 {/* Per-member accent is set on <body> by the route (BaseLayout bodyStyle) —
@@ -295,6 +302,17 @@ const arrow =
           data-zoom={m.area.zoom}
           data-accent={m.accent}
           data-cities={JSON.stringify(m.area.cities)}
+          data-hq={
+            typeof m.nap.latitude === 'number' && typeof m.nap.longitude === 'number'
+              ? JSON.stringify({
+                  lat: m.nap.latitude,
+                  lng: m.nap.longitude,
+                  name: m.name,
+                  street: m.nap.streetAddress,
+                  city: `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`,
+                })
+              : undefined
+          }
           role="img"
           aria-label={`Map of the communities ${m.name} serves across ${m.area.heading.replace(/&amp;/g, 'and')}`}
         ></div>
@@ -308,6 +326,21 @@ const arrow =
         <div class="cities">
           {m.area.cities.map((c) => <span>{c.name}</span>)}
         </div>
+
+        {m.nap.streetAddress && (
+          <address class="office">
+            <span class="lbl">Head office</span>
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer">
+              <span>{m.nap.streetAddress}</span>
+              <span>{m.nap.addressLocality}, {m.nap.addressRegion} {m.nap.postalCode}</span>
+              <span class="dir">
+                Directions
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+            {m.nap.telephone && <a class="tel" href={`tel:${m.nap.telephone.replace(/[^0-9+]/g, '')}`}>{m.nap.telephone}</a>}
+          </address>
+        )}
       </div>
     </div>
   </div>

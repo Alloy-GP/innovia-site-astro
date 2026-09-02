@@ -124,7 +124,8 @@ export interface MemberProfile {
     href: string;
   };
 
-  /** Structured data — leave blank rather than shipping placeholder NAP. */
+  /** Head office. Leave a field blank rather than shipping placeholder NAP —
+   *  the schema builder omits blanks. lat/lng also place the HQ pin on the map. */
   nap: {
     streetAddress: string;
     addressLocality: string;
@@ -132,6 +133,8 @@ export interface MemberProfile {
     postalCode: string;
     telephone: string;
     url: string;
+    latitude?: number;
+    longitude?: number;
   };
 }
 
@@ -344,14 +347,17 @@ const avalon: MemberProfile = {
     href: '/schedule-a-conversation/',
   },
 
-  // Left blank deliberately — shipping placeholder NAP weakens the entity.
+  // Confirmed by the member. Coordinates geocoded from the street address
+  // (OpenStreetMap/Nominatim) — they drive the HQ pin on the service-area map.
   nap: {
-    streetAddress: '',
-    addressLocality: 'Murrieta',
+    streetAddress: '43529 Ridge Park Drive',
+    addressLocality: 'Temecula',
     addressRegion: 'CA',
-    postalCode: '',
+    postalCode: '92590',
     telephone: '',
     url: '',
+    latitude: 33.4945052,
+    longitude: -117.1582665,
   },
 };
 

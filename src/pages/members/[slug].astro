@@ -37,6 +37,8 @@ const firm = memberFirmSchema({
   addressLocality: member.nap.addressLocality,
   addressRegion: member.nap.addressRegion,
   postalCode: member.nap.postalCode,
+  latitude: member.nap.latitude,
+  longitude: member.nap.longitude,
   areaServed: [plain(member.area.heading), ...member.area.cities.map((c) => c.name)],
   // Held back until a review count is available — see memberFirmSchema.
   rating:
@@ -134,6 +136,32 @@ const breadcrumb = breadcrumbSchema([
                   '</strong>'
               );
           });
+
+          // Head office: larger, ringed, and above the service-area pins.
+          if (el.dataset.hq) {
+            var hq = JSON.parse(el.dataset.hq);
+            bounds.push([hq.lat, hq.lng]);
+            L.marker([hq.lat, hq.lng], {
+              zIndexOffset: 1000,
+              alt: hq.name + ' head office',
+              icon: L.divIcon({
+                className: '',
+                html:
+                  '<span style="display:block;width:22px;height:22px;border-radius:50%;background:#18335E;' +
+                  'border:3px solid ' + accent + ';box-shadow:0 0 0 4px rgba(24,51,94,0.18),0 3px 8px rgba(0,0,0,0.3);"></span>',
+                iconSize: [22, 22],
+                iconAnchor: [11, 11],
+                popupAnchor: [0, -14],
+              }),
+            })
+              .addTo(map)
+              .bindPopup(
+                '<div style="font-family:system-ui,sans-serif;min-width:170px;">' +
+                  '<strong style="color:#18335E;font-size:14px;">' + hq.name + '</strong><br>' +
+                  '<span style="color:#555;font-size:13px;">' + hq.street + '<br>' + hq.city + '</span>' +
+                  '</div>'
+              );
+          }
 
           if (bounds.length) map.fitBounds(bounds, { padding: [34, 34] });
         };

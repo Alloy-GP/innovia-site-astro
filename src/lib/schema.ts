@@ -297,6 +297,9 @@ export function memberFirmSchema(opts: {
   addressLocality?: string;
   addressRegion?: string;
   postalCode?: string;
+  /** Head-office coordinates. Emitted as GeoCoordinates when both are present. */
+  latitude?: number;
+  longitude?: number;
   /** City / county names the firm serves. */
   areaServed?: string[];
   rating?: { value: number; count: number } | null;
@@ -322,6 +325,15 @@ export function memberFirmSchema(opts: {
     ...(opts.telephone ? { telephone: opts.telephone } : {}),
     ...(Object.keys(addr).length
       ? { address: { '@type': 'PostalAddress', addressCountry: 'US', ...addr } }
+      : {}),
+    ...(typeof opts.latitude === 'number' && typeof opts.longitude === 'number'
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: opts.latitude,
+            longitude: opts.longitude,
+          },
+        }
       : {}),
     ...(opts.areaServed?.length
       ? { areaServed: opts.areaServed.map((name) => ({ '@type': 'Place', name })) }
