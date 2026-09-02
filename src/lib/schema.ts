@@ -382,3 +382,39 @@ export function memberFirmSchema(opts: {
     ...(opts.sameAs?.length ? { sameAs: opts.sameAs } : {}),
   };
 }
+
+// ── VideoObject ───────────────────────────────────────────────────────────────
+// For an embedded interview on a member page. Google needs name, description,
+// thumbnailUrl and uploadDate; duration and embedUrl make the entry useful.
+// thumbnailUrl must be the image actually shown as the poster — marking up a
+// frame the visitor never sees is a mismatch.
+
+export function videoSchema(opts: {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;          // ISO 8601 date
+  duration?: string;           // ISO 8601 duration, e.g. 'PT31S'
+  embedUrl?: string;
+  /** Page the video lives on. */
+  url?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: opts.name,
+    description: opts.description,
+    thumbnailUrl: opts.thumbnailUrl.startsWith('http')
+      ? opts.thumbnailUrl
+      : `${SITE.url}${opts.thumbnailUrl}`,
+    uploadDate: opts.uploadDate,
+    ...(opts.duration ? { duration: opts.duration } : {}),
+    ...(opts.embedUrl ? { embedUrl: opts.embedUrl } : {}),
+    ...(opts.url ? { url: opts.url } : {}),
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      logo: { '@type': 'ImageObject', url: SITE.org.logo },
+    },
+  };
+}

@@ -3,7 +3,7 @@
 // One page per member firm, generated from src/data/member-highlights.ts.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MemberHighlight from '../../components/MemberHighlight.astro';
-import { memberFirmSchema, breadcrumbSchema } from '../../lib/schema.ts';
+import { memberFirmSchema, breadcrumbSchema, videoSchema } from '../../lib/schema.ts';
 import { SITE } from '../../config/site.ts';
 import { MEMBER_PROFILES } from '../../data/member-highlights.ts';
 
@@ -60,12 +60,27 @@ const breadcrumb = breadcrumbSchema([
   { name: 'Members', url: `${SITE.url}/member-spotlights/` },
   { name: member.name, url },
 ]);
+
+// Only when there's a real video AND a poster to point at.
+const video =
+  member.video.vimeoId && member.video.posterSrc && member.video.uploadDate
+    ? videoSchema({
+        // video.title already names the firm; don't repeat it.
+        name: plain(member.video.title),
+        description: plain(member.seoDescription),
+        thumbnailUrl: member.video.posterSrc,
+        uploadDate: member.video.uploadDate,
+        duration: member.video.durationIso,
+        embedUrl: `https://player.vimeo.com/video/${member.video.vimeoId}`,
+        url,
+      })
+    : null;
 ---
 <BaseLayout
   title={plain(member.seoTitle)}
   description={plain(member.seoDescription)}
   ogImage="/assets/og/option-1-type-led.png"
-  pageSchema={[firm, breadcrumb]}
+  pageSchema={video ? [firm, breadcrumb, video] : [firm, breadcrumb]}
   bodyClass="mh"
   bodyStyle={`--m-accent:${member.accent};--m-accent-bright:${member.accent};--m-accent-deep:${member.accentDeep}`}
   headerVariant="inverse"
@@ -75,6 +90,43 @@ const breadcrumb = breadcrumbSchema([
   <MemberHighlight member={member} />
 
   <script is:inline>
+    // Click-to-play: mount the Vimeo player only when the viewer asks for it,
+    // so the hero costs one WebP instead of a third-party player on load.
+    (function () {
+      var stage = document.getElementById('videoStage');
+      if (!stage || !stage.dataset.vimeo) return;
+
+      function arm() {
+        if (stage.classList.contains('is-armed')) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'vimeo-frame';
+        var f = document.createElement('iframe');
+        f.src =
+          'https://player.vimeo.com/video/' + stage.dataset.vimeo +
+          '?autoplay=1&dnt=1&title=0&byline=0&portrait=0';
+        f.title = stage.dataset.title || 'Member interview';
+        f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+        f.setAttribute('allowfullscreen', '');
+        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        wrap.appendChild(f);
+        stage.appendChild(wrap);
+        stage.classList.add('is-armed');
+        // It stops being a button once the player owns the surface.
+        stage.removeAttribute('role');
+        stage.removeAttribute('tabindex');
+        stage.removeAttribute('aria-label');
+        f.focus({ preventScroll: true });
+      }
+
+      stage.addEventListener('click', arm);
+      stage.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          arm();
+        }
+      });
+    })();
+
     (function () {
       var el = document.getElementById('member-map');
       if (!el) return;

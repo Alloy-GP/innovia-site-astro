@@ -566,8 +566,25 @@
 }
 .v-hero .hero-badges .bdg b { color: #fff; font-weight: 700; }
 
-/* ---- Video stage: pending vs. live ---- */
+/* ---- Video stage: pending vs. playable vs. armed ---- */
 .v-stage.is-pending { cursor: default; }
+.v-stage.is-playable { cursor: pointer; }
+.v-stage.is-playable:focus-visible {
+  outline: 3px solid var(--innovia-green);
+  outline-offset: 3px;
+}
+/* Armed = the viewer clicked; the player is mounted and every bit of facade
+   furniture gets out of its way (including ::before, which would otherwise
+   sit a tinted gradient over the video). */
+.v-stage.is-armed { cursor: default; }
+.v-stage.is-armed .poster-slot,
+.v-stage.is-armed .chip-tl,
+.v-stage.is-armed .corner-tag,
+.v-stage.is-armed .play,
+.v-stage.is-armed .caption { display: none; }
+.v-stage.is-armed::before { display: none; }
+.v-stage.is-armed .vimeo-frame { position: absolute; inset: 0; z-index: 4; }
+.v-stage.is-armed .vimeo-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 .v-stage .poster-slot img {
   width: 100%; height: 100%;
   object-fit: cover;

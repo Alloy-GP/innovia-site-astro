@@ -89,49 +89,63 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       </div>
 
       <div class="v-stage-wrap">
-        {m.video.vimeoId ? (
-          <div class="v-stage is-armed">
-            <iframe
-              src={`https://player.vimeo.com/video/${m.video.vimeoId}?dnt=1`}
-              title={m.video.title}
-              loading="lazy"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-            />
+        {/* One stage, two states. The poster is always the first paint — when a
+            video exists the stage becomes a button and the Vimeo player is only
+            fetched on activation, so the hero never pays for a 3rd-party embed
+            on load. */}
+        <div
+          class:list={['v-stage', m.video.vimeoId ? 'is-playable' : 'is-pending']}
+          id={m.video.vimeoId ? 'videoStage' : undefined}
+          data-vimeo={m.video.vimeoId ?? undefined}
+          data-title={m.video.title}
+          role={m.video.vimeoId ? 'button' : 'img'}
+          tabindex={m.video.vimeoId ? '0' : undefined}
+          aria-label={
+            m.video.vimeoId
+              ? `Play the member interview: ${m.video.title} (${m.video.runtime})`
+              : `${m.video.posterAlt}. Member interview coming soon.`
+          }
+        >
+          <div class="poster-slot">
+            {/* Hero image and the likely LCP element — never lazy-load it.
+                alt is empty because the wrapper carries its own label. */}
+            {m.video.posterSrc && (
+              <img
+                src={m.video.posterSrc}
+                alt=""
+                width="1200"
+                height="814"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              >
+            )}
           </div>
-        ) : (
-          <div class="v-stage is-pending" role="img" aria-label={`${m.video.posterAlt}. Member interview coming soon.`}>
-            <div class="poster-slot">
-              {/* Hero image and the likely LCP element — never lazy-load it.
-                  alt is empty because the wrapper carries role="img" + label. */}
-              {m.video.posterSrc && (
-                <img
-                  src={m.video.posterSrc}
-                  alt=""
-                  width="1200"
-                  height="814"
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                >
-              )}
+
+          <span class="chip-tl">
+            Member interview{!m.video.vimeoId && <Fragment> &middot; coming soon</Fragment>}
+          </span>
+          {m.video.filmedAt && <span class="corner-tag">{m.video.filmedAt}</span>}
+
+          {m.video.vimeoId && (
+            <div class="play" aria-hidden="true">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <span class="chip-tl">Member interview &middot; coming soon</span>
-            {m.video.vimeoId && <span class="corner-tag">{m.video.filmedAt}</span>}
-            <div class="caption">
-              <div class={m.leader.photo ? 'av has-photo' : 'av'}>
-                {m.leader.photo
-                  ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
-                  : m.leader.initials}
-              </div>
-              <div>
-                <div class="ttl" set:html={m.video.title} />
-                <div class="sub" set:html={m.video.subtitle} />
-              </div>
-              {m.video.vimeoId && m.video.runtime && <span class="runtime">{m.video.runtime}</span>}
+          )}
+
+          <div class="caption">
+            <div class={m.leader.photo ? 'av has-photo' : 'av'}>
+              {m.leader.photo
+                ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
+                : m.leader.initials}
             </div>
+            <div>
+              <div class="ttl" set:html={m.video.title} />
+              <div class="sub" set:html={m.video.subtitle} />
+            </div>
+            {m.video.vimeoId && m.video.runtime && <span class="runtime">{m.video.runtime}</span>}
           </div>
-        )}
+        </div>
       </div>
     </div>
   </div>
