@@ -215,7 +215,7 @@ const avalon: MemberProfile = {
     heading: 'Built on doing it right.',
     paragraphs: [
       'Avalon Management Group started in 1983 and grew from a single distressed association into a firm managing roughly 98 communities and 48,000 doors across San Diego and Riverside Counties &mdash; while staying deliberately independent in an industry racing toward consolidation.',
-      'The difference is a service-first operating philosophy. Where national consolidators are driven by financials, Avalon is built around personal customer service and a discipline of continuous improvement &mdash; down to monthly one-on-one meetings with every staff member to find and fix the small things before they become big ones.',
+      'The difference is a service-first operating philosophy. Where national consolidators are driven primarily by the bottom line, Avalon is built around personal customer service and a discipline of continuous improvement &mdash; down to monthly one-on-one meetings with every staff member to find and fix the small things before they become big ones.',
       'That patience shows up in the numbers that matter most: Avalon hasn&rsquo;t lost a client to termination in more than 12 years. They take on the right communities, serve them exceptionally, and keep them.',
     ],
     pullQuote:
