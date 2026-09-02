@@ -197,10 +197,12 @@ const avalon: MemberProfile = {
     'Independent community management for San Diego &amp; Riverside Counties since 1983 — local, hands-on service backed by the resources of a national cooperative.',
 
   video: {
-    // Office entrance doubles as the play facade — the player only loads on click.
-    posterSrc: '/assets/photos/members/avalon-entrance.webp',
+    // Frame pulled from the interview at 25.2s — the one point where he's
+    // looking at camera with his mouth closed. An honest thumbnail: it's
+    // actually in the video, unlike a building exterior.
+    posterSrc: '/assets/photos/members/avalon-interview-poster.webp',
     posterAlt:
-      'The Avalon Management Group office entrance at 43529 Ridge Park Drive, Temecula',
+      'Mark Jones, President and Owner of Avalon Management Group, during his member interview',
     title: 'Meet Avalon Management Group',
     subtitle: 'In Mark&rsquo;s own words',
     // Real length from Vimeo's oEmbed (31s), not the handoff's placeholder 1:20.

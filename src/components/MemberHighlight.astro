@@ -49,6 +49,12 @@ const telHref = (raw: string) => {
   return `tel:${raw.replace(/[^0-9+]/g, '')}`;
 };
 
+/** Entities are fine in markup but not inside attributes. */
+const plainTitle = m.video.title
+  .replace(/&rsquo;/g, '\u2019')
+  .replace(/&amp;/g, '&')
+  .replace(/&mdash;/g, '\u2014');
+
 // Directions link — query by address so it resolves even without coordinates.
 const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   [m.name, m.nap.streetAddress, `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`]
@@ -102,7 +108,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
           tabindex={m.video.vimeoId ? '0' : undefined}
           aria-label={
             m.video.vimeoId
-              ? `Play the member interview: ${m.video.title} (${m.video.runtime})`
+              ? `Play the member interview: ${plainTitle} (${m.video.runtime}). Opens in a player.`
               : `${m.video.posterAlt}. Member interview coming soon.`
           }
         >
@@ -113,8 +119,8 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
               <img
                 src={m.video.posterSrc}
                 alt=""
-                width="1200"
-                height="814"
+                width="1280"
+                height="720"
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
@@ -149,6 +155,17 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       </div>
     </div>
   </div>
+
+  {m.video.vimeoId && (
+    <dialog class="v-modal" id="videoModal" aria-label={`${plainTitle} — member interview`}>
+      <div class="v-modal-inner">
+        <button type="button" class="v-modal-close" id="videoModalClose" aria-label="Close the video">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="v-modal-frame" id="videoModalFrame"></div>
+      </div>
+    </dialog>
+  )}
 </section>
 
 <section class="v-substats tight" aria-label={`${m.name} at a glance`}>
