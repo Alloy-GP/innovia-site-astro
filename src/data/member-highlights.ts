@@ -83,6 +83,8 @@ export interface MemberProfile {
 
   /** Leadership */
   leader: {
+    /** Square headshot. Falls back to `initials` when absent. */
+    photo?: string;
     initials: string;
     name: string;
     role: string;
@@ -111,7 +113,7 @@ export interface MemberProfile {
      * so they render attributed to Google rather than to a named person.
      * Verbatim only — never paraphrase or invent one.
      */
-    quotes: string[];
+    quotes: Array<{ text: string; stars: number }>;
     /**
      * Emit aggregateRating into LocalBusiness schema. Off by default: Google's
      * review-snippet guidance says ratings should come from reviews the site
@@ -280,6 +282,7 @@ const avalon: MemberProfile = {
   },
 
   leader: {
+    photo: '/assets/photos/members/mark-jones.jpg',
     initials: 'MJ',
     name: 'Mark Jones',
     role: 'President &amp; Owner',
@@ -343,9 +346,9 @@ const avalon: MemberProfile = {
     placeUrl:
       'https://www.google.com/maps/search/?api=1&query=The+Avalon+Management+Group%2C+Inc.%2C+43529+Ridge+Park+Dr%2C+Temecula%2C+CA+92590',
     quotes: [
-      'Very happy with the service in today&rsquo;s environment.',
-      'Allison at the Wolf Park HOA office is the bomb!',
-      'She is an astute good listener that makes you feel valued and respected.',
+      { text: 'Very happy with the service in today&rsquo;s environment.', stars: 5 },
+      { text: 'Allison at the Wolf Park HOA office is the bomb!', stars: 5 },
+      { text: 'She is an astute good listener that makes you feel valued and respected.', stars: 5 },
     ],
     emitAggregateRating: false,
   },

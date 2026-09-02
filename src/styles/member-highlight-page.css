@@ -320,7 +320,29 @@
     .v-area .coverage .foot { margin-top: auto; padding-top: 22px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
     @media (max-width: 860px){ .v-area .frame { grid-template-columns: 1fr; } .v-area .map { min-height: 340px; } }
 
-    /* ---- Accent by surface ----
+    /* ---- Leadership headshot ----
+   The avatar circle is an initials chip by default; with a photo it becomes a
+   cropped portrait. Ring uses the accent so it still reads as the same element. */
+.v-founder .card .av.has-photo,
+.v-stage .caption .av.has-photo {
+  background: transparent;
+  overflow: hidden;
+  padding: 0;
+}
+.v-founder .card .av.has-photo {
+  border: 2px solid color-mix(in srgb, var(--m-accent) 65%, transparent);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.32);
+}
+.v-founder .card .av.has-photo img,
+.v-stage .caption .av.has-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border-radius: inherit;
+  display: block;
+}
+
+/* ---- Accent by surface ----
    One accent can't clear 4.5:1 on both navy and cream. --m-accent is tuned for
    the navy sections; the light sections swap in the deep variant, and the navy
    coverage panel inside the (light) area section swaps back. */
@@ -583,10 +605,17 @@
 
 /* ---- Reviews ---- */
 .v-reviews .rcard-pending p { font-style: italic; color: var(--fg-3); margin: 0; }
+/* .rev-grid is a hairline grid: 1px gaps over a grey background, so the white
+   cards read as one panel divided by rules. <figure> and <blockquote> carry a
+   UA margin of `1em 40px`, which insets each card and turns those hairlines
+   into thick grey gutters. Zero them. */
+.v-reviews .rcard { margin: 0; }
 .v-reviews .rcard blockquote { margin: 0; }
 .v-reviews .rcard blockquote p { margin: 0; }
+.v-reviews .rcard .rstars svg { width: 14px; height: 14px; color: #FBBC04; }
 .v-reviews .rcard figcaption {
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
   font-family: var(--font-mono); font-size: 10px;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--fg-3);

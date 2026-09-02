@@ -112,7 +112,11 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
               <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
             <div class="caption">
-              <div class="av">{m.leader.initials}</div>
+              <div class={m.leader.photo ? 'av has-photo' : 'av'}>
+                {m.leader.photo
+                  ? <img src={m.leader.photo} alt="" width="44" height="44" loading="lazy" decoding="async">
+                  : m.leader.initials}
+              </div>
               <div>
                 <div class="ttl" set:html={m.video.title} />
                 <div class="sub" set:html={m.video.subtitle} />
@@ -207,7 +211,11 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   <div class="container">
     <div class="frame">
       <div class="card">
-        <div class="av" aria-hidden="true">{m.leader.initials}</div>
+        <div class={m.leader.photo ? 'av has-photo' : 'av'} aria-hidden="true">
+          {m.leader.photo
+            ? <img src={m.leader.photo} alt="" width="220" height="220" loading="lazy" decoding="async">
+            : m.leader.initials}
+        </div>
         <p class="nm">{m.leader.name}</p>
         <p class="rl" set:html={m.leader.role} />
         <p class="creds">{m.leader.credentials.map((c) => <span>{c}</span>)}</p>
@@ -306,7 +314,12 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       <div class="rev-grid">
         {m.reviews.quotes.map((q) => (
           <figure class="rcard">
-            <blockquote><p set:html={`&ldquo;${q}&rdquo;`} /></blockquote>
+            <div class="rstars" role="img" aria-label={`${q.stars} out of 5 stars`}>
+              {Array.from({ length: q.stars }).map(() => (
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              ))}
+            </div>
+            <blockquote><p set:html={`&ldquo;${q.text}&rdquo;`} /></blockquote>
             <figcaption>Google review</figcaption>
           </figure>
         ))}
