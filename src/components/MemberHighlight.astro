@@ -41,6 +41,14 @@ const claim = (c: { text: string; confirm?: boolean }) =>
 const arrow =
   '<svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
 
+/** US 10-digit numbers to E.164 so the tel: link dials from any country. */
+const telHref = (raw: string) => {
+  const d = raw.replace(/[^0-9]/g, '');
+  if (d.length === 10) return `tel:+1${d}`;
+  if (d.length === 11 && d.startsWith('1')) return `tel:+${d}`;
+  return `tel:${raw.replace(/[^0-9+]/g, '')}`;
+};
+
 // Directions link — query by address so it resolves even without coordinates.
 const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   [m.name, m.nap.streetAddress, `${m.nap.addressLocality}, ${m.nap.addressRegion} ${m.nap.postalCode}`]
@@ -268,10 +276,22 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
         <div class="rev-score">
           <span class="num">{m.reviews.rating}</span>
           <div class="meta">
+            {/* Proportional fill — rounding 4.7 up to five solid stars overstates it. */}
             <div class="stars" role="img" aria-label={`${m.reviews.rating} out of 5 stars`}>
-              {[0, 1, 2, 3, 4].map(() => (
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              ))}
+              <div class="row base" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                ))}
+              </div>
+              <div
+                class="row fill"
+                aria-hidden="true"
+                style={`width:${(Math.max(0, Math.min(5, m.reviews.rating ?? 0)) / 5) * 100}%`}
+              >
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                ))}
+              </div>
             </div>
             <div class="count">
               {m.reviews.reviewCount
@@ -282,11 +302,29 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
         </div>
       )}
     </div>
-    <div class="rev-grid">
-      <div class="rcard rcard-pending"><p>Live Google review &mdash; pulled at build, not written by us.</p></div>
-      <div class="rcard rcard-pending"><p>Live Google review &mdash; pulled at build, not written by us.</p></div>
-      <div class="rcard rcard-pending"><p>Live Google review &mdash; pulled at build, not written by us.</p></div>
-    </div>
+    {m.reviews.quotes.length > 0 ? (
+      <div class="rev-grid">
+        {m.reviews.quotes.map((q) => (
+          <figure class="rcard">
+            <blockquote><p set:html={`&ldquo;${q}&rdquo;`} /></blockquote>
+            <figcaption>Google review</figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="rev-grid">
+        <div class="rcard rcard-pending"><p>Google reviews not yet connected.</p></div>
+      </div>
+    )}
+
+    {m.reviews.placeUrl && (
+      <a class="rev-all" href={m.reviews.placeUrl} target="_blank" rel="noopener noreferrer">
+        {m.reviews.reviewCount
+          ? `Read all ${m.reviews.reviewCount} reviews on Google`
+          : 'Read the reviews on Google'}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+    )}
   </div>
 </section>
 
@@ -338,7 +376,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
               </span>
             </a>
-            {m.nap.telephone && <a class="tel" href={`tel:${m.nap.telephone.replace(/[^0-9+]/g, '')}`}>{m.nap.telephone}</a>}
+            {m.nap.telephone && <a class="tel" href={telHref(m.nap.telephone)}>{m.nap.telephone}</a>}
           </address>
         )}
       </div>

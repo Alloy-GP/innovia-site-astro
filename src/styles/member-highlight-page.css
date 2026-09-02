@@ -558,8 +558,38 @@
 .v-comm .grid-2up { grid-template-columns: repeat(2, 1fr); }
 .v-comm .cs-body { font-size: 15px; line-height: 1.6; color: var(--fg-2); margin: 8px 0 0; }
 
-/* ---- Reviews: placeholder cards until the live feed is wired ---- */
+/* ---- Reviews ---- */
 .v-reviews .rcard-pending p { font-style: italic; color: var(--fg-3); margin: 0; }
+.v-reviews .rcard blockquote { margin: 0; }
+.v-reviews .rcard blockquote p { margin: 0; }
+.v-reviews .rcard figcaption {
+  margin-top: 14px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+/* Two stacked star rows; the gold one is clipped to the rating fraction. */
+.v-reviews .rev-score .meta .stars { position: relative; display: inline-block; line-height: 0; }
+.v-reviews .stars .row { display: flex; gap: 2px; }
+.v-reviews .stars .row.base { color: rgba(24,51,94,0.20); }
+.v-reviews .stars .row.fill {
+  position: absolute; top: 0; left: 0;
+  overflow: hidden; white-space: nowrap;
+}
+.v-reviews .stars .row.fill svg { flex: 0 0 auto; }
+.v-reviews .rev-all {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 26px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--innovia-navy); text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--innovia-navy) 30%, transparent);
+  padding-bottom: 3px;
+}
+.v-reviews .rev-all:hover {
+  color: var(--m-accent-deep);
+  border-bottom-color: var(--m-accent);
+}
 
 /* ---- Service-area map ----
    .map is the framed shell; .map-canvas is the Leaflet mount. The canvas is

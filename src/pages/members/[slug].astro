@@ -29,6 +29,7 @@ const plain = (s: string) =>
 
 const firm = memberFirmSchema({
   name: member.name,
+  legalName: member.legalName,
   description: plain(member.seoDescription),
   url,
   foundingDate: member.stats.find((s) => s.label === 'Established')?.value,
@@ -40,9 +41,12 @@ const firm = memberFirmSchema({
   latitude: member.nap.latitude,
   longitude: member.nap.longitude,
   areaServed: [plain(member.area.heading), ...member.area.cities.map((c) => c.name)],
-  // Held back until a review count is available — see memberFirmSchema.
+  // Opt-in per member — see `emitAggregateRating` in data/member-highlights.ts
+  // for why re-published Google ratings stay out of the markup by default.
   rating:
-    member.reviews.rating !== null && member.reviews.reviewCount
+    member.reviews.emitAggregateRating &&
+    member.reviews.rating !== null &&
+    member.reviews.reviewCount
       ? { value: member.reviews.rating, count: member.reviews.reviewCount }
       : null,
 });

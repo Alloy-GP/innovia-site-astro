@@ -27,8 +27,10 @@ export interface MemberCity {
 export interface MemberProfile {
   slug: string;
   name: string;
-  /** Short legal/display name for tight spaces (footer badge, breadcrumb). */
+  /** Short display name for tight spaces (footer badge, breadcrumb). */
   shortName?: string;
+  /** Registered entity name, when it differs from the trading name. */
+  legalName?: string;
 
   /** Per-member accent. Must read against both navy and cream backgrounds. */
   accent: string;
@@ -98,12 +100,24 @@ export interface MemberProfile {
     items: Array<{ meta: string; title: string; body: Claim }>;
   };
 
-  /** Google reputation. Omit `rating` entirely until the live pull is wired. */
+  /** Google reputation, transcribed from the firm's Google Business Profile. */
   reviews: {
     rating: number | null;
     /** Required before aggregateRating schema can be emitted. */
     reviewCount: number | null;
     placeUrl: string | null;
+    /**
+     * Google surfaces these as review *excerpts* without a full reviewer name,
+     * so they render attributed to Google rather than to a named person.
+     * Verbatim only — never paraphrase or invent one.
+     */
+    quotes: string[];
+    /**
+     * Emit aggregateRating into LocalBusiness schema. Off by default: Google's
+     * review-snippet guidance says ratings should come from reviews the site
+     * itself collected, not re-published from another platform.
+     */
+    emitAggregateRating: boolean;
   };
 
   /** Service area — drives both the copy and the Leaflet map. */
@@ -147,6 +161,7 @@ const avalon: MemberProfile = {
   slug: 'avalon-management-group',
   name: 'Avalon Management Group',
   shortName: 'Avalon',
+  legalName: 'The Avalon Management Group, Inc.',
 
   accent: '#2E9BA8',
   accentDeep: '#1F6F79',
@@ -310,9 +325,16 @@ const avalon: MemberProfile = {
   },
 
   reviews: {
-    rating: 4.5,
-    reviewCount: null,
-    placeUrl: null,
+    rating: 4.7,
+    reviewCount: 221,
+    placeUrl:
+      'https://www.google.com/maps/search/?api=1&query=The+Avalon+Management+Group%2C+Inc.%2C+43529+Ridge+Park+Dr%2C+Temecula%2C+CA+92590',
+    quotes: [
+      'Very happy with the service in today&rsquo;s environment.',
+      'Allison at the Wolf Park HOA office is the bomb!',
+      'She is an astute good listener that makes you feel valued and respected.',
+    ],
+    emitAggregateRating: false,
   },
 
   area: {
@@ -354,7 +376,7 @@ const avalon: MemberProfile = {
     addressLocality: 'Temecula',
     addressRegion: 'CA',
     postalCode: '92590',
-    telephone: '',
+    telephone: '(951) 699-2918',
     url: '',
     latitude: 33.4945052,
     longitude: -117.1582665,

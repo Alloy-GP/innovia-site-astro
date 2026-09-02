@@ -286,8 +286,18 @@ export function eventSchema(opts: {
 // requires both a value and a count, and a rating with no count is a structured
 // -data error rather than a rich result.
 
+/** Normalise a US phone number to E.164 for structured data. */
+function e164(raw: string) {
+  const d = raw.replace(/[^0-9]/g, '');
+  if (d.length === 10) return `+1${d}`;
+  if (d.length === 11 && d.startsWith('1')) return `+${d}`;
+  return raw;
+}
+
 export function memberFirmSchema(opts: {
   name: string;
+  /** Registered entity name, when it differs from the trading name. */
+  legalName?: string;
   description: string;
   url: string;
   foundingDate?: string;
@@ -316,13 +326,16 @@ export function memberFirmSchema(opts: {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: opts.name,
+    ...(opts.legalName && opts.legalName !== opts.name
+      ? { legalName: opts.legalName, alternateName: opts.legalName }
+      : {}),
     description: opts.description,
     url: opts.url,
     ...(opts.foundingDate ? { foundingDate: opts.foundingDate } : {}),
     ...(opts.image
       ? { image: opts.image.startsWith('http') ? opts.image : `${SITE.url}${opts.image}` }
       : {}),
-    ...(opts.telephone ? { telephone: opts.telephone } : {}),
+    ...(opts.telephone ? { telephone: e164(opts.telephone) } : {}),
     ...(Object.keys(addr).length
       ? { address: { '@type': 'PostalAddress', addressCountry: 'US', ...addr } }
       : {}),
