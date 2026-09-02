@@ -60,6 +60,12 @@ export interface MemberProfile {
     /** ISO 8601 duration + upload date, for VideoObject schema. */
     durationIso?: string;
     uploadDate?: string;
+    /**
+     * The chosen frame already has the subject's name/role burned in as a
+     * lower third. When true the stage drops its own caption text so the two
+     * don't stack on top of each other; the runtime chip stays.
+     */
+    posterHasLowerThird?: boolean;
   };
 
   /** Four-up stat strip under the hero. */
@@ -197,9 +203,9 @@ const avalon: MemberProfile = {
     'Independent community management for San Diego &amp; Riverside Counties since 1983 — local, hands-on service backed by the resources of a national cooperative.',
 
   video: {
-    // Frame pulled from the interview at 25.2s — the one point where he's
-    // looking at camera with his mouth closed. An honest thumbnail: it's
-    // actually in the video, unlike a building exterior.
+    // Frame pulled from the interview at 3.0s, while the video's own
+    // "Mark Jones / President" lower third is on screen — it identifies him
+    // without the page having to, and it's genuinely a frame from the video.
     posterSrc: '/assets/photos/members/avalon-interview-poster.webp',
     posterAlt:
       'Mark Jones, President and Owner of Avalon Management Group, during his member interview',
@@ -213,6 +219,7 @@ const avalon: MemberProfile = {
     vimeoId: '1223449346',
     durationIso: 'PT31S',
     uploadDate: '2026-09-02',
+    posterHasLowerThird: true,
   },
 
   stats: [

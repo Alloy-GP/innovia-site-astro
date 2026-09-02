@@ -74,19 +74,20 @@
       color: rgba(255,255,255,0.4); text-align: center; max-width: 32ch; line-height: 1.6;
     }
     /* play button — Innovia green is the one action colour.
-       Offset left rather than centred: the poster is a head-and-shoulders frame
-       at the same 16:9 as the stage, so nothing crops and a centred button
-       lands squarely on the subject's face. The left third is wall. */
+       Centred, per convention: the poster is framed with the subject
+       right-of-centre so the button lands on his chest, not his face.
+       Glyph is ~42% of the circle, matching how YouTube/Vimeo weight theirs —
+       at 112px with a 34px glyph it was mostly empty green. */
     .v-stage .play {
-      position: absolute; top: 50%; left: 24%; transform: translate(-50%, -50%); z-index: 3;
-      width: 112px; height: 112px; border-radius: 999px;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
+      width: 72px; height: 72px; border-radius: 999px;
       background: var(--innovia-green); color: var(--innovia-navy);
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 18px 50px rgba(149,208,49,0.32);
       transition: transform .2s var(--ease-out), background .2s;
     }
     .v-stage:hover .play { transform: translate(-50%, -50%) scale(1.06); background: #fff; }
-    .v-stage .play svg { margin-left: 6px; }
+    .v-stage .play svg { width: 30px; height: 30px; margin-left: 3px; }
     .v-stage .chip-tl {
       position: absolute; top: 20px; left: 20px; z-index: 3;
       display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px;
@@ -639,6 +640,16 @@ body.modal-open { overflow: hidden; }
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
+/* Poster carries its own lower third: no caption text to protect, so the
+   scrim lightens to a thin foot and the runtime chip sits alone on the right,
+   clear of the burned-in name on the left. */
+.v-stage .caption.is-bare {
+  padding: 22px 18px 16px;
+  background: linear-gradient(to top, rgba(11,27,53,0.55) 0%, rgba(11,27,53,0) 100%);
+  justify-content: flex-end;
+}
+.v-stage .caption.is-bare .runtime { margin-left: 0; }
+
 /* Deepen the caption scrim so the title holds over a bright poster. */
 .v-stage .poster-slot ~ .caption { background: linear-gradient(to top, rgba(11,27,53,0.94) 0%, rgba(11,27,53,0.66) 48%, rgba(11,27,53,0) 100%); }
 .v-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -762,8 +773,12 @@ body.modal-open { overflow: hidden; }
 .v-stage-wrap { container-type: inline-size; }
 @container (max-width: 520px) {
   .v-stage { aspect-ratio: 4 / 3; }
-  .v-stage .play { width: 68px; height: 68px; }
-  .v-stage .play svg { width: 26px; height: 26px; margin-left: 4px; }
+  /* 4:3 trims the sides off a 16:9 poster. A burned-in lower third is anchored
+     to the frame's left edge, so centre-cropping cuts the name in half —
+     anchor left instead and lose the empty right side. */
+  .v-stage.has-lower-third .poster-slot img { object-position: 0% 50%; }
+  .v-stage .play { width: 56px; height: 56px; }
+  .v-stage .play svg { width: 24px; height: 24px; margin-left: 2px; }
   .v-stage .chip-tl { top: 12px; left: 12px; padding: 6px 10px; font-size: 9px; }
   .v-stage .corner-tag {
     top: 46px; left: 12px; right: auto;
