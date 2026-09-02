@@ -208,7 +208,7 @@ const avalon: MemberProfile = {
     // without the page having to, and it's genuinely a frame from the video.
     posterSrc: '/assets/photos/members/avalon-interview-poster.webp',
     posterAlt:
-      'Mark Jones, President and Owner of Avalon Management Group, during his member interview',
+      'Mark Jones, President and Owner of Avalon Management Group, during his member intro',
     title: 'Meet Avalon Management Group',
     subtitle: 'In Mark&rsquo;s own words',
     // Real length from Vimeo's oEmbed (31s), not the handoff's placeholder 1:20.
