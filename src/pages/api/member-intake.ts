@@ -108,7 +108,7 @@ export const POST: APIRoute = async ({ request }) => {
     const hp = String(form.get('hp_token') || '').trim();
     if (hp) {
       await postSlack(
-        `:warning: *Member profile intake quarantined (honeypot tripped)*\n` +
+        `:warning: *Innovia · Member profile intake quarantined (honeypot tripped)*\n` +
           `Hidden field was filled with: "${slackEsc(hp.slice(0, 80))}"\n` +
           `If this is a real firm, autofill likely did it. Ask them to resubmit.\n` +
           summary(),
@@ -121,7 +121,7 @@ export const POST: APIRoute = async ({ request }) => {
     const missing = required.filter((k) => !get(k));
     if (missing.length) {
       await postSlack(
-        `:no_entry: *Member profile intake rejected (missing required fields)*\n` +
+        `:no_entry: *Innovia · Member profile intake rejected (missing required fields)*\n` +
           `Missing: ${missing.join(', ')}\n` +
           summary(),
       );
@@ -236,7 +236,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     // 5) Slack: the submission is now recorded (sheet + office email).
-    await postSlack(`:white_check_mark: *New member profile intake received*\n` + summary());
+    await postSlack(`:white_check_mark: *Innovia · Member profile intake received*\n` + summary());
 
     // 6) Confirm to the applicant
     stage = 'confirmation_email';
@@ -255,7 +255,7 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ ok: true });
   } catch (err) {
     await postSlack(
-      `:rotating_light: *Member profile intake failed*\n` +
+      `:rotating_light: *Innovia · Member profile intake failed*\n` +
         `Firm: ${slackEsc(firmName || '(unknown)')}\n` +
         `Stage: ${stage}\n` +
         `Error: ${slackEsc(err instanceof Error ? err.message : String(err))}\n` +
