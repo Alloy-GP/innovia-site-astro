@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "summit.innoviaco-op.com" }],
+      "destination": "https://innoviaco-op.com/summit/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
