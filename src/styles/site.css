@@ -447,6 +447,16 @@ body:not([data-screen-label="Summit 2027 Teaser"]):not([data-screen-label="Summi
   color: rgba(255,255,255,0.4);
 }
 .site-footer .copy .colophon { font-family: var(--font-mono); }
+.site-footer .copy .meta { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; }
+/* Agency credit: reads as part of the legal row (same size + muted tone), icon only lifts on hover. */
+.site-footer .copy .partner-credit {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: inherit; text-decoration: none;
+  font-family: var(--font-body); font-size: 12px; font-weight: 400;
+  white-space: nowrap;
+}
+.site-footer .copy .partner-credit img { width: 18px; height: 18px; display: block; opacity: .55; transition: opacity 140ms; }
+.site-footer .copy .partner-credit:hover img { opacity: .9; }
 
 /* Newsletter signup */
 .site-footer .newsletter h6 { margin-bottom: 12px; }
