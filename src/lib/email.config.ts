@@ -49,7 +49,13 @@ export const EMAIL_CONFIG = {
 
   mailchimp: {
     enabled:     true,      // set false if client has no Mailchimp
-    defaultTags: ['website-lead'],
+    // MAILCHIMP_AUDIENCE_ID is Innovia's Master Member Distribution list, the
+    // same audience the member mailings go to. Every website contact (lead
+    // forms, newsletter sign-up, contact opt-in) therefore carries
+    // "Non-Member", and member sends exclude that tag. Drop it and website
+    // inquiries read as members again: that is how 19 non-members ended up
+    // on the list between the 2026-07-23 launch and 2026-10-28.
+    defaultTags: ['website-lead', 'Non-Member'],
   },
 
   copy: {
