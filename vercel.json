@@ -1,4 +1,7 @@
 {
+  "crons": [
+    { "path": "/api/form-health", "schedule": "0 13 * * *" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

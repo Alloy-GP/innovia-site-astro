@@ -62,3 +62,24 @@ src/
 - Add favicon → `public/assets/favicon.png`
 - Set up Resend DNS for the client domain
 - Add env vars to Vercel (copy from `.env`, set `PUBLIC_ENV=production` on prod project)
+- Add `CRON_SECRET` to Vercel (any long random string, Production + Preview) so the daily form health check can run — see "Daily form health check" below.
+
+## Daily form health check — `/api/form-health`
+
+Nobody should have to wonder whether the forms work. A Vercel cron (`vercel.json`) calls
+`/api/form-health` at 13:00 UTC (8am Central) and posts one line to the forms Slack channel
+(`FORM_SLACK_WEBHOOK`, falling back to `FORM_ALERT_SLACK_URL`): ✅ when everything passes, 🚨 with the
+failures when not. No line in the morning = the cron is not running.
+
+What it checks: that Resend accepts a real email from `notifications@` — sent to Resend's
+simulated-delivery inbox `delivered+form-health@resend.dev` with the same key and endpoint the forms
+use, so a ✓ means key + verified domain + send path, and nobody receives it (one email a day against the
+quota; the Resend→Slack relay ignores sent/delivered events) — the Slack webhook, the Mailchimp
+credentials when `mailchimp.enabled` is true, and that the lead route has somewhere to send. A
+Sending-access Resend key is enough; nothing here lists domains.
+
+Vercel sends `CRON_SECRET` as a bearer token; the same header works by hand:
+`curl -H "Authorization: Bearer $CRON_SECRET" https://innoviaco-op.com/api/form-health`
+Without `CRON_SECRET` the route only answers Vercel's cron user-agent, so it works on day one; set the
+secret so nobody else can trigger it. `src/lib/resend-probe.ts` is shared with every AGP site — do not
+edit it per client. Offline test of every probe path: `npm run test:forms`.

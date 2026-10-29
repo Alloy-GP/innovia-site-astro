@@ -118,5 +118,65 @@ check('drops both honeypots', !keys.includes('Website') && !keys.includes('Compa
 check('drops machine fields', !keys.includes('Fieldsjson') && !keys.includes('Audience'));
 check('drops whitespace-only values', !keys.includes('Blank'));
 
+
+// The Resend probe behind /api/form-health: a real send to Resend's test inbox,
+// reported as the form routes would experience it. (No domains lookup — that
+// needs a Full-access key; production keys are Sending-access only.)
+const { probeResendSend, RESEND_TEST_INBOX } = await import('../src/lib/resend-probe.ts');
+type RpStub = { status: number; body: unknown } | Error;
+let rpCalls: { url: string; init: any }[] = [];
+function stubResend(...responses: RpStub[]) {
+  rpCalls = [];
+  const queue = [...responses];
+  (globalThis as any).fetch = async (url: string, init: any) => {
+    rpCalls.push({ url: String(url), init });
+    const next = queue.shift() ?? { status: 500, body: {} };
+    if (next instanceof Error) throw next;
+    return { ok: next.status < 300, status: next.status, json: async () => next.body } as any;
+  };
+}
+const RP_OPTS = { apiKey: 're_test', from: 'Acme <notifications@mail.acme.test>', client: 'Acme', site: 'https://acme.test', retryDelayMs: 0 };
+
+stubResend({ status: 200, body: { id: 're_abc123' } });
+let rp = await probeResendSend(RP_OPTS);
+const rpSent = JSON.parse(rpCalls[0].init.body);
+check('probe: 200 → ok, names the sender and the Resend id', rp.ok && rp.detail.includes('notifications@mail.acme.test') && rp.detail.includes('re_abc123'));
+check('probe: POSTs to /emails with the key', rpCalls[0].url === 'https://api.resend.com/emails' && rpCalls[0].init.method === 'POST' && rpCalls[0].init.headers.Authorization === 'Bearer re_test');
+check('probe: FROM the notification address, TO the test inbox only', rpSent.from === RP_OPTS.from && JSON.stringify(rpSent.to) === JSON.stringify([RESEND_TEST_INBOX]));
+check("probe: the test inbox is Resend's simulated-delivery address", /^delivered(\+[\w-]+)?@resend\.dev$/.test(RESEND_TEST_INBOX));
+check('probe: subject and body say what it is', /health check/i.test(rpSent.subject) && rpSent.subject.includes('Acme') && /nobody receives/i.test(rpSent.text));
+
+stubResend({ status: 401, body: { statusCode: 401, name: 'validation_error', message: 'API key is invalid' } });
+rp = await probeResendSend(RP_OPTS);
+check("probe: bad key → ✗ with Resend's message and status", !rp.ok && rp.detail === 'API key is invalid (401)');
+
+stubResend({ status: 403, body: { statusCode: 403, name: 'validation_error', message: 'The mail.acme.test domain is not verified. Please, add and verify your domain on https://resend.com/domains' } });
+rp = await probeResendSend(RP_OPTS);
+check('probe: unverified domain → ✗ naming the domain', !rp.ok && rp.detail.includes('mail.acme.test domain is not verified') && rp.detail.endsWith('(403)'));
+
+stubResend({ status: 429, body: { message: 'Too many requests' } }, { status: 200, body: { id: 're_retry' } });
+rp = await probeResendSend(RP_OPTS);
+check('probe: one 429 is retried once, not reported', rp.ok && rpCalls.length === 2 && rp.detail.includes('re_retry'));
+
+stubResend({ status: 429, body: { message: 'Too many requests.' } }, { status: 429, body: { message: 'Too many requests.' } });
+rp = await probeResendSend(RP_OPTS);
+check('probe: two 429s → ✗, no endless retry', !rp.ok && rpCalls.length === 2 && rp.detail.endsWith('(429)'));
+
+stubResend(new Error('fetch failed'));
+rp = await probeResendSend(RP_OPTS);
+check('probe: network error → ✗ unreachable', !rp.ok && rp.detail === 'unreachable: fetch failed');
+
+stubResend({ status: 200, body: { id: 'never' } });
+rp = await probeResendSend({ ...RP_OPTS, apiKey: undefined });
+check('probe: no key → ✗ without calling Resend', !rp.ok && rp.detail === 'RESEND_API_KEY is not set' && rpCalls.length === 0);
+
+stubResend({ status: 200, body: {} });
+rp = await probeResendSend(RP_OPTS);
+check('probe: a 200 with no id is still a pass', rp.ok);
+
+stubResend({ status: 500, body: 'not json' });
+rp = await probeResendSend(RP_OPTS);
+check('probe: a 5xx with an unreadable body still reports the status', !rp.ok && rp.detail.endsWith('(500)'));
+
 console.log(failures ? `\n${failures} FAILED` : '\nall passed');
 process.exit(failures ? 1 : 0);
