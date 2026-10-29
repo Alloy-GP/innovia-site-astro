@@ -79,7 +79,7 @@ credentials when `mailchimp.enabled` is true, and that the lead route has somewh
 Sending-access Resend key is enough; nothing here lists domains.
 
 Vercel sends `CRON_SECRET` as a bearer token; the same header works by hand:
-`curl -H "Authorization: Bearer $CRON_SECRET" https://innoviaco-op.com/api/form-health`
+`curl -H "Authorization: Bearer $CRON_SECRET" https://innoviaco-op.com/api/form-health/`
 Without `CRON_SECRET` the route only answers Vercel's cron user-agent, so it works on day one; set the
 secret so nobody else can trigger it. `src/lib/resend-probe.ts` is shared with every AGP site — do not
 edit it per client. Offline test of every probe path: `npm run test:forms`.

@@ -11,9 +11,12 @@
 // Auth: Vercel sends `Authorization: Bearer $CRON_SECRET` with every cron request
 // once CRON_SECRET is set on the project (any long random string). The same
 // header works for a manual check:
-//   curl -H "Authorization: Bearer $CRON_SECRET" https://innoviaco-op.com/api/form-health
+//   curl -H "Authorization: Bearer $CRON_SECRET" https://innoviaco-op.com/api/form-health/
 // Without CRON_SECRET the route only answers Vercel's cron user-agent, so the
 // heartbeat still runs on day one; set the secret so nobody else can trigger it.
+//
+// This site has trailingSlash: 'always', so the cron in vercel.json calls
+// /api/form-health/ — the bare path answers 308, which a cron would not follow.
 //
 // Ships with the AGP Astro starter. The only per-client input is EMAIL_CONFIG;
 // src/lib/resend-probe.ts is shared and should not be edited per client.
