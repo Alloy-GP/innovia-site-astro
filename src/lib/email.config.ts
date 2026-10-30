@@ -36,7 +36,8 @@ export const EMAIL_CONFIG = {
   // NOTE: notifications@innoviaco-op.com is a SENDING identity (see from.notifications),
   // not a monitored inbox — do not add it here as a recipient.
   notify: [
-    'nzuccala@ccaglobal.com', // interim — until the client confirms final routing
+    'nzuccala@ccaglobal.com', // Nick Zuccala
+    'rhayes@ccaglobal.com',   // Ryan Hayes — added 2026-10-30
   ],
 
   // CC'd on every internal notification (the office copy) — not customer
